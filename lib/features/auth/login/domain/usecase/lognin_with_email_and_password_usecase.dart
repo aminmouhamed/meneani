@@ -1,0 +1,3 @@
+class LogInWithEmailAndPassword {
+  void call() {}
+}
