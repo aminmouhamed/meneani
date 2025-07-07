@@ -8,45 +8,55 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 500.h),
-              Text("Login", style: TextStyle(fontSize: 80.sp)),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomTextForm(hint: "Email", icon: Icons.email),
-                    SizedBox(height: 30.h),
-                    CustomTextForm(hint: "Password", icon: Icons.lock),
-                    SizedBox(height: 10.h),
-                    Row(
-                      children: [
-                        Text("If you dont have account "),
-                        Text(
-                          "Create Accont .",
-                          style: TextStyle(color: Colors.blueAccent),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 30.h),
-                    ElevatedButton(onPressed: () {}, child: Text("logIn")),
-                    SizedBox(height: 30.h),
-                    OutlinedButton(
-                      onPressed: () {},
-                      child: Text("Create Account"),
-                    ),
-                  ],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg3.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 500.h),
+                Text("Login", style: TextStyle(fontSize: 80.sp)),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomTextForm(hint: "Email", icon: Icons.email),
+                      SizedBox(height: 30.h),
+                      CustomTextForm(hint: "Password", icon: Icons.lock),
+                      SizedBox(height: 10.h),
+                      Row(
+                        children: [
+                          Text("If you dont have account "),
+                          Text(
+                            "Create Accont .",
+                            style: TextStyle(color: Colors.blueAccent),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 30.h),
+                      ElevatedButton(onPressed: () {}, child: Text("logIn")),
+                      SizedBox(height: 30.h),
+                      OutlinedButton(
+                        onPressed: () {},
+                        child: Text("Create Account"),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

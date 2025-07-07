@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:meneani/core/const/constent.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField({
@@ -29,6 +30,7 @@ class CustomTextField extends StatelessWidget {
               prefixIcon: icon,
               hint: Text(textHint),
               border: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.hardBleau),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),

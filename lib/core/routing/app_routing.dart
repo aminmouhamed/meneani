@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meneani/core/routing/app_routes.dart';
+import 'package:meneani/features/auth/login/ui/bloc/bloc/login_bloc.dart';
 import 'package:meneani/features/auth/login/ui/widgets/login_page.dart';
 import 'package:meneani/features/auth/signin/ui/bloc/create_account_bloc.dart';
 import 'package:meneani/features/auth/signin/ui/widgets/create_client_account_page.dart.dart';
@@ -15,7 +16,12 @@ class AppRouting {
         return MaterialPageRoute(builder: (context) => WelcomePage());
 
       case AppRoutes.logIn:
-        return MaterialPageRoute(builder: (context) => LoginPage());
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => LoginBloc(loginRepository: di.getIT()),
+            child: LoginPage(),
+          ),
+        );
 
       case AppRoutes.createClientAccount:
         return MaterialPageRoute(
