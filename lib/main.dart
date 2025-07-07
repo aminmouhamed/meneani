@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/routing/app_routing.dart';
+import 'package:meneani/core/theme/app_theme.dart';
+import 'package:meneani/generated/l10n.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:meneani/core/di/di.dart' as di;
@@ -22,15 +26,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Meneani',
-      onGenerateRoute: appRouting.onGenerateRoute,
-      initialRoute: AppRoutes.welcome,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
+    return ScreenUtilInit(
+      designSize: Size(1280, 2856),
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'Meneani',
+          onGenerateRoute: appRouting.onGenerateRoute,
+          initialRoute: AppRoutes.welcome,
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          locale: const Locale("en"),
+          theme: appTheme,
+          // ThemeData(
+          //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+          //   useMaterial3: true,
+          // ),
+        );
+      },
     );
   }
 }

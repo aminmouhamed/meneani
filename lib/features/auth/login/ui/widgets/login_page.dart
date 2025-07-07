@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(child: Center(child: Text("Login screen"))),
+      body: SingleChildScrollView(child: Center(child: Text("Login screen"))),
     );
   }
 }

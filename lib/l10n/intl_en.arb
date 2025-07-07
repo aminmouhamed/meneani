@@ -1,0 +1,5 @@
+{
+    "login" : "login", 
+    "create_client_account" : "Create Client Account",
+    "create_specialist_account" : "Create Specialist Account"
+}

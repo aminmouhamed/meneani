@@ -26,9 +26,7 @@ class CustomDatePicker extends StatelessWidget {
         },
         decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          hint: Text(
-            "${initilaDate.day}/${initilaDate.month}/${initilaDate.year}",
-          ),
+          hint: Text("Dete of Birth"),
           prefixIcon: Icon(Icons.calendar_month_outlined),
         ),
       ),

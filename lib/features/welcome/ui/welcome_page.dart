@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meneani/core/routing/app_routes.dart';
+import 'package:meneani/generated/l10n.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -19,13 +20,23 @@ class WelcomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pushNamed(AppRoutes.logIn);
                 },
-                child: Text("logIn"),
+                child: Text(S.current.login),
               ),
               OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(AppRoutes.signin);
+                  Navigator.of(
+                    context,
+                  ).pushNamed(AppRoutes.createClientAccount);
                 },
-                child: Text("SignIn"),
+                child: Text(S.current.create_client_account),
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.of(
+                    context,
+                  ).pushNamed(AppRoutes.createSpecialistAccount);
+                },
+                child: Text(S.current.create_specialist_account),
               ),
             ],
           ),

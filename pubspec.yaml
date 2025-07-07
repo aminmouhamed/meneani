@@ -39,6 +39,15 @@ dependencies:
   get_it: ^8.0.3
   equatable: ^2.0.7
   supabase_flutter: ^2.9.1
+  flutter_screenutil: ^5.9.3
+  shared_preferences: ^2.5.3
+  intl: ^0.20.2
+  flutter_localizations:
+    sdk : flutter 
+   
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +70,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate : true
 
   # To add assets to your application, add an assets section, like this:
   assets:
@@ -92,3 +102,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_intl: 
+  enabled : true

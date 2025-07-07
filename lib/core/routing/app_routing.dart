@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/features/auth/login/ui/widgets/login_page.dart';
 import 'package:meneani/features/auth/signin/ui/bloc/create_account_bloc.dart';
-import 'package:meneani/features/auth/signin/ui/widgets/signin_page.dart';
+import 'package:meneani/features/auth/signin/ui/widgets/create_client_account_page.dart.dart';
+import 'package:meneani/features/auth/signin/ui/widgets/create_specialist_account_page.dart';
 import 'package:meneani/features/welcome/ui/welcome_page.dart';
 import 'package:meneani/core/di/di.dart' as di;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,14 +17,20 @@ class AppRouting {
       case AppRoutes.logIn:
         return MaterialPageRoute(builder: (context) => LoginPage());
 
-      case AppRoutes.signin:
+      case AppRoutes.createClientAccount:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => CreateAccountBloc(di.getIT()),
-            child: SigninPage(),
+            child: CreateClientAccountPage(),
           ),
         );
-
+      case AppRoutes.createSpecialistAccount:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => CreateAccountBloc(di.getIT()),
+            child: CreateSpecialistAccountPage(),
+          ),
+        );
       default:
         return MaterialPageRoute(builder: (context) => Container());
     }
