@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           ],
           supportedLocales: S.delegate.supportedLocales,
           locale: const Locale("en"),
-          theme: appTheme,
+          theme: lightThem,
           // ThemeData(
           //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
           //   useMaterial3: true,
