@@ -111,15 +111,9 @@ class CreateClientAccountPage extends StatelessWidget {
                     SizedBox(height: 30.h),
                     OutlinedButton(
                       onPressed: () {
-                        showAdaptiveDialog(
-                          context: context,
-                          builder: (_) {
-                            return Container(color: Colors.red);
-                          },
-                        );
-                        // BlocProvider.of<CreateAccountBloc>(
-                        //   context,
-                        // ).add(CreateClientAccountEvent());
+                        BlocProvider.of<CreateAccountBloc>(
+                          context,
+                        ).add(CreateClientAccountEvent());
                       },
                       child: Text("Create Account"),
                     ),

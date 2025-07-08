@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Meneani',
           onGenerateRoute: appRouting.onGenerateRoute,
-          initialRoute: AppRoutes.welcome,
+          initialRoute: AppRoutes.clientHome,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             S.delegate,

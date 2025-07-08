@@ -5,6 +5,7 @@ import 'package:meneani/features/auth/login/ui/widgets/login_page.dart';
 import 'package:meneani/features/auth/signin/ui/bloc/create_account_bloc.dart';
 import 'package:meneani/features/auth/signin/ui/widgets/create_client_account_page.dart.dart';
 import 'package:meneani/features/auth/signin/ui/widgets/create_specialist_account_page.dart';
+import 'package:meneani/features/home/ui/widgets/client_home_page.dart';
 import 'package:meneani/features/welcome/ui/welcome_page.dart';
 import 'package:meneani/core/di/di.dart' as di;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,8 @@ class AppRouting {
     switch (rSetting.name) {
       case AppRoutes.welcome:
         return MaterialPageRoute(builder: (context) => WelcomePage());
+      case AppRoutes.clientHome:
+        return MaterialPageRoute(builder: (context) => ClientHomePage());
 
       case AppRoutes.logIn:
         return MaterialPageRoute(

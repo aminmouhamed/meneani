@@ -19,6 +19,7 @@ class ImplLoginRepository extends LoginRepository {
       );
       return Future.value(right(response));
     } on Exception catch (e) {
+      print(e);
       return left(ServerFailure());
     }
   }

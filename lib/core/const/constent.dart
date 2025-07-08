@@ -1,5 +1,7 @@
 import 'package:flutter/rendering.dart';
 
 class AppColors {
-  static const Color hardBleau = Color(0xff3e7184);
+  static const Color primeryColor = Color(0xff4AF0DF);
+  static const Color secendaryColor = Color(0xff4AF0AF);
+  static const Color therdColor = Color(0xffAEEFA3);
 }

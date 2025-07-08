@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:meneani/features/auth/login/ui/bloc/bloc/login_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -32,9 +34,19 @@ class LoginPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CustomTextForm(hint: "Email", icon: Icons.email),
+                      CustomTextForm(
+                        hint: "Email",
+                        icon: Icons.email,
+                        controller: BlocProvider.of<LoginBloc>(context).email,
+                      ),
                       SizedBox(height: 30.h),
-                      CustomTextForm(hint: "Password", icon: Icons.lock),
+                      CustomTextForm(
+                        hint: "Password",
+                        icon: Icons.lock,
+                        controller: BlocProvider.of<LoginBloc>(
+                          context,
+                        ).password,
+                      ),
                       SizedBox(height: 10.h),
                       Row(
                         children: [
@@ -46,7 +58,14 @@ class LoginPage extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 30.h),
-                      ElevatedButton(onPressed: () {}, child: Text("logIn")),
+                      ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<LoginBloc>(
+                            context,
+                          ).add(LogInWithEmailAndPasswordEvent());
+                        },
+                        child: Text("logIn"),
+                      ),
                       SizedBox(height: 30.h),
                       OutlinedButton(
                         onPressed: () {},
@@ -65,15 +84,21 @@ class LoginPage extends StatelessWidget {
 }
 
 class CustomTextForm extends StatelessWidget {
-  const CustomTextForm({super.key, required this.hint, required this.icon});
+  const CustomTextForm({
+    super.key,
+    required this.hint,
+    required this.icon,
+    required this.controller,
+  });
   final String hint;
   final IconData icon;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextFormField(
-        //  controller: controler,
+        controller: controller,
         // keyboardType: keyBoardType,
         onTap: () async {},
         decoration: InputDecoration(
