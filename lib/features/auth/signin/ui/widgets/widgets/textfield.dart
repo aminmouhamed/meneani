@@ -29,8 +29,11 @@ class CustomTextField extends StatelessWidget {
               isDense: true,
               prefixIcon: icon,
               hint: Text(textHint),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.secendaryColor),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),

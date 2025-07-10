@@ -4,6 +4,7 @@ import 'package:meneani/core/errors/failures.dart';
 import 'package:meneani/features/auth/login/data/services/login_service.dart';
 import 'package:meneani/features/auth/login/domain/entiti/user_entiti.dart';
 import 'package:meneani/features/auth/login/domain/repository/login_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ImplLoginRepository extends LoginRepository {
   final LoginService loginService;
@@ -18,9 +19,9 @@ class ImplLoginRepository extends LoginRepository {
         userEntiti,
       );
       return Future.value(right(response));
-    } on Exception catch (e) {
+    } on AuthApiException catch (e) {
       print(e);
-      return left(ServerFailure());
+      return left(ServerFailure(errorMassege: e.message));
     }
   }
 }

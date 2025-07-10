@@ -1,5 +1,4 @@
 import 'package:meneani/features/auth/login/domain/entiti/user_entiti.dart';
-import 'package:meneani/features/auth/signin/domain/entiti/client_entiti.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginService {

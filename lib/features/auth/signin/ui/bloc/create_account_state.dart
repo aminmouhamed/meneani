@@ -13,4 +13,8 @@ class CreateAccountLoadingState extends CreateAccountState {}
 
 class CreateAccountLoadedState extends CreateAccountState {}
 
-class CreateAccountErrorState extends CreateAccountState {}
+class CreateAccountErrorState extends CreateAccountState {
+  final String errorMessage;
+
+  CreateAccountErrorState({required this.errorMessage});
+}

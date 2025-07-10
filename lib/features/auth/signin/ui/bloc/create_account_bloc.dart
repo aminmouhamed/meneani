@@ -29,6 +29,7 @@ class CreateAccountBloc extends Bloc<CreateAccountEvent, CreateAccountState> {
       // TODO: implement event handler
       if (event is CreateClientAccountEvent) {
         emit(CreateAccountLoadingState());
+
         var response =
             await CreateClientAccountUseCase(
               createAccountRepository: repository,
@@ -47,7 +48,7 @@ class CreateAccountBloc extends Bloc<CreateAccountEvent, CreateAccountState> {
         response.fold(
           (failure) {
             if (failure is ServerFailure) {
-              emit(CreateAccountErrorState());
+              emit(CreateAccountErrorState(errorMessage: failure.errorMassege));
             }
           },
           (val) {

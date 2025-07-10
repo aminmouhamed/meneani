@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/widgets/simpel_button.dart';
 
 class CustomCard extends StatelessWidget {
@@ -8,10 +9,12 @@ class CustomCard extends StatelessWidget {
     required this.bgColor,
     required this.buttonText,
     required this.titel,
+    required this.onPress,
   });
   final Color bgColor;
   final String titel;
   final String buttonText;
+  final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -29,30 +32,23 @@ class CustomCard extends StatelessWidget {
             Text(
               // "Online Doctor  Conseltation",
               titel,
-              style: TextStyle(fontSize: 45.sp, fontWeight: FontWeight.bold),
+              textDirection: TextDirection.rtl,
+              style: GoogleFonts.cairo(
+                fontSize: 45.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 30.h),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Start from ", style: TextStyle(fontSize: 30.sp)),
-                Text(
-                  "1500 Da/Doctor  ",
-                  style: TextStyle(
-                    fontSize: 30.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text("you Can", style: TextStyle(fontSize: 30.sp)),
-              ],
-            ),
             Text(
-              "online consultations now!. ",
-              style: TextStyle(fontSize: 30.sp),
+              textDirection: TextDirection.rtl,
+              "يمكنك حجز موعد مع الطبيب ابتداءا من مبلغ 1000دج",
+              style: GoogleFonts.cairo(fontSize: 30.sp),
             ),
 
             SizedBox(height: 150.h),
-            Center(child: SimpelButton()),
+            Center(
+              child: SimpelButton(text: "دخول", onPress: onPress),
+            ),
           ],
         ),
       ),
@@ -66,10 +62,12 @@ class CustomCard2 extends StatelessWidget {
     required this.bgColor,
     required this.buttonText,
     required this.titel,
+    required this.onPress,
   });
   final Color bgColor;
   final String titel;
   final String buttonText;
+  final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -80,33 +78,31 @@ class CustomCard2 extends StatelessWidget {
       ),
       padding: EdgeInsets.all(40.r),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             // "Online Doctor  Conseltation",
             titel,
-            style: TextStyle(fontSize: 45.sp, fontWeight: FontWeight.bold),
+            textDirection: TextDirection.rtl,
+            style: GoogleFonts.cairo(
+              fontSize: 45.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 30.h),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Start from ", style: TextStyle(fontSize: 30.sp)),
-              Text(
-                "1500 Da/Doctor  ",
-                style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
-              ),
-              Text("you Can", style: TextStyle(fontSize: 30.sp)),
-            ],
-          ),
+
           Text(
-            "online consultations now!. ",
-            style: TextStyle(fontSize: 30.sp),
+            textDirection: TextDirection.rtl,
+            "هذه الخدمة مبنية على نتائج أبحاث الخاصة والتي كانت تمكننا من توجيهك نحو الطريق الصحيح للشفاء ",
+            style: GoogleFonts.cairo(fontSize: 30.sp),
           ),
 
           SizedBox(height: 150.h),
-          Align(alignment: Alignment.bottomRight, child: SimpelButton()),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: SimpelButton(text: "دخول", onPress: onPress),
+          ),
         ],
       ),
     );

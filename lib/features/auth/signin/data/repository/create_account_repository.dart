@@ -21,8 +21,8 @@ class ImplCreateAccountRepository implements CreateAccountRepository {
         ClientModel.fromEntiti(clientEntiti),
       );
       return Future.value(right(response));
-    } on Exception catch (_) {
-      return Future.value(left(ServerFailure()));
+    } on AuthApiException catch (e) {
+      return Future.value(left(ServerFailure(errorMassege: e.message)));
     }
   }
 
@@ -35,8 +35,8 @@ class ImplCreateAccountRepository implements CreateAccountRepository {
         SpecialistModel.fromEntiti(specialistEntiti),
       );
       return Future.value(right(response));
-    } on Exception catch (_) {
-      return Future.value(left(ServerFailure()));
+    } on AuthApiException catch (e) {
+      return Future.value(left(ServerFailure(errorMassege: e.message)));
     }
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meneani/core/const/constent.dart';
 
 ThemeData lightThem = ThemeData(
   primaryColor: Colors.blue[400],
+
+  secondaryHeaderColor: AppColors.primeryColor,
   hintColor: Colors.black54,
   textTheme: TextTheme(),
   elevatedButtonTheme: ElevatedButtonThemeData(

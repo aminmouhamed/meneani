@@ -6,4 +6,8 @@ class Failures extends Equatable {
   List<Object?> get props => throw UnimplementedError();
 }
 
-class ServerFailure extends Failures {}
+class ServerFailure extends Failures {
+  final String errorMassege;
+
+  ServerFailure({required this.errorMassege});
+}
