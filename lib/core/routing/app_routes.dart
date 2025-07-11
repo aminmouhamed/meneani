@@ -6,4 +6,5 @@ class AppRoutes {
   static const String clientHome = "client_home";
   static const String clientService = "client_service";
   static const String clientProfile = "client_profile";
+  static const String setting = "setting";
 }

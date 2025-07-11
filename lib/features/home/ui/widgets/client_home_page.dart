@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
+import 'package:meneani/core/widgets/show_dialog_error_handler.dart';
 import 'package:meneani/core/widgets/simpel_button.dart';
+import 'package:meneani/features/home/data/services/home_service.dart';
+import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
 import 'package:meneani/features/home/ui/widgets/widgets/custom_card.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class ClientHomePage extends StatelessWidget {
-  const ClientHomePage({super.key});
-
+  ClientHomePage({super.key});
+  HomeService _homeService = HomeService();
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +37,7 @@ class ClientHomePage extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(AppRoutes.clientHome);
               break;
             case 2:
-              Navigator.of(
-                context,
-              ).pushReplacementNamed(AppRoutes.clientProfile);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.setting);
               break;
           }
         },
@@ -74,13 +78,28 @@ class ClientHomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              "صباح الخير ، محمد.",
-                              textDirection: TextDirection.rtl,
-                              style: GoogleFonts.cairo(
-                                fontSize: 50.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            BlocBuilder<HomeBloc, HomeState>(
+                              builder: (context, state) {
+                                String name = "";
+                                if (state is HomeErrorState) {
+                                  ShowDialogErrorHandler.showErrorDialog(
+                                    context,
+                                    state.errorMassege,
+                                  );
+                                }
+                                if (state is HomeLoadedState) {
+                                  name = state.clientEntiti.fName;
+                                }
+                                if (state is HomeLoadingState) {}
+                                return Text(
+                                  "صباح الخير ، ${name}.",
+                                  textDirection: TextDirection.rtl,
+                                  style: GoogleFonts.cairo(
+                                    fontSize: 50.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                );
+                              },
                             ),
                             Text(
                               textDirection: TextDirection.rtl,
@@ -108,78 +127,89 @@ class ClientHomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(40.r),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  CustomCard(
-                    onPress: () {},
-                    titel: "استشارة الطبيب عبر الإنترنت",
-                    bgColor: AppColors.therdColor.withAlpha(150),
-                    buttonText: "",
+      body: ModalProgressHUD(
+        inAsyncCall: _isLoading,
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(40.r),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    CustomCard(
+                      onPress: () async {
+                        var data = await _homeService.getUserData();
+                        print(data);
+                      },
+                      titel: "استشارة الطبيب عبر الإنترنت",
+                      bgColor: AppColors.therdColor.withAlpha(150),
+                      buttonText: "",
+                    ),
+                    SizedBox(width: 30.h),
+                    CustomCard(
+                      onPress: () {
+                        Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.clientService);
+                      },
+                      titel: "قم بحجز موعد لزياره الطبيب",
+                      bgColor: AppColors.secendaryColor.withAlpha(150),
+                      buttonText: "",
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.h),
+                CustomCard2(
+                  onPress: () {},
+                  titel: "التوجيه الأوتوماتيكي",
+                  bgColor: AppColors.primeryColor.withAlpha(150),
+                  buttonText: "",
+                ),
+                SizedBox(height: 30.h),
+                Text(": مواعيدي", style: GoogleFonts.cairo(fontSize: 47.sp)),
+                SizedBox(height: 30.h),
+                Container(
+                  padding: EdgeInsets.all(30.r),
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Text("Doctor Name : "), Text("Date : ")],
                   ),
-                  SizedBox(width: 30.h),
-                  CustomCard(
-                    onPress: () {
-                      Navigator.of(context).pushNamed(AppRoutes.clientService);
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: 20,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 30.h),
+                        padding: EdgeInsets.all(30.r),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(9),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              "12/12/2025",
+                              style: GoogleFonts.cairo(),
+                            ),
+                            CustomText(
+                              "محمدأمين قطش",
+                              style: GoogleFonts.cairo(),
+                            ),
+                          ],
+                        ),
+                      );
                     },
-                    titel: "قم بحجز موعد لزياره الطبيب",
-                    bgColor: AppColors.secendaryColor.withAlpha(150),
-                    buttonText: "",
                   ),
-                ],
-              ),
-              SizedBox(height: 30.h),
-              CustomCard2(
-                onPress: () {},
-                titel: "التوجيه الأوتوماتيكي",
-                bgColor: AppColors.primeryColor.withAlpha(150),
-                buttonText: "",
-              ),
-              SizedBox(height: 30.h),
-              Text(": مواعيدي", style: GoogleFonts.cairo(fontSize: 47.sp)),
-              SizedBox(height: 30.h),
-              Container(
-                padding: EdgeInsets.all(30.r),
-                decoration: BoxDecoration(color: Colors.white),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text("Doctor Name : "), Text("Date : ")],
                 ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(top: 30.h),
-                      padding: EdgeInsets.all(30.r),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CustomText("12/12/2025", style: GoogleFonts.cairo()),
-                          CustomText(
-                            "محمدأمين قطش",
-                            style: GoogleFonts.cairo(),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

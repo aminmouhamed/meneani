@@ -30,9 +30,7 @@ class ClientProfilePage extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(AppRoutes.clientHome);
               break;
             case 2:
-              Navigator.of(
-                context,
-              ).pushReplacementNamed(AppRoutes.clientProfile);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.setting);
               break;
           }
         },

@@ -1,1 +1,13 @@
+import 'package:dartz/dartz.dart';
+import 'package:meneani/core/errors/failures.dart';
 
+import 'package:meneani/features/home/domain/entiti/client_entiti.dart';
+import 'package:meneani/features/home/domain/repository/home_repository.dart';
+
+class GetClientDataUsecase {
+  HomeRepository homeRepository;
+  GetClientDataUsecase({required this.homeRepository});
+  Future<Either<Failures, ClientEntiti>> call() async {
+    return await homeRepository.getClientData();
+  }
+}

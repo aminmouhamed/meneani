@@ -29,7 +29,16 @@ class ShowDialogErrorHandler {
           ..show();
         break;
       default:
-        break;
+        await AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: errorMassege,
+            btnCancelOnPress: () {},
+            btnOkOnPress: () {},
+          )
+          ..show();
     }
   }
 }

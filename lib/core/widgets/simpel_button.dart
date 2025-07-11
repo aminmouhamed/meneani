@@ -43,7 +43,7 @@ class _SimpelButtonState extends State<SimpelButton> {
           color: color,
           borderRadius: BorderRadius.circular(9),
         ),
-        duration: Duration(microseconds: 1000),
+        duration: Duration(microseconds: 2000),
         child: Text(
           textDirection: TextDirection.rtl,
           text,

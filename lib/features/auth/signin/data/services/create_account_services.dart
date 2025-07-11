@@ -8,6 +8,7 @@ class CreateAccountService {
     var response = await _supabaseClient.auth.signUp(
       password: clientmodel.password,
       email: clientmodel.email,
+      data: {"phone": "0558313593"},
     );
     var client = _supabaseClient.from("client");
     var jsondata = clientmodel.toJson();

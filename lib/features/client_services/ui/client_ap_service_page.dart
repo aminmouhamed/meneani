@@ -6,8 +6,8 @@ import 'package:meneani/core/widgets/custom_text.dart';
 import 'package:meneani/core/widgets/simpel_button.dart';
 import 'package:meneani/features/home/ui/widgets/client_home_page.dart';
 
-class ClientServicePage extends StatelessWidget {
-  ClientServicePage({super.key});
+class ClientAppointmentServicePage extends StatelessWidget {
+  ClientAppointmentServicePage({super.key});
   List<String> specialistType = [
     "مختص في الأمراض العقلية",
     "مختص في الإدمان",

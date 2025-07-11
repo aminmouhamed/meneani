@@ -7,6 +7,7 @@ import 'package:meneani/core/errors/failures.dart';
 import 'package:meneani/features/auth/login/domain/entiti/user_entiti.dart';
 import 'package:meneani/features/auth/login/domain/repository/login_repository.dart';
 import 'package:meneani/features/auth/login/domain/usecase/lognin_with_email_and_password_usecase.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -33,7 +34,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         (value) {
           if (value.user != null) {
             print(value.user!.email);
-            emit(LogInLoadedState());
+            emit(LogInLoadedState(authResponse: value));
           }
         },
       );

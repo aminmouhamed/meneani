@@ -11,7 +11,11 @@ class LoginInitial extends LoginState {}
 
 class LogInLoadingState extends LoginState {}
 
-class LogInLoadedState extends LoginState {}
+class LogInLoadedState extends LoginState {
+  final AuthResponse authResponse;
+
+  LogInLoadedState({required this.authResponse});
+}
 
 class LogInErrorState extends LoginState {
   final String errorMessage;

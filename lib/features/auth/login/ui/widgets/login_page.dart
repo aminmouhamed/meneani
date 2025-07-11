@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
+import 'package:meneani/core/routing/app_routes.dart';
+import 'package:meneani/core/widgets/custom_text.dart';
 import 'package:meneani/core/widgets/show_dialog_error_handler.dart';
 import 'package:meneani/features/auth/login/ui/bloc/bloc/login_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -11,6 +14,11 @@ class LoginPage extends StatelessWidget {
   bool _isLoading = false;
   Color emailBorderColor = AppColors.secendaryColor;
   Color passwordBorderColor = AppColors.secendaryColor;
+  void goToHome(context) async {
+    await Future.delayed(Duration(seconds: 1));
+    await Navigator.of(context).pushReplacementNamed(AppRoutes.clientHome);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +29,7 @@ class LoginPage extends StatelessWidget {
             _isLoading = true;
           } else if (state is LogInLoadedState) {
             _isLoading = false;
+            goToHome(context);
           } else if (state is LogInErrorState) {
             _isLoading = false;
             emailBorderColor = Colors.red;
@@ -35,10 +44,10 @@ class LoginPage extends StatelessWidget {
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/bg3.png"),
-                  fit: BoxFit.cover,
-                ),
+                // image: DecorationImage(
+                //   image: AssetImage("assets/images/bg3.png"),
+                //   fit: BoxFit.cover,
+                // ),
               ),
               child: SafeArea(
                 child: SingleChildScrollView(
@@ -48,7 +57,14 @@ class LoginPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 500.h),
-                      Text("Login", style: TextStyle(fontSize: 80.sp)),
+                      CustomText(
+                        "تسجيل دخول",
+                        style: GoogleFonts.cairo(
+                          fontSize: 80.sp,
+                          color: AppColors.secendaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
@@ -57,7 +73,7 @@ class LoginPage extends StatelessWidget {
                           children: [
                             CustomTextForm(
                               BorderColor: emailBorderColor,
-                              hint: "Email",
+                              hint: "البريد الإلكتروني",
                               icon: Icons.email,
                               controller: BlocProvider.of<LoginBloc>(
                                 context,
@@ -66,7 +82,7 @@ class LoginPage extends StatelessWidget {
                             SizedBox(height: 30.h),
                             CustomTextForm(
                               BorderColor: passwordBorderColor,
-                              hint: "Password",
+                              hint: "كلمة السر",
                               icon: Icons.lock,
                               controller: BlocProvider.of<LoginBloc>(
                                 context,
@@ -74,28 +90,46 @@ class LoginPage extends StatelessWidget {
                             ),
                             SizedBox(height: 10.h),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text("If you dont have account "),
-                                Text(
-                                  "Create Accont .",
-                                  style: TextStyle(color: Colors.blueAccent),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(
+                                      context,
+                                    ).pushNamed(AppRoutes.createClientAccount);
+                                  },
+                                  child: CustomText(
+                                    " . إنشاء حساب",
+                                    style: GoogleFonts.cairo(
+                                      color: AppColors.primeryColor,
+                                    ),
+                                  ),
+                                ),
+                                CustomText(
+                                  " إذا لم يكن لديك حساب",
+                                  style: GoogleFonts.cairo(),
                                 ),
                               ],
                             ),
                             SizedBox(height: 30.h),
                             ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  AppColors.secendaryColor,
+                                ),
+                              ),
                               onPressed: () {
                                 BlocProvider.of<LoginBloc>(
                                   context,
                                 ).add(LogInWithEmailAndPasswordEvent());
                               },
-                              child: Text("logIn"),
+                              child: CustomText(
+                                "تسجيل دخول",
+                                style: GoogleFonts.cairo(color: Colors.white),
+                              ),
                             ),
                             SizedBox(height: 30.h),
-                            OutlinedButton(
-                              onPressed: () {},
-                              child: Text("Create Account"),
-                            ),
                           ],
                         ),
                       ),
@@ -117,7 +151,7 @@ class CustomTextForm extends StatelessWidget {
     required this.hint,
     required this.icon,
     required this.controller,
-    this.BorderColor = AppColors.primeryColor,
+    this.BorderColor = Colors.black87,
   });
   final String hint;
   final IconData icon;
@@ -133,8 +167,11 @@ class CustomTextForm extends StatelessWidget {
         onTap: () async {},
         decoration: InputDecoration(
           isDense: true,
-          prefixIcon: Icon(icon),
-          hint: Text(hint),
+          suffixIcon: Icon(icon, color: AppColors.secendaryColor),
+          hint: CustomText(
+            hint,
+            style: GoogleFonts.cairo(color: AppColors.therdColor),
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: BorderColor),

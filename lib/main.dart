@@ -23,6 +23,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   AppRouting appRouting = AppRouting();
+  SupabaseClient _supabaseClient = Supabase.instance.client;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,9 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Meneani',
           onGenerateRoute: appRouting.onGenerateRoute,
-          initialRoute: AppRoutes.clientHome,
+          initialRoute: _supabaseClient.auth.currentUser != null
+              ? AppRoutes.clientHome
+              : AppRoutes.logIn,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             S.delegate,
