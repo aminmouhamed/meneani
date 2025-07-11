@@ -1,11 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
+import 'package:meneani/features/client_profile/ui/bloc/profile_bloc.dart';
 
 class ClientProfilePage extends StatelessWidget {
   const ClientProfilePage({super.key});
@@ -102,13 +104,24 @@ class ClientProfilePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 30.h),
-                      CustomText(
-                        "جرايمي كريمة",
-                        style: GoogleFonts.cairo(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 45.sp,
-                          color: Colors.white,
-                        ),
+                      BlocBuilder<ProfileBloc, ProfileState>(
+                        builder: (context, state) {
+                          String name = "";
+                          if (state is ProfileErrorState) {}
+                          if (state is ProfileLoadedState) {
+                            name =
+                                "${state.clientEntiti.fName} ${state.clientEntiti.lName}";
+                          }
+                          if (state is ProfileLoadingState) {}
+                          return CustomText(
+                            name,
+                            style: GoogleFonts.cairo(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 45.sp,
+                              color: Colors.white,
+                            ),
+                          );
+                        },
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 60.h),

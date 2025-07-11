@@ -8,7 +8,7 @@ class ProfileServices {
 
     var data = await _supabaseClient
         .from("client")
-        .select("uFName")
+        .select("uFName , uLName")
         .eq("id", uid);
 
     result = data[0];

@@ -10,6 +10,11 @@ import 'package:meneani/features/auth/signin/domain/repository/create_account_re
 import 'package:meneani/features/auth/signin/domain/usecase/create_client_account_usecase.dart';
 import 'package:meneani/features/auth/signin/domain/usecase/create_specialist_account_usecase.dart';
 import 'package:meneani/features/auth/signin/ui/bloc/create_account_bloc.dart';
+import 'package:meneani/features/client_profile/data/repository/profile_repository.dart';
+import 'package:meneani/features/client_profile/data/services/profile_services.dart';
+import 'package:meneani/features/client_profile/domain/repository/profile_repository.dart';
+import 'package:meneani/features/client_profile/domain/usecase/Get_Profile_data.dart';
+import 'package:meneani/features/client_profile/ui/bloc/profile_bloc.dart';
 import 'package:meneani/features/home/data/repository/home_repository.dart';
 import 'package:meneani/features/home/data/services/home_service.dart';
 import 'package:meneani/features/home/domain/repository/home_repository.dart';
@@ -19,35 +24,84 @@ import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
 GetIt getIT = GetIt.instance;
 
 Future<void> init() async {
-  //! bloc
+  //! Create Account featur
+
+  //! Bloc
   getIT.registerFactory(() => CreateAccountBloc(getIT()));
-  getIT.registerFactory(() => LoginBloc(loginRepository: getIT()));
-  getIT.registerFactory(() => HomeBloc(homeRepository: getIT()));
-  //! usecases
+  //! UseCase
   getIT.registerLazySingleton(
     () => CreateClientAccountUseCase(createAccountRepository: getIT()),
   );
   getIT.registerLazySingleton(
     () => CreateSpecialistAccountUsecase(createAccountRepository: getIT()),
   );
+  //! Repository
+  getIT.registerLazySingleton<CreateAccountRepository>(
+    () => ImplCreateAccountRepository(createAccountService: getIT()),
+  );
+  //!Services
+  getIT.registerLazySingleton(() => CreateAccountService());
+
+  //----------------------------------------------------------------------------
+  //! Login
+
+  //!bloc
+  getIT.registerFactory(() => LoginBloc(loginRepository: getIT()));
+
+  //!Usecase
+
   getIT.registerLazySingleton(
     () => LogInWithEmailAndPasswordUseCase(loginRepository: getIT()),
   );
+
+  //!Repository
+  getIT.registerLazySingleton<LoginRepository>(
+    () => ImplLoginRepository(loginService: getIT()),
+  );
+
+  //!Services
+
+  getIT.registerLazySingleton(() => LoginService());
+
+  //----------------------------------------------------------------------------
+
+  //!Home
+  //! bloc
+
+  getIT.registerFactory(() => HomeBloc(homeRepository: getIT()));
+  //! usecases
+
   getIT.registerLazySingleton(
     () => GetClientDataUsecase(homeRepository: getIT()),
   );
   //! repository
-  getIT.registerLazySingleton<CreateAccountRepository>(
-    () => ImplCreateAccountRepository(createAccountService: getIT()),
-  );
-  getIT.registerLazySingleton<LoginRepository>(
-    () => ImplLoginRepository(loginService: getIT()),
-  );
+
   getIT.registerLazySingleton<HomeRepository>(
     () => ImplHomeRepository(homeService: getIT()),
   );
   //! sevices
-  getIT.registerLazySingleton(() => LoginService());
-  getIT.registerLazySingleton(() => CreateAccountService());
+
   getIT.registerLazySingleton(() => HomeService());
+
+  //----------------------------------------------------------------------------
+
+  //!Profile
+  //!Bloc
+  getIT.registerFactory(() => ProfileBloc(profileRepository: getIT()));
+
+  //!UseCase
+  getIT.registerLazySingleton(
+    () => GetProfileDataUsecase(profileRepository: getIT()),
+  );
+
+  //!Repository
+
+  getIT.registerLazySingleton<ProfileRepository>(
+    () => ImplProfileRepository(profileServices: getIT()),
+  );
+
+  //!Services
+  getIT.registerLazySingleton(() => ProfileServices());
+
+  //_____________END______________
 }

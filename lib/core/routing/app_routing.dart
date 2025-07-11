@@ -5,6 +5,7 @@ import 'package:meneani/features/auth/login/ui/widgets/login_page.dart';
 import 'package:meneani/features/auth/signin/ui/bloc/create_account_bloc.dart';
 import 'package:meneani/features/auth/signin/ui/widgets/create_client_account_page.dart.dart';
 import 'package:meneani/features/auth/signin/ui/widgets/create_specialist_account_page.dart';
+import 'package:meneani/features/client_profile/ui/bloc/profile_bloc.dart';
 import 'package:meneani/features/client_profile/ui/widgets/client_profile_page.dart';
 import 'package:meneani/features/client_services/ui/client_ap_service_page.dart';
 import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
@@ -34,7 +35,14 @@ class AppRouting {
       case AppRoutes.setting:
         return MaterialPageRoute(builder: (context) => SettingPage());
       case AppRoutes.clientProfile:
-        return MaterialPageRoute(builder: (context) => ClientProfilePage());
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) =>
+                ProfileBloc(profileRepository: di.getIT())
+                  ..add(GetUserProfileDataEvent()),
+            child: ClientProfilePage(),
+          ),
+        );
 
       case AppRoutes.logIn:
         return MaterialPageRoute(
