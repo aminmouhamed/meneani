@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
+import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});
   SupabaseClient _supabaseClient = Supabase.instance.client;
+  UserPublicData _userData = UserPublicData.instence;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,12 +21,14 @@ class SettingPage extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.of(
-                context,
-              ).pushReplacementNamed(AppRoutes.clientProfile);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
               break;
             case 1:
-              Navigator.of(context).pushReplacementNamed(AppRoutes.clientHome);
+              Navigator.of(context).pushReplacementNamed(
+                _userData.UserType == "client"
+                    ? AppRoutes.clientHome
+                    : AppRoutes.specialistHome,
+              );
               break;
             case 2:
               Navigator.of(context).pushReplacementNamed(AppRoutes.setting);
@@ -50,6 +54,7 @@ class SettingPage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             await _supabaseClient.auth.signOut();
+            await sharedPreferences!.clear();
             Navigator.of(context).pushReplacementNamed(AppRoutes.logIn);
           },
           child: Text("Logout"),

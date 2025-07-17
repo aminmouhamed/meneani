@@ -3,18 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
+import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
-import 'package:meneani/core/widgets/show_dialog_error_handler.dart';
-import 'package:meneani/core/widgets/simpel_button.dart';
+
 import 'package:meneani/features/home/data/services/home_service.dart';
 import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
 import 'package:meneani/features/home/ui/widgets/widgets/custom_card.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+// ignore: must_be_immutable
 class ClientHomePage extends StatelessWidget {
   ClientHomePage({super.key});
-  HomeService _homeService = HomeService();
+  final HomeService _homeService = HomeService();
+  UserPublicData userData = UserPublicData.instence;
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -29,9 +31,7 @@ class ClientHomePage extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.of(
-                context,
-              ).pushReplacementNamed(AppRoutes.clientProfile);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
               break;
             case 1:
               Navigator.of(context).pushReplacementNamed(AppRoutes.clientHome);
@@ -61,70 +61,115 @@ class ClientHomePage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         scrolledUnderElevation: 0,
-        flexibleSpace: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.h),
-            child: Column(
-              children: [
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    NotificationsIconButton(),
+        flexibleSpace: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            if (state is HomeLoadedState) {
+              return SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.h),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          NotificationsIconButton(),
 
+                          Row(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "صباح الخير ، ${userData.userfName}.",
+                                    textDirection: TextDirection.rtl,
+                                    style: GoogleFonts.cairo(
+                                      fontSize: 50.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    textDirection: TextDirection.rtl,
+                                    "احرص على صحتك جيدا",
+                                    style: GoogleFonts.cairo(fontSize: 35.sp),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 30.w),
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(userData.userImage),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+            return SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.h),
+                child: Column(
+                  children: [
+                    SizedBox(height: 20),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                        NotificationsIconButton(),
+
+                        Row(
                           children: [
-                            BlocBuilder<HomeBloc, HomeState>(
-                              builder: (context, state) {
-                                String name = "";
-                                if (state is HomeErrorState) {
-                                  ShowDialogErrorHandler.showErrorDialog(
-                                    context,
-                                    state.errorMassege,
-                                  );
-                                }
-                                if (state is HomeLoadedState) {
-                                  name = state.clientEntiti.fName;
-                                }
-                                if (state is HomeLoadingState) {}
-                                return Text(
-                                  "صباح الخير ، ${name}.",
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "صباح الخير ، .",
                                   textDirection: TextDirection.rtl,
                                   style: GoogleFonts.cairo(
                                     fontSize: 50.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                );
-                              },
+                                ),
+                                Text(
+                                  textDirection: TextDirection.rtl,
+                                  "احرص على صحتك جيدا",
+                                  style: GoogleFonts.cairo(fontSize: 35.sp),
+                                ),
+                              ],
                             ),
-                            Text(
-                              textDirection: TextDirection.rtl,
-                              "احرص على صحتك جيدا",
-                              style: GoogleFonts.cairo(fontSize: 35.sp),
+                            SizedBox(width: 30.w),
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage("assets/images/pr1.jpg"),
+                                ),
+                              ),
                             ),
                           ],
-                        ),
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/profil_img.jpg"),
-                            ),
-                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
       body: ModalProgressHUD(
@@ -139,10 +184,9 @@ class ClientHomePage extends StatelessWidget {
                 Row(
                   children: [
                     CustomCard(
-                      onPress: () async {
-                        var data = await _homeService.getUserData();
-                        print(data);
-                      },
+                      onPress: () async {},
+                      bodyText:
+                          "يمكنك حجز موعد مع الطبيب ابتداءا من مبلغ 1000دج",
                       titel: "استشارة الطبيب عبر الإنترنت",
                       bgColor: AppColors.therdColor.withAlpha(150),
                       buttonText: "",
@@ -154,6 +198,8 @@ class ClientHomePage extends StatelessWidget {
                           context,
                         ).pushNamed(AppRoutes.clientService);
                       },
+                      bodyText:
+                          "يمكنك حجز موعد مع الطبيب ابتداءا من مبلغ 1000دج",
                       titel: "قم بحجز موعد لزياره الطبيب",
                       bgColor: AppColors.secendaryColor.withAlpha(150),
                       buttonText: "",
@@ -163,6 +209,7 @@ class ClientHomePage extends StatelessWidget {
                 SizedBox(height: 30.h),
                 CustomCard2(
                   onPress: () {},
+
                   titel: "التوجيه الأوتوماتيكي",
                   bgColor: AppColors.primeryColor.withAlpha(150),
                   buttonText: "",

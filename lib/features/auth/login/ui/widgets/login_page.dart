@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
+import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
 import 'package:meneani/core/widgets/show_dialog_error_handler.dart';
@@ -12,11 +13,18 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   bool _isLoading = false;
-  Color emailBorderColor = AppColors.secendaryColor;
-  Color passwordBorderColor = AppColors.secendaryColor;
+  Color emailBorderColor = AppColors.primeryColor;
+  Color passwordBorderColor = AppColors.primeryColor;
+  UserPublicData _userData = UserPublicData.instence;
   void goToHome(context) async {
     await Future.delayed(Duration(seconds: 1));
-    await Navigator.of(context).pushReplacementNamed(AppRoutes.clientHome);
+    if (_userData.UserType == "client") {
+      await Navigator.of(context).pushReplacementNamed(AppRoutes.clientHome);
+    } else if (_userData.UserType == "specialist") {
+      await Navigator.of(
+        context,
+      ).pushReplacementNamed(AppRoutes.specialistHome);
+    }
   }
 
   @override
@@ -61,7 +69,7 @@ class LoginPage extends StatelessWidget {
                         "تسجيل دخول",
                         style: GoogleFonts.cairo(
                           fontSize: 80.sp,
-                          color: AppColors.secendaryColor,
+                          color: AppColors.primeryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -116,7 +124,7 @@ class LoginPage extends StatelessWidget {
                             ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor: WidgetStatePropertyAll(
-                                  AppColors.secendaryColor,
+                                  AppColors.primeryColor,
                                 ),
                               ),
                               onPressed: () {
@@ -163,14 +171,17 @@ class CustomTextForm extends StatelessWidget {
     return Container(
       child: TextFormField(
         controller: controller,
+
         // keyboardType: keyBoardType,
         onTap: () async {},
         decoration: InputDecoration(
+          fillColor: Colors.white,
+          filled: true,
           isDense: true,
-          suffixIcon: Icon(icon, color: AppColors.secendaryColor),
+          suffixIcon: Icon(icon, color: AppColors.primeryColor),
           hint: CustomText(
             hint,
-            style: GoogleFonts.cairo(color: AppColors.therdColor),
+            style: GoogleFonts.cairo(color: AppColors.primeryColor),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

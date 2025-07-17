@@ -10,9 +10,11 @@ class CustomCard extends StatelessWidget {
     required this.buttonText,
     required this.titel,
     required this.onPress,
+    required this.bodyText,
   });
   final Color bgColor;
   final String titel;
+  final String bodyText;
   final String buttonText;
   final VoidCallback onPress;
 
@@ -41,7 +43,7 @@ class CustomCard extends StatelessWidget {
             SizedBox(height: 30.h),
             Text(
               textDirection: TextDirection.rtl,
-              "يمكنك حجز موعد مع الطبيب ابتداءا من مبلغ 1000دج",
+              bodyText,
               style: GoogleFonts.cairo(fontSize: 30.sp),
             ),
 

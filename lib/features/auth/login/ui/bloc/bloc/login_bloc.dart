@@ -13,31 +13,30 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required this.loginRepository}) : super(LoginInitial());
   final LoginRepository loginRepository;
   late TextEditingController email = TextEditingController();
   late TextEditingController password = TextEditingController();
-  @override
-  Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is LogInWithEmailAndPasswordEvent) {
-      emit(LogInLoadingState());
-      var response = await LogInWithEmailAndPasswordUseCase(
-        loginRepository: loginRepository,
-      ).call(UserEntiti(email: email.text, password: password.text));
+  LoginBloc({required this.loginRepository}) : super(LoginInitial()) {
+    on<LoginEvent>((event, emit) async {
+      if (event is LogInWithEmailAndPasswordEvent) {
+        emit(LogInLoadingState());
+        var response = await LogInWithEmailAndPasswordUseCase(
+          loginRepository: loginRepository,
+        ).call(UserEntiti(email: email.text, password: password.text));
 
-      response.fold(
-        (failure) {
-          if (failure is ServerFailure) {
-            emit(LogInErrorState(errorMessage: failure.errorMassege));
-          }
-        },
-        (value) {
-          if (value.user != null) {
-            print(value.user!.email);
-            emit(LogInLoadedState(authResponse: value));
-          }
-        },
-      );
-    }
+        response.fold(
+          (failure) {
+            if (failure is ServerFailure) {
+              emit(LogInErrorState(errorMessage: failure.errorMassege));
+            }
+          },
+          (value) {
+            if (value.user != null) {
+              emit(LogInLoadedState(authResponse: value));
+            }
+          },
+        );
+      }
+    });
   }
 }

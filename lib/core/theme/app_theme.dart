@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meneani/core/const/constent.dart';
 
 ThemeData lightThem = ThemeData(
-  primaryColor: Colors.blue[400],
+  primaryColor: const Color(0xFF8CE7F1),
 
-  secondaryHeaderColor: AppColors.primeryColor,
-  hintColor: Colors.black54,
+  colorScheme: ColorScheme.light(primary: const Color(0xFF8CE7F1)),
+  buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+
   textTheme: TextTheme(),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
@@ -17,10 +18,7 @@ ThemeData lightThem = ThemeData(
       //backgroundColor: WidgetStatePropertyAll(Colors.blueAccent),
     ),
   ),
-  buttonTheme: ButtonThemeData(
-    // buttonColor: Colors.blueAccent,
-    //hoverColor: Colors.blue[100],
-  ),
+
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: AppBarTheme(color: Colors.white),
 );

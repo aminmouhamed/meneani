@@ -11,28 +11,26 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({required this.homeRepository}) : super(HomeInitial());
   final HomeRepository homeRepository;
-  @override
-  Stream<HomeState> mapEventToState(HomeEvent event) async* {
-    if (event is GetClientDataEvent) {
-      emit(HomeLoadingState());
+  HomeBloc({required this.homeRepository}) : super(HomeInitial()) {
+    on<HomeEvent>((event, emit) async {
+      if (event is GetUsreDataEvent) {
+        emit(HomeLoadingState());
 
-      var response = await GetClientDataUsecase(
-        homeRepository: homeRepository,
-      ).call();
-      response.fold(
-        (failure) {
-          if (failure is ServerFailure) {
-            emit(HomeErrorState(errorMassege: failure.errorMassege));
-          }
-        },
-        (value) {
-          if (value != null) {
-            emit(HomeLoadedState(clientEntiti: value));
-          }
-        },
-      );
-    }
+        var response = await GetClientDataUsecase(
+          homeRepository: homeRepository,
+        ).call();
+        response.fold(
+          (failure) {
+            if (failure is ServerFailure) {
+              emit(HomeErrorState(errorMassege: failure.errorMassege));
+            }
+          },
+          (value) {
+            emit(HomeLoadedState());
+          },
+        );
+      }
+    });
   }
 }

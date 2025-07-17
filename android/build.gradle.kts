@@ -3,6 +3,7 @@ allprojects {
         google()
         mavenCentral()
     }
+
 }
 
 val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
@@ -14,6 +15,7 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(":app")
+    
 }
 
 tasks.register<Delete>("clean") {

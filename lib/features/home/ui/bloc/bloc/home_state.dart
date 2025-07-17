@@ -11,11 +11,7 @@ class HomeInitial extends HomeState {}
 
 class HomeLoadingState extends HomeState {}
 
-class HomeLoadedState extends HomeState {
-  final ClientEntiti clientEntiti;
-
-  HomeLoadedState({required this.clientEntiti});
-}
+class HomeLoadedState extends HomeState {}
 
 class HomeErrorState extends HomeState {
   final String errorMassege;

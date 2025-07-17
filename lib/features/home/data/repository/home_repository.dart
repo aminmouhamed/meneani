@@ -10,11 +10,11 @@ class ImplHomeRepository implements HomeRepository {
 
   ImplHomeRepository({required this.homeService});
   @override
-  Future<Either<Failures, ClientEntiti>> getClientData() async {
+  Future<Either<Failures, int>> getClientData() async {
     try {
       var data = await homeService.getUserData();
-      ClientMode _clientModel = ClientMode.fromJson(data);
-      return Future.value(right(_clientModel.toEntiti()));
+
+      return Future.value(right(1));
     } on Exception catch (e) {
       return Future.value(left(ServerFailure(errorMassege: e.toString())));
     }

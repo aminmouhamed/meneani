@@ -7,7 +7,7 @@ import 'package:meneani/features/home/domain/repository/home_repository.dart';
 class GetClientDataUsecase {
   HomeRepository homeRepository;
   GetClientDataUsecase({required this.homeRepository});
-  Future<Either<Failures, ClientEntiti>> call() async {
+  Future<Either<Failures, int>> call() async {
     return await homeRepository.getClientData();
   }
 }
