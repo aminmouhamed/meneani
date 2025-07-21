@@ -11,7 +11,7 @@ class ProfileServices {
     late String uid = _supabaseClient.auth.currentUser!.id;
 
     var data = await _supabaseClient
-        .from("client")
+        .from(userData.UserType)
         .select("uFName , uLName , image")
         .eq("id", uid);
 
@@ -24,9 +24,7 @@ class ProfileServices {
     String uid = _supabaseClient.auth.currentUser!.id;
     String fileName = DateTime.now().millisecondsSinceEpoch.toString();
     String path = "images/${fileName}";
-    var responsePath = await _supabaseClient.storage
-        .from("users")
-        .upload(path, image);
+    await _supabaseClient.storage.from("users").upload(path, image);
     String? publicUrl = await _supabaseClient.storage
         .from("users")
         .getPublicUrl(path);

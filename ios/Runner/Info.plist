@@ -45,6 +45,8 @@
 	<true/>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>tt</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>to let user accesse galery</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>

@@ -9,8 +9,12 @@ abstract class SpecialistServicesEvent extends Equatable {
 
 class SpecialistGetAppointmentSettingEvent extends SpecialistServicesEvent {}
 
-class SpecialistSetAppointmentSettingEvent extends SpecialistServicesEvent {
-  final AppointmentEntiti appointmentEntiti;
+class SpecialistUpdateAppointmentSettingEvent extends SpecialistServicesEvent {
+  final bool serviceState;
+  final String price;
 
-  SpecialistSetAppointmentSettingEvent({required this.appointmentEntiti});
+  SpecialistUpdateAppointmentSettingEvent({
+    required this.serviceState,
+    required this.price,
+  });
 }

@@ -10,12 +10,12 @@ class ImplSpecialistServicesRepository implements SpecialisServicesRepository {
 
   ImplSpecialistServicesRepository({required this.specialistService});
   @override
-  Future<Either<Failures, AppointmentEntiti>> enabelAppointmentService(
+  Future<Either<Failures, AppointmentEntiti>> updateAppointmentService(
     AppointmentEntiti appointment,
   ) async {
     try {
       AppointmentModel _appointmentModel = AppointmentModel.fromJson(
-        await specialistService.setEppointmentService(appointment),
+        await specialistService.updateEppointmentService(appointment),
       );
       AppointmentEntiti _appointmentEntiti = _appointmentModel.toEntiti();
       return Future.value(right(_appointmentEntiti));

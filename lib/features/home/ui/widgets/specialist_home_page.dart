@@ -101,7 +101,11 @@ class SpecialistHomePage extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: NetworkImage(_userData.userImage),
+                                    image: _userData.userImage.isEmpty
+                                        ? AssetImage(
+                                            "assets/images/profil_img.jpg",
+                                          )
+                                        : NetworkImage(_userData.userImage),
                                   ),
                                 ),
                               ),

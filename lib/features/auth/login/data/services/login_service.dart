@@ -27,7 +27,6 @@ class LoginService {
       lName: data[0]["uLName"],
       image: data[0]["image"] != null ? data[0]["image"] : "",
     );
-    print(userData.userImage);
 
     return Future.value(response);
   }

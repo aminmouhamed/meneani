@@ -7,13 +7,35 @@ import 'package:meneani/core/widgets/custom_text.dart';
 import 'package:meneani/core/widgets/simpel_button.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/widgets/customdatepicker.dart';
 import 'package:meneani/features/client_services/domain/entities/appointment_entiti.dart';
-import 'package:meneani/features/client_services/ui/client_ap_service_page.dart';
+import 'package:meneani/features/client_services/ui/widgets/client_ap_service_page.dart';
 
 class AppointmentServicePage extends StatelessWidget {
   AppointmentServicePage({super.key, required this.appointmentEntiti});
   final AppointmentEntiti appointmentEntiti;
   UserPublicData userData = UserPublicData.instence;
   final TextEditingController date = TextEditingController();
+  List<List<dynamic>> times = [
+    ["08:30", Colors.red[200]],
+    ["09:00", Colors.black12],
+    ["09:30", Colors.black12],
+    ["10:00", Colors.black12],
+    ["10:30", Colors.black12],
+    ["11:00", Colors.black12],
+    ["11:30", Colors.black12],
+    ["12:00", Colors.black12],
+    ["12:30", Colors.black12],
+    ["13:00", Colors.black12],
+    ["13:30", Colors.black12],
+    ["14:00", Colors.black12],
+    ["14:30", Colors.black12],
+    ["15:00", Colors.black12],
+    ["15:30", Colors.black12],
+    ["16:00", Colors.black12],
+    ["16:30", Colors.black12],
+    ["17:30", Colors.black12],
+    ["18:00", Colors.black12],
+    ["18:30", Colors.black12],
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,12 +195,13 @@ class AppointmentServicePage extends StatelessWidget {
                         width: 400.r,
                         height: 400.r,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(12),
+                            bottomRight: Radius.circular(12),
+                          ),
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                              "https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg?s=612x612&w=0&k=20&c=tyLvtzutRh22j9GqSGI33Z4HpIwv9vL_MZw_xOE19NQ=",
-                            ),
+                            image: NetworkImage(appointmentEntiti.image),
                           ),
                         ),
                       ),
@@ -259,18 +282,33 @@ class AppointmentServicePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      CustomDatePicker(
-                        controller: date,
-                        textHint: "حدد زمن الموعد",
+                      CustomText(
+                        "التاريخ : 22/07/2025",
+                        style: GoogleFonts.cairo(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 30.h),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: CustomText(
-                          "حجز موعد",
-                          style: GoogleFonts.cairo(color: Colors.black),
+                      GridView.builder(
+                        reverse: false,
+                        shrinkWrap: true,
+                        itemCount: times.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          mainAxisExtent: 40,
                         ),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(20.r),
+                            margin: EdgeInsets.all(8.r),
+                            child: CustomText(times[index][0]),
+                            decoration: BoxDecoration(
+                              color: times[index][1],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

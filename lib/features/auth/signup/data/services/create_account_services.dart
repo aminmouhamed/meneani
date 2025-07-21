@@ -17,6 +17,7 @@ class CreateAccountService {
     jsondata["id"] = response.user!.id;
     await client.insert(jsondata);
     await type.insert({"id": response.user!.id, "type": "client"});
+    await _supabaseClient.auth.signOut();
     return Future.value(response);
   }
 
@@ -33,6 +34,13 @@ class CreateAccountService {
     jsondata["id"] = response.user!.id;
     await type.insert({"id": response.user!.id, "type": "specialist"});
     await specialist.insert(jsondata);
+    await _supabaseClient.from("appointment_service").insert({
+      "specialist_id": response.user!.id,
+      "price": "0",
+      "descriptions": "",
+      "state": false,
+    });
+    await _supabaseClient.auth.signOut();
     return Future.value(response);
   }
 }

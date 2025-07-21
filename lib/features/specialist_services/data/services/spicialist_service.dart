@@ -3,16 +3,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SpecialistService {
   SupabaseClient _supabase = Supabase.instance.client;
-  Future<Map<String, dynamic>> setEppointmentService(
+  Future<Map<String, dynamic>> updateEppointmentService(
     AppointmentEntiti appointment,
   ) async {
     String uid = _supabase.auth.currentUser!.id;
-    AuthResponse response = await _supabase.from("appointment_service").insert({
-      "specialist_id": uid,
-      "price": appointment.price,
-      "description": "",
-      "state": appointment.service_state,
-    });
+    await _supabase
+        .from("appointment_service")
+        .update({
+          "price": appointment.price,
+          "descriptions": "",
+          "state": appointment.service_state,
+        })
+        .eq("specialist_id", uid);
     return await getAppointmentService();
   }
 
@@ -20,7 +22,7 @@ class SpecialistService {
     String uid = _supabase.auth.currentUser!.id;
     var response = await _supabase
         .from("appointment_service")
-        .select(" price , description , state ")
+        .select(" price , descriptions , state ")
         .eq("specialist_id", uid);
     return response[0];
   }

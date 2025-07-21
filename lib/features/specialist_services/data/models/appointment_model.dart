@@ -14,7 +14,7 @@ class AppointmentModel {
   factory AppointmentModel.fromJson(Map<String, dynamic> jsonData) {
     return AppointmentModel(
       price: jsonData["price"],
-      description: jsonData["description"],
+      description: jsonData["descriptions"],
       service_state: jsonData["state"],
     );
   }
@@ -22,7 +22,7 @@ class AppointmentModel {
   Map<String, dynamic> toJson() {
     return {
       "price": this.price,
-      "description": this.description,
+      "descriptions": this.description,
       "state": this.service_state,
     };
   }

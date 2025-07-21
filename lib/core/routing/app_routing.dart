@@ -5,14 +5,16 @@ import 'package:meneani/features/auth/login/ui/widgets/login_page.dart';
 import 'package:meneani/features/auth/signup/ui/bloc/create_account_bloc.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/create_client_account_page.dart.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/create_specialist_account_page.dart';
-import 'package:meneani/features/client_services/ui/appointment_service_page.dart';
+import 'package:meneani/features/client_services/ui/bloc/client_service_bloc.dart';
+import 'package:meneani/features/client_services/ui/widgets/appointment_service_page.dart';
 import 'package:meneani/features/profile/ui/bloc/profile_bloc.dart';
 import 'package:meneani/features/profile/ui/widgets/profile_page.dart';
-import 'package:meneani/features/client_services/ui/client_ap_service_page.dart';
+import 'package:meneani/features/client_services/ui/widgets/client_ap_service_page.dart';
 import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
 import 'package:meneani/features/home/ui/widgets/client_home_page.dart';
 import 'package:meneani/features/home/ui/widgets/specialist_home_page.dart';
 import 'package:meneani/features/setting/ui/widgets/settings_page.dart';
+import 'package:meneani/features/specialist_services/ui/bloc/specialist_services_bloc.dart';
 import 'package:meneani/features/specialist_services/ui/widgets/appointment_service_page.dart';
 import 'package:meneani/features/welcome/ui/welcome_page.dart';
 import 'package:meneani/core/di/di.dart' as di;
@@ -33,11 +35,26 @@ class AppRouting {
         );
       case AppRoutes.clientService:
         return MaterialPageRoute(
-          builder: (context) => ClientAppointmentServicePage(),
+          builder: (context) => BlocProvider(
+            create: (context) =>
+                ClientServiceBloc(getSpecialistEppointmentServices: di.getIT())
+                  ..add(
+                    GetSpecialistAppointmentEvent(
+                      SpecialistType: "مختص في الأمراض العقلية",
+                    ),
+                  ),
+            child: ClientAppointmentServicePage(),
+          ),
         );
       case AppRoutes.apointmentServiceSetting:
         return MaterialPageRoute(
-          builder: (context) => AppointmentServiceSettingsPage(),
+          builder: (context) => BlocProvider(
+            create: (context) => SpecialistServicesBloc(
+              updateAppointmentService: di.getIT(),
+              getAppointmentSetting: di.getIT(),
+            )..add(SpecialistGetAppointmentSettingEvent()),
+            child: AppointmentServiceSettingsPage(),
+          ),
         );
       case AppRoutes.specialistHome:
         return MaterialPageRoute(
