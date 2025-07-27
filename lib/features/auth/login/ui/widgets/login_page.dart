@@ -12,7 +12,6 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  bool _isLoading = false;
   Color emailBorderColor = AppColors.primeryColor;
   Color passwordBorderColor = AppColors.primeryColor;
   UserPublicData _userData = UserPublicData.instence;
@@ -31,123 +30,120 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(),
-      body: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) {
+      body: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
           if (state is LogInLoadingState) {
-            _isLoading = true;
+            showDialog(
+              context: context,
+              builder: (context) => Center(child: CircularProgressIndicator()),
+            );
           } else if (state is LogInLoadedState) {
-            _isLoading = false;
+            Navigator.pop(context);
             goToHome(context);
           } else if (state is LogInErrorState) {
-            _isLoading = false;
+            Navigator.pop(context);
             emailBorderColor = Colors.red;
             passwordBorderColor = Colors.red;
             //show(context, state.errorMessage);
             ShowDialogErrorHandler.showErrorDialog(context, state.errorMessage);
           }
-
-          return ModalProgressHUD(
-            inAsyncCall: _isLoading,
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                // image: DecorationImage(
-                //   image: AssetImage("assets/images/bg3.png"),
-                //   fit: BoxFit.cover,
-                // ),
-              ),
-              child: SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 500.h),
-                      CustomText(
-                        "تسجيل دخول",
-                        style: GoogleFonts.cairo(
-                          fontSize: 80.sp,
-                          color: AppColors.primeryColor,
-                          fontWeight: FontWeight.bold,
+        },
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            // image: DecorationImage(
+            //   image: AssetImage("assets/images/bg3.png"),
+            //   fit: BoxFit.cover,
+            // ),
+          ),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 500.h),
+                  CustomText(
+                    "تسجيل دخول",
+                    style: GoogleFonts.cairo(
+                      fontSize: 80.sp,
+                      color: AppColors.primeryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CustomTextForm(
+                          BorderColor: emailBorderColor,
+                          hint: "البريد الإلكتروني",
+                          icon: Icons.email,
+                          controller: BlocProvider.of<LoginBloc>(context).email,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        SizedBox(height: 30.h),
+                        CustomTextForm(
+                          BorderColor: passwordBorderColor,
+                          hint: "كلمة السر",
+                          icon: Icons.lock,
+                          controller: BlocProvider.of<LoginBloc>(
+                            context,
+                          ).password,
+                        ),
+                        SizedBox(height: 10.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            CustomTextForm(
-                              BorderColor: emailBorderColor,
-                              hint: "البريد الإلكتروني",
-                              icon: Icons.email,
-                              controller: BlocProvider.of<LoginBloc>(
-                                context,
-                              ).email,
-                            ),
-                            SizedBox(height: 30.h),
-                            CustomTextForm(
-                              BorderColor: passwordBorderColor,
-                              hint: "كلمة السر",
-                              icon: Icons.lock,
-                              controller: BlocProvider.of<LoginBloc>(
-                                context,
-                              ).password,
-                            ),
-                            SizedBox(height: 10.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(
-                                      context,
-                                    ).pushNamed(AppRoutes.createClientAccount);
-                                  },
-                                  child: CustomText(
-                                    " . إنشاء حساب",
-                                    style: GoogleFonts.cairo(
-                                      color: AppColors.primeryColor,
-                                    ),
-                                  ),
-                                ),
-                                CustomText(
-                                  " إذا لم يكن لديك حساب",
-                                  style: GoogleFonts.cairo(),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 30.h),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  AppColors.primeryColor,
-                                ),
-                              ),
-                              onPressed: () {
-                                BlocProvider.of<LoginBloc>(
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(
                                   context,
-                                ).add(LogInWithEmailAndPasswordEvent());
+                                ).pushNamed(AppRoutes.createClientAccount);
                               },
                               child: CustomText(
-                                "تسجيل دخول",
-                                style: GoogleFonts.cairo(color: Colors.white),
+                                " . إنشاء حساب",
+                                style: GoogleFonts.cairo(
+                                  color: AppColors.primeryColor,
+                                ),
                               ),
                             ),
-                            SizedBox(height: 30.h),
+                            CustomText(
+                              " إذا لم يكن لديك حساب",
+                              style: GoogleFonts.cairo(),
+                            ),
                           ],
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 30.h),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(
+                              AppColors.primeryColor,
+                            ),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<LoginBloc>(
+                              context,
+                            ).add(LogInWithEmailAndPasswordEvent());
+                          },
+                          child: CustomText(
+                            "تسجيل دخول",
+                            style: GoogleFonts.cairo(color: Colors.white),
+                          ),
+                        ),
+                        SizedBox(height: 30.h),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

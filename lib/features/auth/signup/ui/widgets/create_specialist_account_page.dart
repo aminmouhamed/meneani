@@ -79,15 +79,15 @@ class CreateSpecialistAccountPage extends StatelessWidget {
                   textHint: "رقم شهادة التخرج",
                   controler: BlocProvider.of<CreateAccountBloc>(
                     context,
-                  ).nationalId,
+                  ).deplomatId,
                   icon: Icon(Icons.badge),
                 ),
                 CustomTextField(
-                  keyBoardType: TextInputType.number,
+                  keyBoardType: TextInputType.text,
                   textHint: "عنوان",
                   controler: BlocProvider.of<CreateAccountBloc>(
                     context,
-                  ).nationalId,
+                  ).address,
                   icon: Icon(Icons.home),
                 ),
                 CustomDatePicker(

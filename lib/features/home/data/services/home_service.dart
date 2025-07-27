@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/const/user_public_data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -18,11 +19,26 @@ class HomeService {
           .select("uFName , uLName , image")
           .eq("id", uid);
       result = data[0];
+      _userData.UserType = userType;
       _userData.insertUserData(
         fName: result["uFName"],
         lName: result["uLName"],
         image: result["image"],
       );
     }
+  }
+
+  Future<List<Map<String, dynamic>>> getClientAppointment() async {
+    var response = await _supabaseClient
+        .from("appointment")
+        .select(
+          "id, appointment_date , specialist(uFName , uLName ,uSpecialistType , uSpecialistAddress , image)",
+        )
+        .eq("client_id", _supabaseClient.auth.currentUser!.id);
+    return response;
+  }
+
+  Future<void> deleteClientAppointment(int id) async {
+    await _supabaseClient.from("appointment").delete().eq("id", id);
   }
 }

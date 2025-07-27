@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:meneani/core/routing/app_routes.dart';
+import 'package:meneani/core/widgets/custom_page_route.dart';
 import 'package:meneani/features/auth/login/ui/bloc/bloc/login_bloc.dart';
 import 'package:meneani/features/auth/login/ui/widgets/login_page.dart';
 import 'package:meneani/features/auth/signup/ui/bloc/create_account_bloc.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/create_client_account_page.dart.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/create_specialist_account_page.dart';
-import 'package:meneani/features/client_services/ui/bloc/client_service_bloc.dart';
-import 'package:meneani/features/client_services/ui/widgets/appointment_service_page.dart';
+import 'package:meneani/features/client_appointment_services/ui/bloc/client_service_bloc.dart';
+import 'package:meneani/features/client_chat_service/ui/bloc/client_chat_services_bloc/client_chat_bloc.dart';
+import 'package:meneani/features/client_chat_service/ui/widgets/client_chat_service_home_page.dart';
+import 'package:meneani/features/home/ui/bloc/home_service_bloc.dart';
 import 'package:meneani/features/profile/ui/bloc/profile_bloc.dart';
 import 'package:meneani/features/profile/ui/widgets/profile_page.dart';
-import 'package:meneani/features/client_services/ui/widgets/client_ap_service_page.dart';
+import 'package:meneani/features/client_appointment_services/ui/widgets/client_ap_service_page.dart';
 import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
 import 'package:meneani/features/home/ui/widgets/client_home_page.dart';
 import 'package:meneani/features/home/ui/widgets/specialist_home_page.dart';
@@ -24,31 +27,53 @@ class AppRouting {
   Route onGenerateRoute(RouteSettings rSetting) {
     switch (rSetting.name) {
       case AppRoutes.welcome:
-        return MaterialPageRoute(builder: (context) => WelcomePage());
-      case AppRoutes.clientHome:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
+        return CustomPageRoute(child: WelcomePage());
+      case AppRoutes.chatServiceHome:
+        return CustomPageRoute(
+          child: BlocProvider(
             create: (context) =>
-                HomeBloc(homeRepository: di.getIT())..add(GetUsreDataEvent()),
+                ClientChatBloc(getSpecialistChatServiceUsecase: di.getIT()),
+            child: ClientChatServiceHomePage(),
+          ),
+        );
+      case AppRoutes.clientHome:
+        return CustomPageRoute(
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    HomeBloc(getClientDataUsecase: di.getIT())
+                      ..add(GetUsreDataEvent()),
+              ),
+              BlocProvider(
+                create: (context) => HomeServiceBloc(
+                  deleteClientAppointmentUseCase: di.getIT(),
+                  getClientAppointmentUseCase: di.getIT(),
+                )..add(HomeGetClientAppointmentEvent()),
+              ),
+            ],
             child: ClientHomePage(),
           ),
         );
       case AppRoutes.clientService:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
+        return CustomPageRoute(
+          child: BlocProvider(
             create: (context) =>
-                ClientServiceBloc(getSpecialistEppointmentServices: di.getIT())
-                  ..add(
-                    GetSpecialistAppointmentEvent(
-                      SpecialistType: "مختص في الأمراض العقلية",
-                    ),
+                ClientServiceBloc(
+                  getSpecialistEppointmentServices: di.getIT(),
+                  setClientAppointmentUsecase: di.getIT(),
+                  getAppointmentOfServiceUsecase: di.getIT(),
+                )..add(
+                  GetSpecialistAppointmentEvent(
+                    SpecialistType: "مختص في الأمراض العقلية",
                   ),
+                ),
             child: ClientAppointmentServicePage(),
           ),
         );
       case AppRoutes.apointmentServiceSetting:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
+        return CustomPageRoute(
+          child: BlocProvider(
             create: (context) => SpecialistServicesBloc(
               updateAppointmentService: di.getIT(),
               getAppointmentSetting: di.getIT(),
@@ -57,18 +82,19 @@ class AppRouting {
           ),
         );
       case AppRoutes.specialistHome:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
+        return CustomPageRoute(
+          child: BlocProvider(
             create: (context) =>
-                HomeBloc(homeRepository: di.getIT())..add(GetUsreDataEvent()),
+                HomeBloc(getClientDataUsecase: di.getIT())
+                  ..add(GetUsreDataEvent()),
             child: SpecialistHomePage(),
           ),
         );
       case AppRoutes.setting:
-        return MaterialPageRoute(builder: (context) => SettingPage());
+        return CustomPageRoute(child: SettingPage());
       case AppRoutes.profile:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
+        return CustomPageRoute(
+          child: BlocProvider(
             create: (context) =>
                 ProfileBloc(profileRepository: di.getIT())
                   ..add(GetUserProfileDataEvent()),
@@ -77,29 +103,29 @@ class AppRouting {
         );
 
       case AppRoutes.logIn:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
+        return CustomPageRoute(
+          child: BlocProvider(
             create: (context) => LoginBloc(loginRepository: di.getIT()),
             child: LoginPage(),
           ),
         );
 
       case AppRoutes.createClientAccount:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
+        return CustomPageRoute(
+          child: BlocProvider(
             create: (context) => CreateAccountBloc(di.getIT()),
             child: CreateClientAccountPage(),
           ),
         );
       case AppRoutes.createSpecialistAccount:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
+        return CustomPageRoute(
+          child: BlocProvider(
             create: (context) => CreateAccountBloc(di.getIT()),
             child: CreateSpecialistAccountPage(),
           ),
         );
       default:
-        return MaterialPageRoute(builder: (context) => Container());
+        return CustomPageRoute(child: Container());
     }
   }
 }

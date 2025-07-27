@@ -11,7 +11,11 @@ class HomeInitial extends HomeState {}
 
 class HomeLoadingState extends HomeState {}
 
-class HomeLoadedState extends HomeState {}
+class HomeLoadedState extends HomeState {
+  List<GetClientAppointmentEntiti>? appointmentList;
+
+  HomeLoadedState({this.appointmentList});
+}
 
 class HomeErrorState extends HomeState {
   final String errorMassege;

@@ -23,7 +23,7 @@ class CustomDatePicker extends StatelessWidget {
           DateTime? berthDate = await showDatePicker(
             initialDate: initilaDate,
             context: context,
-            firstDate: DateTime(1980),
+            firstDate: DateTime(1965),
             lastDate: DateTime.now(),
           );
           if (berthDate != null) {

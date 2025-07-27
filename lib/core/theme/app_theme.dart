@@ -4,7 +4,7 @@ import 'package:meneani/core/const/constent.dart';
 ThemeData lightThem = ThemeData(
   primaryColor: const Color(0xFF8CE7F1),
 
-  colorScheme: ColorScheme.light(primary: const Color(0xFF8CE7F1)),
+  colorScheme: ColorScheme.light(primary: const Color(0xFF000000)),
   buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
 
   textTheme: TextTheme(),

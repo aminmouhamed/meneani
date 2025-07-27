@@ -10,11 +10,21 @@ import 'package:meneani/features/auth/signup/domain/repository/create_account_re
 import 'package:meneani/features/auth/signup/domain/usecase/create_client_account_usecase.dart';
 import 'package:meneani/features/auth/signup/domain/usecase/create_specialist_account_usecase.dart';
 import 'package:meneani/features/auth/signup/ui/bloc/create_account_bloc.dart';
-import 'package:meneani/features/client_services/data/repository/client_service_repository.dart';
-import 'package:meneani/features/client_services/data/service/client_services_services.dart';
-import 'package:meneani/features/client_services/domain/repository/client_services_repository.dart';
-import 'package:meneani/features/client_services/domain/usecase/get_specialist_eppointment_services.dart';
-import 'package:meneani/features/client_services/ui/bloc/client_service_bloc.dart';
+import 'package:meneani/features/client_appointment_services/data/repository/client_service_repository.dart';
+import 'package:meneani/features/client_appointment_services/data/service/client_services_services.dart';
+import 'package:meneani/features/client_appointment_services/domain/repository/client_services_repository.dart';
+import 'package:meneani/features/client_appointment_services/domain/usecase/get_appointment_of_service_usecase.dart';
+import 'package:meneani/features/client_appointment_services/domain/usecase/get_specialist_eppointment_services.dart';
+import 'package:meneani/features/client_appointment_services/domain/usecase/set_client_appointment_usecase.dart';
+import 'package:meneani/features/client_appointment_services/ui/bloc/client_service_bloc.dart';
+import 'package:meneani/features/client_chat_service/data/repository/client_chat_service_repository.dart';
+import 'package:meneani/features/client_chat_service/data/service/client_chat_service.dart';
+import 'package:meneani/features/client_chat_service/domain/repository/client_chat_service_repository.dart';
+import 'package:meneani/features/client_chat_service/domain/usecase/get_specialist_chat_service_usecase.dart';
+import 'package:meneani/features/client_chat_service/ui/bloc/client_chat_services_bloc/client_chat_bloc.dart';
+import 'package:meneani/features/home/domain/usecase/delete_client_appointment.dart';
+import 'package:meneani/features/home/domain/usecase/get_client_appointment.dart';
+import 'package:meneani/features/home/ui/bloc/home_service_bloc.dart';
 import 'package:meneani/features/profile/data/repository/profile_repository.dart';
 import 'package:meneani/features/profile/data/services/profile_services.dart';
 import 'package:meneani/features/profile/domain/repository/profile_repository.dart';
@@ -79,11 +89,23 @@ Future<void> init() async {
   //!Home
   //! bloc
 
-  getIT.registerFactory(() => HomeBloc(homeRepository: getIT()));
+  getIT.registerFactory(() => HomeBloc(getClientDataUsecase: getIT()));
+  getIT.registerFactory(
+    () => HomeServiceBloc(
+      getClientAppointmentUseCase: getIT(),
+      deleteClientAppointmentUseCase: getIT(),
+    ),
+  );
   //! usecases
 
   getIT.registerLazySingleton(
     () => GetClientDataUsecase(homeRepository: getIT()),
+  );
+  getIT.registerLazySingleton(
+    () => GetClientAppointmentUseCase(homeRepository: getIT()),
+  );
+  getIT.registerLazySingleton(
+    () => DeleteClientAppointmentUseCase(homeRepository: getIT()),
   );
   //! repository
 
@@ -145,10 +167,14 @@ Future<void> init() async {
   getIT.registerLazySingleton(() => SpecialistService());
 
   //----------------------------------------------------------------------------
-  //!Client_services
+  //!Client_appointment_services
   //!Bloc
   getIT.registerFactory(
-    () => ClientServiceBloc(getSpecialistEppointmentServices: getIT()),
+    () => ClientServiceBloc(
+      getSpecialistEppointmentServices: getIT(),
+      setClientAppointmentUsecase: getIT(),
+      getAppointmentOfServiceUsecase: getIT(),
+    ),
   );
 
   //!UseCase
@@ -157,7 +183,12 @@ Future<void> init() async {
       clientServicesRepository: getIT(),
     ),
   );
-
+  getIT.registerLazySingleton(
+    () => SetClientAppointmentUsecase(clientServicesRepository: getIT()),
+  );
+  getIT.registerLazySingleton(
+    () => GetAppointmentOfServiceUsecase(clientServicesRepository: getIT()),
+  );
   //!Repository
 
   getIT.registerLazySingleton<ClientServicesRepository>(
@@ -166,6 +197,27 @@ Future<void> init() async {
 
   //!Services
   getIT.registerLazySingleton(() => ClientServices());
+
+  //----------------------------------------------------------------------------
+  //!Client_chat_services
+  //!Bloc
+  getIT.registerFactory(
+    () => ClientChatBloc(getSpecialistChatServiceUsecase: getIT()),
+  );
+
+  //!UseCase
+  getIT.registerLazySingleton(
+    () => GetSpecialistChatServiceUsecase(clientChatServiceRepository: getIT()),
+  );
+
+  //!Repository
+
+  getIT.registerLazySingleton<ClientChatServiceRepository>(
+    () => ImplClientChatServiceRepository(clientChatService: getIT()),
+  );
+
+  //!Services
+  getIT.registerLazySingleton(() => ClientChatService());
 
   //_____________END______________
 }

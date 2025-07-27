@@ -55,7 +55,7 @@ class SettingPage extends StatelessWidget {
           onPressed: () async {
             await _supabaseClient.auth.signOut();
             await sharedPreferences!.clear();
-            Navigator.of(context).pushReplacementNamed(AppRoutes.logIn);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.welcome);
           },
           child: Text("Logout"),
         ),

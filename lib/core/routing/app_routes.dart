@@ -9,4 +9,5 @@ class AppRoutes {
   static const String profile = "profile";
   static const String setting = "setting";
   static const String apointmentServiceSetting = "appointment_service";
+  static const String chatServiceHome = "chat_service_home";
 }

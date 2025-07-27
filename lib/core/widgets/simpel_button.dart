@@ -19,18 +19,8 @@ class _SimpelButtonState extends State<SimpelButton> {
   _SimpelButtonState({required this.text, required this.onpress});
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) {
-        setState(() {
-          color = Colors.black12;
-        });
-      },
-      onTapUp: (_) {
-        setState(() {
-          color = Colors.white;
-        });
-        onpress();
-      },
+    return InkWell(
+      onTap: () => onpress(),
       child: AnimatedContainer(
         padding: EdgeInsets.only(
           left: 75.h,
