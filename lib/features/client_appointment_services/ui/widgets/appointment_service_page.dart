@@ -79,13 +79,25 @@ class AppointmentServicePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SearshIconButton(),
-
                     Row(
                       children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: userData.userImage.isEmpty
+                                  ? AssetImage("assets/images/pr1.jpg")
+                                  : NetworkImage(userData.userImage),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 30.w),
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "حجز موعد .",
@@ -102,25 +114,9 @@ class AppointmentServicePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(width: 30.w),
-                        Hero(
-                          tag: userData.userImage,
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: userData.userImage.isEmpty
-                                    ? AssetImage("assets/images/pr1.jpg")
-                                    : NetworkImage(userData.userImage),
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
+                    SearshIconButton(),
                   ],
                 ),
               ],
@@ -133,7 +129,7 @@ class AppointmentServicePage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(30.r),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 30.h),
                 CustomText(
@@ -155,78 +151,8 @@ class AppointmentServicePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        // color: Colors.red,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
-                              children: [
-                                CustomText(
-                                  "${appointmentEntiti.fName} ${appointmentEntiti.lName}",
-                                  style: GoogleFonts.cairo(fontSize: 40.sp),
-                                ),
-                                CustomText(
-                                  "اسم الطبيب : ",
-                                  style: GoogleFonts.cairo(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 40.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20.h),
-                            Row(
-                              children: [
-                                CustomText(
-                                  appointmentEntiti.specialistType,
-                                  style: GoogleFonts.cairo(fontSize: 40.sp),
-                                ),
-                                CustomText(
-                                  "الاختصاص : ",
-                                  style: GoogleFonts.cairo(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 40.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 550.w,
-                                  child: CustomText(
-                                    appointmentEntiti.address,
-                                    style: GoogleFonts.cairo(fontSize: 40.sp),
-                                  ),
-                                ),
-
-                                CustomText(
-                                  "العنوان : ",
-                                  style: GoogleFonts.cairo(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 40.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            CustomText(
-                              "السعر : ${appointmentEntiti.prix}دج",
-                              maxLines: 6,
-                              style: GoogleFonts.cairo(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 30.w),
                       Container(
                         width: 400.r,
                         height: 400.r,
@@ -241,6 +167,75 @@ class AppointmentServicePage extends StatelessWidget {
                                 ? AssetImage("assets/images/pr1.jpg")
                                 : NetworkImage(appointmentEntiti.image),
                           ),
+                        ),
+                      ),
+                      SizedBox(width: 30.w),
+                      Container(
+                        // color: Colors.red,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                CustomText(
+                                  "اسم الطبيب : ",
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40.sp,
+                                  ),
+                                ),
+                                CustomText(
+                                  "${appointmentEntiti.fName} ${appointmentEntiti.lName}",
+                                  style: GoogleFonts.cairo(fontSize: 40.sp),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20.h),
+                            Row(
+                              children: [
+                                CustomText(
+                                  "الاختصاص : ",
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40.sp,
+                                  ),
+                                ),
+                                CustomText(
+                                  appointmentEntiti.specialistType,
+                                  style: GoogleFonts.cairo(fontSize: 40.sp),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                  "العنوان : ",
+                                  style: GoogleFonts.cairo(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40.sp,
+                                  ),
+                                ),
+                                Container(
+                                  width: 550.w,
+                                  child: CustomText(
+                                    appointmentEntiti.address,
+                                    style: GoogleFonts.cairo(fontSize: 40.sp),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            CustomText(
+                              "السعر : ${appointmentEntiti.prix}دج",
+                              maxLines: 6,
+                              style: GoogleFonts.cairo(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -271,7 +266,7 @@ class AppointmentServicePage extends StatelessWidget {
                   child: StatefulBuilder(
                     builder: (BuildContext context, setState) {
                       return Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DropdownButton(
                             value: dropBoxValue,

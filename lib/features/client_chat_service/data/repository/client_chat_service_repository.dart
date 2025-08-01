@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:meneani/core/errors/failures.dart';
 import 'package:meneani/features/client_chat_service/data/model/specialist_chat_service_model.dart';
 import 'package:meneani/features/client_chat_service/data/service/client_chat_service.dart';
-import 'package:meneani/features/client_chat_service/domain/entiti/message_entiti.dart';
+
 import 'package:meneani/features/client_chat_service/domain/entiti/specialist_chat_service_entiti.dart';
 import 'package:meneani/features/client_chat_service/domain/repository/client_chat_service_repository.dart';
 
@@ -41,8 +41,18 @@ class ImplClientChatServiceRepository implements ClientChatServiceRepository {
   }
 
   @override
-  Future<Either<Failures, int>> insertChatMassege(MessageEntiti massegEntiti) {
-    // TODO: implement insertChatMassege
-    throw UnimplementedError();
+  Future<Either<Failures, String>> insertChatRoom(String specialistId) async {
+    try {
+      try {
+        var response = await clientChatService.selectChatRoom(specialistId);
+
+        return Future.value(right(response["room_id"]));
+      } catch (e) {
+        await clientChatService.inserChatRoom(specialistId);
+        return insertChatRoom(specialistId);
+      }
+    } on Exception catch (e) {
+      return Future.value(left(ServerFailure(errorMassege: e.toString())));
+    }
   }
 }

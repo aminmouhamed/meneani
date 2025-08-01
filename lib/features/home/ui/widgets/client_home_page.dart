@@ -81,13 +81,25 @@ class ClientHomePage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          NotificationsIconButton(),
-
                           Row(
                             children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: userData.userImage.isEmpty
+                                        ? AssetImage("assets/images/pr1.jpg")
+                                        : NetworkImage(userData.userImage),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 30.w),
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     "صباح الخير ، ${userData.userfName}.",
@@ -104,21 +116,15 @@ class ClientHomePage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 30.w),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: userData.userImage.isEmpty
-                                        ? AssetImage("assets/images/pr1.jpg")
-                                        : NetworkImage(userData.userImage),
-                                  ),
-                                ),
-                              ),
                             ],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(
+                                context,
+                              ).pushNamed(AppRoutes.ChatRooms);
+                            },
+                            icon: Icon(Icons.notifications, size: 90.r),
                           ),
                         ],
                       ),
@@ -158,7 +164,7 @@ class ClientHomePage extends StatelessWidget {
                           Row(
                             children: [
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
@@ -204,7 +210,7 @@ class ClientHomePage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(40.r),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Row(
@@ -244,6 +250,10 @@ class ClientHomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  CustomText(
+                    "مواعيدي :",
+                    style: GoogleFonts.cairo(fontSize: 47.sp),
+                  ),
                   IconButton(
                     onPressed: () {
                       BlocProvider.of<HomeServiceBloc>(
@@ -252,7 +262,6 @@ class ClientHomePage extends StatelessWidget {
                     },
                     icon: Icon(Icons.refresh_rounded),
                   ),
-                  Text(": مواعيدي", style: GoogleFonts.cairo(fontSize: 47.sp)),
                 ],
               ),
               SizedBox(height: 30.h),
@@ -279,6 +288,73 @@ class ClientHomePage extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
+                                  Container(
+                                    height: 200.r,
+                                    width: 200.r,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image:
+                                            state
+                                                .appointmentList![index]
+                                                .specialistImage
+                                                .isEmpty
+                                            ? AssetImage(
+                                                "assets/images/pr1.jpg",
+                                              )
+                                            : NetworkImage(
+                                                state
+                                                    .appointmentList![index]
+                                                    .specialistImage,
+                                              ),
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(
+                                        "${state.appointmentList![index].specialistFName} ${state.appointmentList![index].specialisLName}",
+                                        style: GoogleFonts.cairo(),
+                                      ),
+                                      SizedBox(height: 10.h),
+                                      CustomText(
+                                        state
+                                            .appointmentList![index]
+                                            .specialistType,
+                                        style: GoogleFonts.cairo(),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      CustomText(
+                                        state
+                                            .appointmentList![index]
+                                            .appointmentDate
+                                            .split("T")[0],
+                                        style: GoogleFonts.cairo(),
+                                      ),
+                                      CustomText(
+                                        DateTime.parse(
+                                              state
+                                                  .appointmentList![index]
+                                                  .appointmentDate,
+                                            ).hour.toString() +
+                                            ":" +
+                                            DateTime.parse(
+                                              state
+                                                  .appointmentList![index]
+                                                  .appointmentDate,
+                                            ).minute.toString().padLeft(2, "0"),
+                                        style: GoogleFonts.cairo(),
+                                      ),
+                                    ],
+                                  ),
+
                                   Column(
                                     children: [
                                       IconButton(
@@ -345,71 +421,6 @@ class ClientHomePage extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      CustomText(
-                                        state
-                                            .appointmentList![index]
-                                            .appointmentDate
-                                            .split("T")[0],
-                                        style: GoogleFonts.cairo(),
-                                      ),
-                                      CustomText(
-                                        DateTime.parse(
-                                              state
-                                                  .appointmentList![index]
-                                                  .appointmentDate,
-                                            ).hour.toString() +
-                                            ":" +
-                                            DateTime.parse(
-                                              state
-                                                  .appointmentList![index]
-                                                  .appointmentDate,
-                                            ).minute.toString().padLeft(2, "0"),
-                                        style: GoogleFonts.cairo(),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      CustomText(
-                                        "${state.appointmentList![index].specialistFName} ${state.appointmentList![index].specialisLName}",
-                                        style: GoogleFonts.cairo(),
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      CustomText(
-                                        state
-                                            .appointmentList![index]
-                                            .specialistType,
-                                        style: GoogleFonts.cairo(),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    height: 200.r,
-                                    width: 200.r,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image:
-                                            state
-                                                .appointmentList![index]
-                                                .specialistImage
-                                                .isEmpty
-                                            ? AssetImage(
-                                                "assets/images/pr1.jpg",
-                                              )
-                                            : NetworkImage(
-                                                state
-                                                    .appointmentList![index]
-                                                    .specialistImage,
-                                              ),
-                                      ),
-                                    ),
                                   ),
                                 ],
                               ),

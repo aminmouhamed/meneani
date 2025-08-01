@@ -96,7 +96,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         SizedBox(height: 10.h),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             GestureDetector(

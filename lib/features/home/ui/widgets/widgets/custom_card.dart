@@ -80,8 +80,8 @@ class CustomCard2 extends StatelessWidget {
       ),
       padding: EdgeInsets.all(40.r),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             // "Online Doctor  Conseltation",

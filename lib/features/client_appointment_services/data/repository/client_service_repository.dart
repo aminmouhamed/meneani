@@ -19,7 +19,7 @@ class ImplClientServiceRepository implements ClientServicesRepository {
       var response = await clientServices.getSpecialistAppointmentServices(
         specialistType,
       );
-      print(response);
+
       if (response.length != 0) {
         List<AppointmentEntiti> _appointmentEntities = response.map((jsonData) {
           AppointmentModel _appointmentdata = AppointmentModel.fromJson(

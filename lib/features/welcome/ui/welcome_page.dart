@@ -18,7 +18,7 @@ class WelcomePage extends StatelessWidget {
               Text("welcome screen"),
               OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(AppRoutes.logIn);
+                  Navigator.of(context).pushReplacementNamed(AppRoutes.logIn);
                 },
                 child: Text(S.current.login),
               ),
@@ -26,7 +26,7 @@ class WelcomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushNamed(AppRoutes.createClientAccount);
+                  ).pushReplacementNamed(AppRoutes.createClientAccount);
                 },
                 child: Text(S.current.create_client_account),
               ),
@@ -34,7 +34,7 @@ class WelcomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushNamed(AppRoutes.createSpecialistAccount);
+                  ).pushReplacementNamed(AppRoutes.createSpecialistAccount);
                 },
                 child: Text(S.current.create_specialist_account),
               ),

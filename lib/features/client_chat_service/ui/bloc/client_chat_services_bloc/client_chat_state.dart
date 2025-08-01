@@ -17,6 +17,12 @@ class ClientChatServiceLoadedState extends ClientChatState {
   ClientChatServiceLoadedState({required this.chatService});
 }
 
+class ClientChatServiceInsertLoadedState extends ClientChatState {
+  final String roomId;
+
+  ClientChatServiceInsertLoadedState({required this.roomId});
+}
+
 class ClientChatServiceErrorState extends ClientChatState {
   final String errorMassege;
 

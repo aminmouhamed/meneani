@@ -8,10 +8,31 @@ class ClientChatService {
     List<Map<String, dynamic>> response = await _supabaseClient
         .from("chat_service")
         .select(
-          "specialistId , price ,specialist.uSpecialistType , specialist.uFName , specialist.uLName , specialist.image ",
+          "specialistid , price ,specialist(uSpecialistType , uFName , uLName , image) ",
         )
-        .eq("specialist.uSpecialistType", specialistType)
-        .eq("state", true);
-    return response;
+        .eq("state", true)
+        .eq("specialist.uSpecialistType", specialistType);
+
+    return response.where((val) => val["specialist"] != null).toList();
+  }
+
+  Future<void> inserChatRoom(String specialistId) async {
+    List<String> roomId = [specialistId, _supabaseClient.auth.currentUser!.id];
+    roomId.sort();
+    await _supabaseClient.from("chat_room").insert({
+      "client_id": _supabaseClient.auth.currentUser!.id,
+      "specialist_id": specialistId,
+      "room_id": roomId.join("_"),
+    });
+  }
+
+  Future<Map<String, dynamic>> selectChatRoom(String specialistId) async {
+    List<String> roomId = [specialistId, _supabaseClient.auth.currentUser!.id];
+    roomId.sort();
+    var response = await _supabaseClient
+        .from("chat_room")
+        .select("room_id")
+        .eq("room_id", roomId.join("_"));
+    return response[0];
   }
 }

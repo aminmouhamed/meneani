@@ -5,11 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/di/di.dart' as di;
+import 'package:meneani/core/widgets/custom_page_route.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
 import 'package:meneani/core/widgets/simpel_button.dart';
 import 'package:meneani/features/client_appointment_services/ui/widgets/client_ap_service_page.dart';
 import 'package:meneani/features/client_chat_service/domain/entiti/specialist_chat_service_entiti.dart';
 import 'package:meneani/features/client_chat_service/ui/bloc/client_chat_services_bloc/client_chat_bloc.dart';
+import 'package:meneani/features/messaging/ui/bloc/messaging_service_bloc.dart';
+import 'package:meneani/features/messaging/ui/widgets/messaging_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ClientChatServiceHomePage extends StatelessWidget {
   ClientChatServiceHomePage({super.key});
@@ -50,13 +54,25 @@ class ClientChatServiceHomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SearshIconButton(),
-
                     Row(
                       children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: userData.userImage.isEmpty
+                                  ? AssetImage("assets/images/pr1.jpg")
+                                  : NetworkImage(userData.userImage),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 30.w),
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "استشارة الطبيب .",
@@ -73,22 +89,9 @@ class ClientChatServiceHomePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(width: 30.w),
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: userData.userImage.isEmpty
-                                  ? AssetImage("assets/images/pr1.jpg")
-                                  : NetworkImage(userData.userImage),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
+                    SearshIconButton(),
                   ],
                 ),
               ],
@@ -111,15 +114,19 @@ class ClientChatServiceHomePage extends StatelessWidget {
           if (state is ClientChatServiceErrorState) {
             Navigator.pop(context);
           }
+          if (state is ClientChatServiceInsertLoadedState) {}
         },
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(40.r),
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              //mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(": الاختصاصات", style: GoogleFonts.cairo(fontSize: 47.sp)),
+                CustomText(
+                  "الاختصاصات :",
+                  style: GoogleFonts.cairo(fontSize: 47.sp),
+                ),
                 SizedBox(height: 30.h),
 
                 Container(
@@ -129,7 +136,7 @@ class ClientChatServiceHomePage extends StatelessWidget {
                     builder: (context, setState) => ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      reverse: true,
+
                       itemCount: this.specialistType.length,
                       itemBuilder: (context, index) {
                         return InkWell(
@@ -168,7 +175,10 @@ class ClientChatServiceHomePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 30.h),
-                Text(": المختصين", style: GoogleFonts.cairo(fontSize: 47.sp)),
+                CustomText(
+                  "المختصين :",
+                  style: GoogleFonts.cairo(fontSize: 47.sp),
+                ),
 
                 SizedBox(height: 30.h),
                 Expanded(
@@ -200,26 +210,44 @@ class ClientChatServiceHomePage extends StatelessWidget {
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
+                                      Container(
+                                        height: 60,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: _ap[index].image.isEmpty
+                                                ? AssetImage(
+                                                    "assets/images/pr1.jpg",
+                                                  )
+                                                : NetworkImage(
+                                                    _ap[index].image,
+                                                  ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 30.w),
                                       Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.end,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
                                               CustomText(
-                                                "${_ap[index].fName} ${_ap[index].lName}",
+                                                "اسم الطبيب : ",
                                                 style: GoogleFonts.cairo(
+                                                  fontWeight: FontWeight.bold,
                                                   fontSize: 40.sp,
                                                 ),
                                               ),
                                               CustomText(
-                                                "اسم الطبيب : ",
+                                                "${_ap[index].fName} ${_ap[index].lName}",
                                                 style: GoogleFonts.cairo(
-                                                  fontWeight: FontWeight.bold,
                                                   fontSize: 40.sp,
                                                 ),
                                               ),
@@ -229,42 +257,21 @@ class ClientChatServiceHomePage extends StatelessWidget {
                                           Row(
                                             children: [
                                               CustomText(
-                                                _ap[index].specialistType,
-                                                style: GoogleFonts.cairo(
-                                                  fontSize: 40.sp,
-                                                ),
-                                              ),
-                                              CustomText(
                                                 "الاختصاص : ",
                                                 style: GoogleFonts.cairo(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 40.sp,
                                                 ),
                                               ),
+                                              CustomText(
+                                                _ap[index].specialistType,
+                                                style: GoogleFonts.cairo(
+                                                  fontSize: 40.sp,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ],
-                                      ),
-                                      SizedBox(width: 30.w),
-                                      Hero(
-                                        tag: _ap[index].image,
-                                        child: Container(
-                                          height: 60,
-                                          width: 60,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: _ap[index].image.isEmpty
-                                                  ? AssetImage(
-                                                      "assets/images/pr1.jpg",
-                                                    )
-                                                  : NetworkImage(
-                                                      _ap[index].image,
-                                                    ),
-                                            ),
-                                          ),
-                                        ),
                                       ),
                                     ],
                                   ),
@@ -273,27 +280,46 @@ class ClientChatServiceHomePage extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.amberAccent,
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.amberAccent,
-                                          ),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.amberAccent,
-                                          ),
-                                          Icon(Icons.star),
-                                          Icon(Icons.star),
-                                        ],
-                                      ),
                                       SimpelButton(
-                                        text: "حجز موعد",
-                                        onPress: () {
+                                        text: "محادثة",
+                                        onPress: () async {
+                                          BlocProvider.of<ClientChatBloc>(
+                                            context,
+                                          ).add(
+                                            ClientChatServiceInsertChatRoomEvent(
+                                              specialistId:
+                                                  _ap[index].specialistId,
+                                            ),
+                                          );
+
+                                          List<String> roomId = [
+                                            _ap[index].specialistId,
+                                            Supabase
+                                                .instance
+                                                .client
+                                                .auth
+                                                .currentUser!
+                                                .id,
+                                          ];
+                                          roomId.sort();
+                                          await Navigator.of(context).push(
+                                            CustomPageRoute(
+                                              child: BlocProvider(
+                                                create: (context) =>
+                                                    MessagingServiceBloc(
+                                                      sendMessageUsecase: di
+                                                          .getIT(),
+                                                    ),
+                                                child: MessagingPage(
+                                                  roomId: roomId.join("_"),
+                                                  userName:
+                                                      "${_ap[index].fName} ${_ap[index].lName} ",
+                                                  image: _ap[index].image,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+
                                           // Navigator.of(context).push(
                                           //   MaterialPageRoute(
                                           //     builder: (context) => BlocProvider(
@@ -312,6 +338,24 @@ class ClientChatServiceHomePage extends StatelessWidget {
                                           //   ),
                                           // );
                                         },
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.amberAccent,
+                                          ),
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.amberAccent,
+                                          ),
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.amberAccent,
+                                          ),
+                                          Icon(Icons.star),
+                                          Icon(Icons.star),
+                                        ],
                                       ),
                                     ],
                                   ),

@@ -19,12 +19,12 @@ class SpecialistChatServiceModel {
 
   factory SpecialistChatServiceModel.fromJson(Map<String, dynamic> jsonData) {
     return SpecialistChatServiceModel(
-      fName: jsonData["uFName"],
-      lName: jsonData["uLName"],
+      fName: jsonData["specialist"]["uFName"],
+      lName: jsonData["specialist"]["uLName"],
       price: jsonData["price"],
-      specialistId: jsonData["specialistId"],
-      specialistType: jsonData["specialistType"],
-      image: jsonData["image"],
+      specialistId: jsonData["specialistid"],
+      specialistType: jsonData["specialist"]["uSpecialistType"],
+      image: jsonData["specialist"]["image"],
     );
   }
   SpecialistChatServiceEntiti toEntiti() {

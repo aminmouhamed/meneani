@@ -10,6 +10,11 @@ import 'package:meneani/features/auth/signup/domain/repository/create_account_re
 import 'package:meneani/features/auth/signup/domain/usecase/create_client_account_usecase.dart';
 import 'package:meneani/features/auth/signup/domain/usecase/create_specialist_account_usecase.dart';
 import 'package:meneani/features/auth/signup/ui/bloc/create_account_bloc.dart';
+import 'package:meneani/features/chat_room/data/repository/chat_rooms_repository.dart';
+import 'package:meneani/features/chat_room/data/service/chat_rooms_service.dart';
+import 'package:meneani/features/chat_room/domain/repository/chat_rooms_repository.dart';
+import 'package:meneani/features/chat_room/domain/usecase/get_chat_rooms_usecase.dart';
+import 'package:meneani/features/chat_room/ui/bloc/chat_rooms_bloc.dart';
 import 'package:meneani/features/client_appointment_services/data/repository/client_service_repository.dart';
 import 'package:meneani/features/client_appointment_services/data/service/client_services_services.dart';
 import 'package:meneani/features/client_appointment_services/domain/repository/client_services_repository.dart';
@@ -21,10 +26,16 @@ import 'package:meneani/features/client_chat_service/data/repository/client_chat
 import 'package:meneani/features/client_chat_service/data/service/client_chat_service.dart';
 import 'package:meneani/features/client_chat_service/domain/repository/client_chat_service_repository.dart';
 import 'package:meneani/features/client_chat_service/domain/usecase/get_specialist_chat_service_usecase.dart';
+import 'package:meneani/features/client_chat_service/domain/usecase/insert_chat_room_usecase.dart';
 import 'package:meneani/features/client_chat_service/ui/bloc/client_chat_services_bloc/client_chat_bloc.dart';
 import 'package:meneani/features/home/domain/usecase/delete_client_appointment.dart';
 import 'package:meneani/features/home/domain/usecase/get_client_appointment.dart';
 import 'package:meneani/features/home/ui/bloc/home_service_bloc.dart';
+import 'package:meneani/features/messaging/data/repository/messaging_service-repository.dart';
+import 'package:meneani/features/messaging/data/service/Messaging_service.dart';
+import 'package:meneani/features/messaging/domain/repository/messaging_service_repository.dart';
+import 'package:meneani/features/messaging/domain/usecase/send_message_usecase.dart';
+import 'package:meneani/features/messaging/ui/bloc/messaging_service_bloc.dart';
 import 'package:meneani/features/profile/data/repository/profile_repository.dart';
 import 'package:meneani/features/profile/data/services/profile_services.dart';
 import 'package:meneani/features/profile/domain/repository/profile_repository.dart';
@@ -35,6 +46,11 @@ import 'package:meneani/features/home/data/services/home_service.dart';
 import 'package:meneani/features/home/domain/repository/home_repository.dart';
 import 'package:meneani/features/home/domain/usecase/get_client_data_usecase.dart';
 import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
+import 'package:meneani/features/specialist_chat_service/data/repository/specialist_chat_service_repository.dart';
+import 'package:meneani/features/specialist_chat_service/data/service/specialist_chat_service.dart';
+import 'package:meneani/features/specialist_chat_service/domain/repository/specialist_chat_service_repository.dart';
+import 'package:meneani/features/specialist_chat_service/domain/usecase/specialist_set_chat_service_usecase.dart';
+import 'package:meneani/features/specialist_chat_service/ui/bloc/specialist_chat_service_bloc.dart';
 import 'package:meneani/features/specialist_services/data/repository/specialist_services_repository.dart';
 import 'package:meneani/features/specialist_services/data/services/spicialist_service.dart';
 import 'package:meneani/features/specialist_services/domain/repository/specialis_appointment_service.dart';
@@ -167,6 +183,29 @@ Future<void> init() async {
   getIT.registerLazySingleton(() => SpecialistService());
 
   //----------------------------------------------------------------------------
+  //!Specialist_chat_services
+  //!Bloc
+  getIT.registerFactory(
+    () => SpecialistChatServiceBloc(specialistSetChatServiceUsecase: getIT()),
+  );
+
+  //!UseCase
+  getIT.registerLazySingleton(
+    () => SpecialistSetChatServiceUsecase(
+      specialistChatServiceRepository: getIT(),
+    ),
+  );
+
+  //!Repository
+
+  getIT.registerLazySingleton<SpecialistChatServiceRepository>(
+    () => ImplSpecialistChatServiceRepository(specialistChatService: getIT()),
+  );
+
+  //!Services
+  getIT.registerLazySingleton(() => SpecialistChatService());
+
+  //----------------------------------------------------------------------------
   //!Client_appointment_services
   //!Bloc
   getIT.registerFactory(
@@ -202,12 +241,18 @@ Future<void> init() async {
   //!Client_chat_services
   //!Bloc
   getIT.registerFactory(
-    () => ClientChatBloc(getSpecialistChatServiceUsecase: getIT()),
+    () => ClientChatBloc(
+      getSpecialistChatServiceUsecase: getIT(),
+      insertChatRoomUsecase: getIT(),
+    ),
   );
 
   //!UseCase
   getIT.registerLazySingleton(
     () => GetSpecialistChatServiceUsecase(clientChatServiceRepository: getIT()),
+  );
+  getIT.registerLazySingleton(
+    () => InsertChatRoomUsecase(clientChatServiceRepository: getIT()),
   );
 
   //!Repository
@@ -219,5 +264,37 @@ Future<void> init() async {
   //!Services
   getIT.registerLazySingleton(() => ClientChatService());
 
+  //----------------------------------------------------------------------------
+  //!Messaging_services
+  //!Bloc
+  getIT.registerFactory(
+    () => MessagingServiceBloc(sendMessageUsecase: getIT()),
+  );
+
+  //!UseCase
+  getIT.registerLazySingleton(
+    () => SendMessageUsecase(messagingServiceRepository: getIT()),
+  );
+  //!Repository
+  getIT.registerLazySingleton<MessagingServiceRepository>(
+    () => ImplMessagingServiceRepository(messagingService: getIT()),
+  );
+  //!Services
+  getIT.registerLazySingleton(() => MessagingService());
+
+  //!Chat_room
+  //!Bloc
+  getIT.registerFactory(() => ChatRoomsBloc(getChatRoomsUsecase: getIT()));
+
+  //!UseCase
+  getIT.registerLazySingleton(
+    () => GetChatRoomsUsecase(chatRoomsRepository: getIT()),
+  );
+  //!Repository
+  getIT.registerLazySingleton<ChatRoomsRepository>(
+    () => ImplChatRoomsRepository(chatRoomsService: getIT()),
+  );
+  //!Services
+  getIT.registerLazySingleton(() => ChatRoomsService());
   //_____________END______________
 }

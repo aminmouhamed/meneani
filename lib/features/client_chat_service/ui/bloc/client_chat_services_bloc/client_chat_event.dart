@@ -12,3 +12,9 @@ class GetSpecialistChatServicesEvent extends ClientChatEvent {
 
   GetSpecialistChatServicesEvent({required this.specialistType});
 }
+
+class ClientChatServiceInsertChatRoomEvent extends ClientChatEvent {
+  final String specialistId;
+
+  ClientChatServiceInsertChatRoomEvent({required this.specialistId});
+}

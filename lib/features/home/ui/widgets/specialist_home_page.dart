@@ -70,13 +70,27 @@ class SpecialistHomePage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          NotificationsIconButton(),
-
                           Row(
                             children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: _userData.userImage.isEmpty
+                                        ? AssetImage(
+                                            "assets/images/profil_img.jpg",
+                                          )
+                                        : NetworkImage(_userData.userImage),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 30.w),
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     "صباح الخير ، ${_userData.userfName}.",
@@ -93,23 +107,15 @@ class SpecialistHomePage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 30.w),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: _userData.userImage.isEmpty
-                                        ? AssetImage(
-                                            "assets/images/profil_img.jpg",
-                                          )
-                                        : NetworkImage(_userData.userImage),
-                                  ),
-                                ),
-                              ),
                             ],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(
+                                context,
+                              ).pushNamed(AppRoutes.ChatRooms);
+                            },
+                            icon: Icon(Icons.notifications, size: 90.r),
                           ),
                         ],
                       ),
@@ -132,7 +138,7 @@ class SpecialistHomePage extends StatelessWidget {
                         Row(
                           children: [
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
@@ -181,7 +187,11 @@ class SpecialistHomePage extends StatelessWidget {
               Row(
                 children: [
                   CustomCard(
-                    onPress: () {},
+                    onPress: () {
+                      Navigator.of(
+                        context,
+                      ).pushNamed(AppRoutes.specialistChatServiceSetting);
+                    },
                     bodyText:
                         "هنا يمكنك التحكم بإعداد الخدمة الخاصة بك و الوصول إلى إحصائياتها .",
                     titel: "استشارة الطبيب عبر الإنترنت",

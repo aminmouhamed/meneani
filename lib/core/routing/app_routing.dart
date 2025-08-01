@@ -6,6 +6,8 @@ import 'package:meneani/features/auth/login/ui/widgets/login_page.dart';
 import 'package:meneani/features/auth/signup/ui/bloc/create_account_bloc.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/create_client_account_page.dart.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/create_specialist_account_page.dart';
+import 'package:meneani/features/chat_room/ui/bloc/chat_rooms_bloc.dart';
+import 'package:meneani/features/chat_room/ui/widgets/chat_rooms_page.dart';
 import 'package:meneani/features/client_appointment_services/ui/bloc/client_service_bloc.dart';
 import 'package:meneani/features/client_chat_service/ui/bloc/client_chat_services_bloc/client_chat_bloc.dart';
 import 'package:meneani/features/client_chat_service/ui/widgets/client_chat_service_home_page.dart';
@@ -17,6 +19,8 @@ import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
 import 'package:meneani/features/home/ui/widgets/client_home_page.dart';
 import 'package:meneani/features/home/ui/widgets/specialist_home_page.dart';
 import 'package:meneani/features/setting/ui/widgets/settings_page.dart';
+import 'package:meneani/features/specialist_chat_service/ui/bloc/specialist_chat_service_bloc.dart';
+import 'package:meneani/features/specialist_chat_service/ui/widgets/specialist_chat_service_setting_page.dart';
 import 'package:meneani/features/specialist_services/ui/bloc/specialist_services_bloc.dart';
 import 'package:meneani/features/specialist_services/ui/widgets/appointment_service_page.dart';
 import 'package:meneani/features/welcome/ui/welcome_page.dart';
@@ -28,12 +32,32 @@ class AppRouting {
     switch (rSetting.name) {
       case AppRoutes.welcome:
         return CustomPageRoute(child: WelcomePage());
-      case AppRoutes.chatServiceHome:
+      case AppRoutes.ChatRooms:
         return CustomPageRoute(
           child: BlocProvider(
             create: (context) =>
-                ClientChatBloc(getSpecialistChatServiceUsecase: di.getIT()),
+                ChatRoomsBloc(getChatRoomsUsecase: di.getIT())
+                  ..add(GetChatRoomsEvent()),
+            child: ChatRoomsPage(),
+          ),
+        );
+      case AppRoutes.chatServiceHome:
+        return CustomPageRoute(
+          child: BlocProvider(
+            create: (context) => ClientChatBloc(
+              getSpecialistChatServiceUsecase: di.getIT(),
+              insertChatRoomUsecase: di.getIT(),
+            ),
             child: ClientChatServiceHomePage(),
+          ),
+        );
+      case AppRoutes.specialistChatServiceSetting:
+        return CustomPageRoute(
+          child: BlocProvider(
+            create: (context) => SpecialistChatServiceBloc(
+              specialistSetChatServiceUsecase: di.getIT(),
+            ),
+            child: SpecialistChatServiceSettingPage(),
           ),
         );
       case AppRoutes.clientHome:
