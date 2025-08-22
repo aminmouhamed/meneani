@@ -17,11 +17,15 @@ class LoginService {
         .select("type")
         .eq("id", response.user!.id);
     await sharedPreferences!.setString("user_type", uType[0]["type"]);
+
     userData.UserType = uType[0]["type"];
     var data = await _supabaseClient
         .from(uType[0]["type"])
         .select("uFName , uLName ,image")
         .eq("id", response.user!.id);
+    await sharedPreferences!.setString("uFName", data[0]["uFName"]);
+    await sharedPreferences!.setString("uLName", data[0]["uLName"]);
+    await sharedPreferences!.setString("image", data[0]["image"]);
     userData.insertUserData(
       fName: data[0]["uFName"],
       lName: data[0]["uLName"],

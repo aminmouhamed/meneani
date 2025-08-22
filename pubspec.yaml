@@ -48,11 +48,18 @@ dependencies:
   modal_progress_hud_nsn: ^0.5.1
   image_picker: ^1.1.1
   fl_chart: ^1.0.0
+  
 
   flutter_localizations:
     sdk : flutter 
+  internet_connection_checker: ^3.0.1
+  flutter_launcher_icons: "^0.14.4"
    
-
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21
 
 
 

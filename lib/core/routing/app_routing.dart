@@ -44,10 +44,15 @@ class AppRouting {
       case AppRoutes.chatServiceHome:
         return CustomPageRoute(
           child: BlocProvider(
-            create: (context) => ClientChatBloc(
-              getSpecialistChatServiceUsecase: di.getIT(),
-              insertChatRoomUsecase: di.getIT(),
-            ),
+            create: (context) =>
+                ClientChatBloc(
+                  getSpecialistChatServiceUsecase: di.getIT(),
+                  insertChatRoomUsecase: di.getIT(),
+                )..add(
+                  GetSpecialistChatServicesEvent(
+                    specialistType: "مختص في الأمراض العقلية",
+                  ),
+                ),
             child: ClientChatServiceHomePage(),
           ),
         );

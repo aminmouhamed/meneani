@@ -28,6 +28,7 @@ import 'package:meneani/features/client_chat_service/domain/repository/client_ch
 import 'package:meneani/features/client_chat_service/domain/usecase/get_specialist_chat_service_usecase.dart';
 import 'package:meneani/features/client_chat_service/domain/usecase/insert_chat_room_usecase.dart';
 import 'package:meneani/features/client_chat_service/ui/bloc/client_chat_services_bloc/client_chat_bloc.dart';
+import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
 import 'package:meneani/features/home/domain/usecase/delete_client_appointment.dart';
 import 'package:meneani/features/home/domain/usecase/get_client_appointment.dart';
 import 'package:meneani/features/home/ui/bloc/home_service_bloc.dart';
@@ -296,5 +297,10 @@ Future<void> init() async {
   );
   //!Services
   getIT.registerLazySingleton(() => ChatRoomsService());
+
+  //! connectivity service
+
+  //!bloc
+  getIT.registerFactory(() => ConnectivityBloc());
   //_____________END______________
 }

@@ -12,11 +12,13 @@ import 'package:meneani/features/auth/signup/ui/bloc/create_account_bloc.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/widgets/customdatepicker.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/widgets/customdropdown.dart';
 import 'package:meneani/features/auth/signup/ui/widgets/widgets/textfield.dart';
+import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class CreateClientAccountPage extends StatelessWidget {
   CreateClientAccountPage({super.key});
   bool _isLoading = false;
+  GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   void show(BuildContext context, String errorMasseg) async {
     await AwesomeDialog(
         context: context,
@@ -58,110 +60,186 @@ class CreateClientAccountPage extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.h),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10.r),
+                      //padding: EdgeInsets.all(10.r),
+                      height: 400.r,
+                      width: 400.r,
                       decoration: BoxDecoration(
-                        color: Colors.black54,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.person,
-                        size: 300.r,
-                        color: Colors.white,
+                        // shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/logo.png"),
+                        ),
                       ),
                     ),
                     SizedBox(height: 30.h),
-                    CustomText(
-                      "إنشاء حساب",
-                      style: GoogleFonts.cairo(
-                        fontSize: 60.sp,
-                        color: Colors.black54,
-                      ),
-                    ),
-                    SizedBox(height: 40.h),
-                    CustomTextField(
-                      controler: context.read<CreateAccountBloc>().fName,
-                      textHint: "الاسم",
-                      icon: Icon(Icons.person),
-                    ),
-                    CustomTextField(
-                      textHint: "اللقب",
-                      controler: BlocProvider.of<CreateAccountBloc>(
-                        context,
-                      ).lName,
-                      icon: Icon(Icons.person),
-                    ),
-                    CustomTextField(
-                      keyBoardType: TextInputType.emailAddress,
-                      textHint: "البريد الإلكتروني",
-                      controler: BlocProvider.of<CreateAccountBloc>(
-                        context,
-                      ).email,
-                      icon: Icon(Icons.email),
-                    ),
-                    CustomTextField(
-                      keyBoardType: TextInputType.phone,
-                      textHint: "رقم الهاتف",
-                      controler: BlocProvider.of<CreateAccountBloc>(
-                        context,
-                      ).phone,
-                      icon: Icon(Icons.phone),
-                    ),
-                    CustomTextField(
-                      keyBoardType: TextInputType.text,
-                      textHint: "كلمة السر",
-                      controler: BlocProvider.of<CreateAccountBloc>(
-                        context,
-                      ).password,
-                      icon: Icon(Icons.lock),
-                    ),
-                    CustomTextField(
-                      keyBoardType: TextInputType.number,
-                      textHint: "رقم بطاقة التعريف الوطنية",
-                      controler: BlocProvider.of<CreateAccountBloc>(
-                        context,
-                      ).nationalId,
-                      icon: Icon(Icons.person),
-                    ),
+                    Stack(
+                      children: [
+                        Form(
+                          key: _globalKey,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 65.h),
+                              Container(
+                                padding: EdgeInsets.all(30.r),
+                                decoration: BoxDecoration(
+                                  //border: Border.all(width: 2),
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: AppColors.therdColor,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
 
-                    CustomDatePicker(
-                      controller: BlocProvider.of<CreateAccountBloc>(
-                        context,
-                      ).age,
-                      textHint: "تاريخ الميلاد",
-                    ),
-                    SizedBox(height: 30.h),
-                    CustomDropDownMenu(
-                      controller: BlocProvider.of<CreateAccountBloc>(
-                        context,
-                      ).gender,
-                    ),
-                    SizedBox(height: 30.h),
-                    OutlinedButton(
-                      onPressed: () {
-                        // AwesomeDialog(
-                        //   context: context,
-                        //   dialogType: DialogType.error,
-                        //   animType: AnimType.rightSlide,
-                        //   title: 'Server Error',
-                        //   desc: "error masseg",
-                        //   btnCancelOnPress: () {},
-                        //   btnOkOnPress: () {},
-                        // )..show();
-                        BlocProvider.of<CreateAccountBloc>(
-                          context,
-                        ).add(CreateClientAccountEvent());
-                      },
+                                  children: [
+                                    SizedBox(height: 70.h),
 
-                      child: CustomText(
-                        "إنشاء حساب",
-                        style: GoogleFonts.cairo(),
-                      ),
+                                    CustomTextField(
+                                      controler: context
+                                          .read<CreateAccountBloc>()
+                                          .fName,
+                                      textHint: "الاسم",
+                                      icon: Icon(
+                                        Icons.person,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    CustomTextField(
+                                      textHint: "اللقب",
+                                      controler:
+                                          BlocProvider.of<CreateAccountBloc>(
+                                            context,
+                                          ).lName,
+                                      icon: Icon(
+                                        Icons.person,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    CustomTextField(
+                                      keyBoardType: TextInputType.emailAddress,
+                                      textHint: "البريد الإلكتروني",
+                                      controler:
+                                          BlocProvider.of<CreateAccountBloc>(
+                                            context,
+                                          ).email,
+                                      icon: Icon(
+                                        Icons.email,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    CustomTextField(
+                                      keyBoardType: TextInputType.phone,
+                                      textHint: "رقم الهاتف",
+                                      controler:
+                                          BlocProvider.of<CreateAccountBloc>(
+                                            context,
+                                          ).phone,
+                                      icon: Icon(
+                                        Icons.phone,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    CustomTextField(
+                                      keyBoardType: TextInputType.text,
+                                      textHint: "كلمة السر",
+                                      controler:
+                                          BlocProvider.of<CreateAccountBloc>(
+                                            context,
+                                          ).password,
+                                      icon: Icon(
+                                        Icons.lock,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    CustomTextField(
+                                      keyBoardType: TextInputType.number,
+                                      textHint: "رقم بطاقة التعريف الوطنية",
+                                      controler:
+                                          BlocProvider.of<CreateAccountBloc>(
+                                            context,
+                                          ).nationalId,
+                                      icon: Icon(
+                                        Icons.person,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+
+                                    CustomDatePicker(
+                                      controller:
+                                          BlocProvider.of<CreateAccountBloc>(
+                                            context,
+                                          ).age,
+                                      textHint: "تاريخ الميلاد",
+                                    ),
+                                    SizedBox(height: 15.h),
+                                    CustomDropDownMenu(
+                                      controller:
+                                          BlocProvider.of<CreateAccountBloc>(
+                                            context,
+                                          ).gender,
+                                    ),
+                                    SizedBox(height: 30.h),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (BlocProvider.of<ConnectivityBloc>(
+                                              context,
+                                            ).state
+                                            is ConnectivityDontHaveConnectionsState) {
+                                          AwesomeDialog(
+                                            context: context,
+                                            dialogType: DialogType.warning,
+                                            animType: AnimType.rightSlide,
+                                            title: 'تحذير',
+                                            desc: "تحقق من اتصالك بالإنترنت .",
+                                            titleTextStyle: GoogleFonts.cairo(),
+                                            descTextStyle: GoogleFonts.cairo(),
+
+                                            btnOkOnPress: () {},
+                                          )..show();
+                                        }
+                                        if (!_globalKey.currentState!
+                                            .validate()) {
+                                          return;
+                                        }
+                                        BlocProvider.of<CreateAccountBloc>(
+                                          context,
+                                        ).add(CreateClientAccountEvent());
+                                      },
+
+                                      child: CustomText(
+                                        "إنشاء حساب",
+                                        style: GoogleFonts.cairo(
+                                          color: AppColors.therdColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    //SizedBox(height: 30.h),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.all(20.r),
+                            decoration: BoxDecoration(
+                              color: AppColors.therdColor,
+                              border: Border.all(width: 2, color: Colors.white),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: CustomText(
+                              "إنشاء حساب",
+                              style: GoogleFonts.cairo(
+                                fontSize: 60.sp,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 30.h),
                   ],
                 ),
               ),

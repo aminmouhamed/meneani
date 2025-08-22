@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,12 +10,12 @@ import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
 import 'package:meneani/core/widgets/show_dialog_error_handler.dart';
 import 'package:meneani/features/auth/login/ui/bloc/bloc/login_bloc.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  Color emailBorderColor = AppColors.primeryColor;
-  Color passwordBorderColor = AppColors.primeryColor;
+  Color emailBorderColor = Colors.black;
+  Color passwordBorderColor = Colors.black;
   UserPublicData _userData = UserPublicData.instence;
   void goToHome(context) async {
     await Future.delayed(Duration(seconds: 1));
@@ -64,12 +66,31 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 500.h),
+                  SizedBox(height: 100.h),
+                  Container(
+                    padding: EdgeInsets.all(30.r),
+                    decoration: BoxDecoration(
+                      color: AppColors.therdColor.withAlpha(100),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.therdColor, width: 2),
+                    ),
+                    child: Container(
+                      width: 500.r,
+                      height: 500.r,
+                      decoration: BoxDecoration(
+                        // shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/logo.png"),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 100.h),
                   CustomText(
                     "تسجيل دخول",
                     style: GoogleFonts.cairo(
                       fontSize: 80.sp,
-                      color: AppColors.primeryColor,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -84,39 +105,52 @@ class LoginPage extends StatelessWidget {
                           hint: "البريد الإلكتروني",
                           icon: Icons.email,
                           controller: BlocProvider.of<LoginBloc>(context).email,
+                          keyBoardType: TextInputType.emailAddress,
                         ),
                         SizedBox(height: 30.h),
                         CustomTextForm(
+                          password: true,
                           BorderColor: passwordBorderColor,
                           hint: "كلمة السر",
                           icon: Icons.lock,
                           controller: BlocProvider.of<LoginBloc>(
                             context,
                           ).password,
+                          keyBoardType: TextInputType.text,
                         ),
                         SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(
-                                  context,
-                                ).pushNamed(AppRoutes.createClientAccount);
-                              },
-                              child: CustomText(
-                                " . إنشاء حساب",
+                        RichText(
+                          text: TextSpan(
+                            text: "إذا لم يكن لديك حساب , ",
+                            style: GoogleFonts.cairo(color: Colors.black87),
+                            children: [
+                              TextSpan(
+                                text: "إنشاء حساب مريض",
                                 style: GoogleFonts.cairo(
-                                  color: AppColors.primeryColor,
+                                  color: AppColors.secendaryColor,
                                 ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => Navigator.of(
+                                    context,
+                                  ).pushNamed(AppRoutes.createClientAccount),
                               ),
-                            ),
-                            CustomText(
-                              " إذا لم يكن لديك حساب",
-                              style: GoogleFonts.cairo(),
-                            ),
-                          ],
+                              TextSpan(
+                                text: " أو ",
+                                style: GoogleFonts.cairo(),
+                              ),
+                              TextSpan(
+                                text: "إنشاء حساب مختص .",
+                                style: GoogleFonts.cairo(
+                                  color: AppColors.secendaryColor,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () =>
+                                      Navigator.of(context).pushNamed(
+                                        AppRoutes.createSpecialistAccount,
+                                      ),
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(height: 30.h),
                         ElevatedButton(
@@ -126,6 +160,21 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
+                            if (BlocProvider.of<ConnectivityBloc>(context).state
+                                is ConnectivityDontHaveConnectionsState) {
+                              AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.warning,
+                                animType: AnimType.rightSlide,
+                                title: 'تحذير',
+                                desc: "تحقق من اتصالك بالإنترنت .",
+                                titleTextStyle: GoogleFonts.cairo(),
+                                descTextStyle: GoogleFonts.cairo(),
+
+                                btnOkOnPress: () {},
+                              )..show();
+                              return;
+                            }
                             BlocProvider.of<LoginBloc>(
                               context,
                             ).add(LogInWithEmailAndPasswordEvent());
@@ -156,34 +205,64 @@ class CustomTextForm extends StatelessWidget {
     required this.icon,
     required this.controller,
     this.BorderColor = Colors.black87,
+    this.password = false,
+    required this.keyBoardType,
   });
+  bool password;
+  bool hide = true;
   final String hint;
   final IconData icon;
   final TextEditingController controller;
+  final TextInputType keyBoardType;
   Color BorderColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: TextFormField(
-        controller: controller,
-
-        // keyboardType: keyBoardType,
-        onTap: () async {},
-        decoration: InputDecoration(
-          fillColor: Colors.white,
-          filled: true,
-          isDense: true,
-          suffixIcon: Icon(icon, color: AppColors.primeryColor),
-          hint: CustomText(
-            hint,
-            style: GoogleFonts.cairo(color: AppColors.primeryColor),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: BorderColor),
-          ),
-        ),
+      child: StatefulBuilder(
+        builder: (context, setState) {
+          return TextFormField(
+            keyboardType: this.keyBoardType,
+            controller: controller,
+            obscureText: password ? hide : false,
+            // keyboardType: keyBoardType,
+            onTap: () async {},
+            decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              isDense: true,
+              suffixIcon: password
+                  ? IconButton(
+                      onPressed: () {
+                        setState(() {
+                          if (hide) {
+                            hide = false;
+                          } else {
+                            hide = true;
+                          }
+                        });
+                      },
+                      icon: Icon(
+                        Icons.remove_red_eye_outlined,
+                        color: Colors.black54,
+                      ),
+                    )
+                  : Icon(icon, color: Colors.black54),
+              hint: CustomText(
+                hint,
+                style: GoogleFonts.cairo(color: Colors.black54),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(width: 2),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: BorderColor),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

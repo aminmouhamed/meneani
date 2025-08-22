@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/widgets/simpel_button.dart';
 
 class CustomCard extends StatelessWidget {
@@ -21,38 +22,50 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        padding: EdgeInsets.all(40.r),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              // "Online Doctor  Conseltation",
-              titel,
-              textDirection: TextDirection.rtl,
-              style: GoogleFonts.cairo(
-                fontSize: 45.sp,
-                fontWeight: FontWeight.bold,
-              ),
+      child: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            top: 0,
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.question_mark, size: 60.r),
             ),
-            SizedBox(height: 30.h),
-            Text(
-              textDirection: TextDirection.rtl,
-              bodyText,
-              style: GoogleFonts.cairo(fontSize: 30.sp),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: bgColor,
+              borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
+            padding: EdgeInsets.all(40.r),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  // "Online Doctor  Conseltation",
+                  titel,
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.cairo(
+                    fontSize: 45.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 30.h),
+                Text(
+                  textDirection: TextDirection.rtl,
+                  bodyText,
+                  style: GoogleFonts.cairo(fontSize: 30.sp),
+                ),
 
-            SizedBox(height: 150.h),
-            Center(
-              child: SimpelButton(text: "دخول", onPress: onPress),
+                SizedBox(height: 150.h),
+                Center(
+                  child: SimpelButton(text: "دخول", onPress: onPress),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -28,52 +28,86 @@ class CreateAccountBloc extends Bloc<CreateAccountEvent, CreateAccountState> {
     on<CreateAccountEvent>((event, emit) async {
       // TODO: implement event handler
       if (event is CreateClientAccountEvent) {
-        emit(CreateAccountLoadingState());
-
-        var response =
-            await CreateClientAccountUseCase(
-              createAccountRepository: repository,
-            ).call(
-              ClientEntiti(
-                phone: phone.text,
-                password: password.text,
-                uFName: fName.text,
-                uLName: lName.text,
-                uNationalId: nationalId.text,
-                uAge: age.text,
-                uGender: gender.text,
-                email: email.text,
-              ),
-            );
-        response.fold(
-          (failure) {
-            if (failure is ServerFailure) {
-              emit(CreateAccountErrorState(errorMessage: failure.errorMassege));
-            }
-          },
-          (val) {
-            emit(CreateAccountLoadedState());
-          },
-        );
+        if (phone.text.isNotEmpty &&
+            password.text.isNotEmpty &&
+            fName.text.isNotEmpty &&
+            lName.text.isNotEmpty &&
+            nationalId.text.isNotEmpty &&
+            age.text.isNotEmpty &&
+            gender.text.isNotEmpty &&
+            email.text.isNotEmpty) {
+          emit(CreateAccountLoadingState());
+          var response =
+              await CreateClientAccountUseCase(
+                createAccountRepository: repository,
+              ).call(
+                ClientEntiti(
+                  phone: phone.text,
+                  password: password.text,
+                  uFName: fName.text,
+                  uLName: lName.text,
+                  uNationalId: nationalId.text,
+                  uAge: age.text,
+                  uGender: gender.text,
+                  email: email.text,
+                ),
+              );
+          response.fold(
+            (failure) {
+              if (failure is ServerFailure) {
+                emit(
+                  CreateAccountErrorState(errorMessage: failure.errorMassege),
+                );
+              }
+            },
+            (val) {
+              emit(CreateAccountLoadedState());
+            },
+          );
+        }
       } else if (event is CreateSpecialistAccountEvent) {
-        var response =
-            await CreateSpecialistAccountUsecase(
-              createAccountRepository: repository,
-            ).call(
-              SpecialistEntiti(
-                phone: phone.text,
-                password: password.text,
-                uFName: fName.text,
-                uLName: lName.text,
-                uNationalId: nationalId.text,
-                uDiplomaId: deplomatId.text,
-                uAge: age.text,
-                uGender: gender.text,
-                uSpecialistType: specialistType.text,
-                uSpecialistAddress: address.text,
-                uEmail: email.text,
-              ),
-            );
+        if (phone.text.isNotEmpty &&
+            password.text.isNotEmpty &&
+            fName.text.isNotEmpty &&
+            lName.text.isNotEmpty &&
+            nationalId.text.isNotEmpty &&
+            age.text.isNotEmpty &&
+            gender.text.isNotEmpty &&
+            email.text.isNotEmpty &&
+            specialistType.text.isNotEmpty &&
+            address.text.isNotEmpty) {
+          emit(CreateAccountLoadingState());
+          var response =
+              await CreateSpecialistAccountUsecase(
+                createAccountRepository: repository,
+              ).call(
+                SpecialistEntiti(
+                  phone: phone.text,
+                  password: password.text,
+                  uFName: fName.text,
+                  uLName: lName.text,
+                  uNationalId: nationalId.text,
+                  uDiplomaId: deplomatId.text,
+                  uAge: age.text,
+                  uGender: gender.text,
+                  uSpecialistType: specialistType.text,
+                  uSpecialistAddress: address.text,
+                  uEmail: email.text,
+                ),
+              );
+          response.fold(
+            (failure) {
+              if (failure is ServerFailure) {
+                emit(
+                  CreateAccountErrorState(errorMessage: failure.errorMassege),
+                );
+              }
+            },
+            (val) {
+              emit(CreateAccountLoadedState());
+            },
+          );
+        }
       }
     });
   }

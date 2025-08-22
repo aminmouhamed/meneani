@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/routing/app_routes.dart';
+import 'package:meneani/features/connectivity/ui/404.dart';
 import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
 import 'package:meneani/features/home/ui/widgets/client_home_page.dart';
 import 'package:meneani/features/home/ui/widgets/widgets/custom_card.dart';
@@ -180,40 +181,42 @@ class SpecialistHomePage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsGeometry.all(40.r),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  CustomCard(
-                    onPress: () {
-                      Navigator.of(
-                        context,
-                      ).pushNamed(AppRoutes.specialistChatServiceSetting);
-                    },
-                    bodyText:
-                        "هنا يمكنك التحكم بإعداد الخدمة الخاصة بك و الوصول إلى إحصائياتها .",
-                    titel: "استشارة الطبيب عبر الإنترنت",
-                    bgColor: AppColors.therdColor.withAlpha(150),
-                    buttonText: "",
-                  ),
-                  SizedBox(width: 30.h),
-                  CustomCard(
-                    onPress: () {
-                      Navigator.of(
-                        context,
-                      ).pushNamed(AppRoutes.apointmentServiceSetting);
-                    },
-                    bodyText:
-                        "هنا يمكنك التحكم بإعداد الخدمة الخاصة بك و الوصول إلى إحصائياتها .",
-                    titel: "الإعدادات الخاصة بخدمة حجز المواعيد",
-                    bgColor: AppColors.secendaryColor.withAlpha(150),
-                    buttonText: "",
-                  ),
-                ],
-              ),
-            ],
+        child: InternetConnectionsCheker(
+          child: Padding(
+            padding: EdgeInsetsGeometry.all(40.r),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    CustomCard(
+                      onPress: () {
+                        Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.specialistChatServiceSetting);
+                      },
+                      bodyText:
+                          "هنا يمكنك التحكم بإعداد الخدمة الخاصة بك و الوصول إلى إحصائياتها .",
+                      titel: "استشارة الطبيب عبر الإنترنت",
+                      bgColor: AppColors.therdColor.withAlpha(150),
+                      buttonText: "",
+                    ),
+                    SizedBox(width: 30.h),
+                    CustomCard(
+                      onPress: () {
+                        Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.apointmentServiceSetting);
+                      },
+                      bodyText:
+                          "هنا يمكنك التحكم بإعداد الخدمة الخاصة بك و الوصول إلى إحصائياتها .",
+                      titel: "الإعدادات الخاصة بخدمة حجز المواعيد",
+                      bgColor: AppColors.secendaryColor.withAlpha(150),
+                      buttonText: "",
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:meneani/core/widgets/custom_page_route.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
 import 'package:meneani/features/chat_room/domain/entiti/chat_room_entiti.dart';
 import 'package:meneani/features/chat_room/ui/bloc/chat_rooms_bloc.dart';
+import 'package:meneani/features/connectivity/ui/404.dart';
 import 'package:meneani/features/messaging/ui/bloc/messaging_service_bloc.dart';
 import 'package:meneani/features/messaging/ui/widgets/messaging_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -80,96 +81,100 @@ class ChatRoomsPage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            BlocListener<ChatRoomsBloc, ChatRoomsState>(
-              listener: (context, state) {
-                if (state is ChatRoomsLoadingState) {
-                  showDialog(
-                    context: context,
-                    builder: (context) =>
-                        Center(child: CircularProgressIndicator()),
-                  );
-                }
-                if (state is ChatRoomsLoadedState) {
-                  Navigator.pop(context);
-                }
-                if (state is ChatRoomsErrorState) {
-                  Navigator.pop(context);
-                }
-              },
-              child: Container(),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.w),
-                child: BlocBuilder<ChatRoomsBloc, ChatRoomsState>(
-                  builder: (context, state) {
-                    List<ChatRoomEntiti> data = [];
-                    if (state is ChatRoomsLoadedState) {
-                      data = state.chatRooms;
-                    }
+        child: InternetConnectionsCheker(
+          child: Column(
+            children: [
+              BlocListener<ChatRoomsBloc, ChatRoomsState>(
+                listener: (context, state) {
+                  if (state is ChatRoomsLoadingState) {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          Center(child: CircularProgressIndicator()),
+                    );
+                  }
+                  if (state is ChatRoomsLoadedState) {
+                    Navigator.pop(context);
+                  }
+                  if (state is ChatRoomsErrorState) {
+                    Navigator.pop(context);
+                  }
+                },
+                child: Container(),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.w),
+                  child: BlocBuilder<ChatRoomsBloc, ChatRoomsState>(
+                    builder: (context, state) {
+                      List<ChatRoomEntiti> data = [];
+                      if (state is ChatRoomsLoadedState) {
+                        data = state.chatRooms;
+                      }
 
-                    return ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              CustomPageRoute(
-                                child: BlocProvider(
-                                  create: (context) => MessagingServiceBloc(
-                                    sendMessageUsecase: di.getIT(),
-                                  ),
-                                  child: MessagingPage(
-                                    roomId: data[index].roomId,
-                                    userName:
-                                        "${data[index].uFName} ${data[index].uLName} ",
-                                    image: data[index].uImage,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(30.r),
-                            margin: EdgeInsets.only(top: 30.h),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 200.r,
-                                  width: 200.r,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: data[index].uImage.isEmpty
-                                          ? AssetImage("assets/images/pr1.jpg")
-                                          : NetworkImage(data[index].uImage),
+                      return ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                CustomPageRoute(
+                                  child: BlocProvider(
+                                    create: (context) => MessagingServiceBloc(
+                                      sendMessageUsecase: di.getIT(),
+                                    ),
+                                    child: MessagingPage(
+                                      roomId: data[index].roomId,
+                                      userName:
+                                          "${data[index].uFName} ${data[index].uLName} ",
+                                      image: data[index].uImage,
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 30.w),
-                                CustomText(
-                                  style: GoogleFonts.cairo(fontSize: 50.sp),
-                                  "${data[index].uFName} ${data[index].uLName} "
-                                      .toUpperCase(),
-                                ),
-                              ],
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(30.r),
+                              margin: EdgeInsets.only(top: 30.h),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 200.r,
+                                    width: 200.r,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: data[index].uImage.isEmpty
+                                            ? AssetImage(
+                                                "assets/images/pr1.jpg",
+                                              )
+                                            : NetworkImage(data[index].uImage),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 30.w),
+                                  CustomText(
+                                    style: GoogleFonts.cairo(fontSize: 50.sp),
+                                    "${data[index].uFName} ${data[index].uLName} "
+                                        .toUpperCase(),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

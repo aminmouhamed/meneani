@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meneani/core/const/constent.dart';
@@ -6,6 +7,7 @@ import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/routing/app_routing.dart';
 import 'package:meneani/core/theme/app_theme.dart';
+import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
 import 'package:meneani/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,28 +40,31 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: Size(1280, 2856),
       builder: (context, child) {
-        return MaterialApp(
-          title: 'Meneani',
-          onGenerateRoute: appRouting.onGenerateRoute,
-          initialRoute: _supabaseClient.auth.currentUser != null
-              ? userType == "client"
-                    ? AppRoutes.clientHome
-                    : AppRoutes.specialistHome
-              : AppRoutes.welcome,
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          locale: const Locale("ar"),
-          theme: lightThem,
-          // ThemeData(
-          //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-          //   useMaterial3: true,
-          // ),
+        return BlocProvider(
+          create: (context) => ConnectivityBloc(),
+          child: MaterialApp(
+            title: 'Meneani',
+            onGenerateRoute: appRouting.onGenerateRoute,
+            initialRoute: _supabaseClient.auth.currentUser != null
+                ? userType == "client"
+                      ? AppRoutes.clientHome
+                      : AppRoutes.specialistHome
+                : AppRoutes.welcome,
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            locale: const Locale("ar"),
+            theme: lightThem,
+            // ThemeData(
+            //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+            //   useMaterial3: true,
+            // ),
+          ),
         );
       },
     );

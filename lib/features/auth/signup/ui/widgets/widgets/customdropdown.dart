@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
 
@@ -21,11 +22,13 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Container(
+        height: 150.h,
         decoration: BoxDecoration(
-          border: Border.all(),
+          // border: Border.all(),
           borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -94,10 +97,12 @@ class _CustomDropDownMenuState2 extends State<CustomDropDownMenu2> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Container(
+        height: 150.h,
         decoration: BoxDecoration(
-          border: Border.all(),
+          color: Colors.white,
+          // border: Border.all(),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(

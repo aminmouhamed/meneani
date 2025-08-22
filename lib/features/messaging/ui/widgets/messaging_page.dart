@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/widgets/custom_text.dart';
+import 'package:meneani/features/connectivity/ui/404.dart';
+
 import 'package:meneani/features/messaging/ui/bloc/messaging_service_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -90,87 +90,89 @@ class MessagingPage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: StreamBuilder(
-                stream: _supabaseClient
-                    .from("chat_room_message")
-                    .stream(primaryKey: ["id"])
-                    .eq("room_id", this.roomId),
-                builder: (context, asyncSnapshot) {
-                  List<Map<String, dynamic>> data = [];
+        child: InternetConnectionsCheker(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: StreamBuilder(
+                  stream: _supabaseClient
+                      .from("chat_room_message")
+                      .stream(primaryKey: ["id"])
+                      .eq("room_id", this.roomId),
+                  builder: (context, asyncSnapshot) {
+                    List<Map<String, dynamic>> data = [];
 
-                  // if (asyncSnapshot.connectionState ==
-                  //     ConnectionState.waiting) {
-                  //   return Center(child: CustomText("تحميل ..."));
-                  // }
-                  if (asyncSnapshot.hasData) {
-                    data = asyncSnapshot.data!;
-                    // _controller!.animateTo(
-                    //   _controller!.position.maxScrollExtent,
-                    //   duration: Duration(microseconds: 100),
-                    //   curve: Curves.fastOutSlowIn,
-                    // );
-                    goTo();
-                  }
+                    // if (asyncSnapshot.connectionState ==
+                    //     ConnectionState.waiting) {
+                    //   return Center(child: CustomText("تحميل ..."));
+                    // }
+                    if (asyncSnapshot.hasData) {
+                      data = asyncSnapshot.data!;
+                      // _controller!.animateTo(
+                      //   _controller!.position.maxScrollExtent,
+                      //   duration: Duration(microseconds: 100),
+                      //   curve: Curves.fastOutSlowIn,
+                      // );
+                      goTo();
+                    }
 
-                  return ListView.builder(
-                    reverse: false,
-                    controller: _controller,
-                    itemCount: data.length,
-                    itemBuilder: (context, index) => TextMessage(
-                      message: data[index]["message"],
-                      sender: data[index]["senderId"],
-                    ),
-                  );
-                },
+                    return ListView.builder(
+                      reverse: false,
+                      controller: _controller,
+                      itemCount: data.length,
+                      itemBuilder: (context, index) => TextMessage(
+                        message: data[index]["message"],
+                        sender: data[index]["senderId"],
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(40.r),
-              child: StatefulBuilder(
-                builder: (context, setState) => TextField(
-                  controller: _message,
-                  decoration: InputDecoration(
-                    hintText: "Aa",
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        BlocProvider.of<MessagingServiceBloc>(context).add(
-                          SendMessageEvent(
-                            message: _message.text,
-                            roomId: this.roomId,
-                          ),
-                        );
-                        setState(() {
-                          _message.text = "";
-
-                          _controller!.animateTo(
-                            _controller!.position.maxScrollExtent,
-                            duration: Duration(milliseconds: 100),
-                            curve: Curves.fastOutSlowIn,
+              Padding(
+                padding: EdgeInsets.all(40.r),
+                child: StatefulBuilder(
+                  builder: (context, setState) => TextField(
+                    controller: _message,
+                    decoration: InputDecoration(
+                      hintText: "Aa",
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          BlocProvider.of<MessagingServiceBloc>(context).add(
+                            SendMessageEvent(
+                              message: _message.text,
+                              roomId: this.roomId,
+                            ),
                           );
-                        });
-                      },
-                      icon: Icon(Icons.send),
+                          setState(() {
+                            _message.text = "";
+
+                            _controller!.animateTo(
+                              _controller!.position.maxScrollExtent,
+                              duration: Duration(milliseconds: 100),
+                              curve: Curves.fastOutSlowIn,
+                            );
+                          });
+                        },
+                        icon: Icon(Icons.send),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -190,7 +192,12 @@ class TextMessage extends StatelessWidget {
           : CrossAxisAlignment.end,
       children: [
         Container(
-          padding: EdgeInsets.all(20.r),
+          padding: EdgeInsets.only(
+            top: 20.r,
+            bottom: 20.r,
+            left: 30.r,
+            right: 30.r,
+          ),
           margin: EdgeInsets.all(10.r),
           child: Text(
             textWidthBasis: TextWidthBasis.parent,
@@ -198,8 +205,19 @@ class TextMessage extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 57.sp),
           ),
           decoration: BoxDecoration(
-            color: AppColors.primeryColor,
-            borderRadius: BorderRadius.circular(12),
+            color: sender == _supabaseClient.auth.currentUser!.id
+                ? Colors.blue
+                : Colors.blueAccent,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12),
+              topRight: sender == _supabaseClient.auth.currentUser!.id
+                  ? Radius.circular(0)
+                  : Radius.circular(12),
+              topLeft: sender == _supabaseClient.auth.currentUser!.id
+                  ? Radius.circular(12)
+                  : Radius.circular(0),
+            ),
           ),
         ),
       ],

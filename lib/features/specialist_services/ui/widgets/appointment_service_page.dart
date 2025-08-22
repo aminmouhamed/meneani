@@ -6,6 +6,7 @@ import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
 
 import 'package:meneani/features/auth/signup/ui/widgets/widgets/textfield.dart';
+import 'package:meneani/features/connectivity/ui/404.dart';
 import 'package:meneani/features/specialist_chat_service/data/service/specialist_chat_service.dart';
 import 'package:meneani/features/specialist_chat_service/ui/bloc/specialist_chat_service_bloc.dart';
 import 'package:meneani/features/specialist_services/ui/bloc/specialist_services_bloc.dart';
@@ -84,140 +85,142 @@ class AppointmentServiceSettingsPage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: BlocListener<SpecialistServicesBloc, SpecialistServicesState>(
-          listener: (context, state) {
-            if (state is SpecialistAppointmentServiceLoadingState) {
-              showDialog(
-                context: context,
-                builder: (context) =>
-                    Center(child: CircularProgressIndicator()),
-              );
-            }
-            if (state is SpecialistServiceErrorState) {
-              Navigator.pop(context);
-            }
-            if (state is SpecialistAppointmentServiceLoadedState) {
-              Navigator.pop(context);
-            }
-          },
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(30.r),
-              child: BlocBuilder<SpecialistServicesBloc, SpecialistServicesState>(
-                builder: (context, state) {
-                  if (state is SpecialistAppointmentServiceLoadedState) {
-                    _isloading = false;
+        child: InternetConnectionsCheker(
+          child: BlocListener<SpecialistServicesBloc, SpecialistServicesState>(
+            listener: (context, state) {
+              if (state is SpecialistAppointmentServiceLoadingState) {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      Center(child: CircularProgressIndicator()),
+                );
+              }
+              if (state is SpecialistServiceErrorState) {
+                Navigator.pop(context);
+              }
+              if (state is SpecialistAppointmentServiceLoadedState) {
+                Navigator.pop(context);
+              }
+            },
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(30.r),
+                child: BlocBuilder<SpecialistServicesBloc, SpecialistServicesState>(
+                  builder: (context, state) {
+                    if (state is SpecialistAppointmentServiceLoadedState) {
+                      _isloading = false;
 
-                    _appointmentSetting.serviceState =
-                        state.appointmentEntiti.service_state;
-                    print(
-                      "service state : ${state.appointmentEntiti.service_state}",
-                    );
-                  }
+                      _appointmentSetting.serviceState =
+                          state.appointmentEntiti.service_state;
+                      print(
+                        "service state : ${state.appointmentEntiti.service_state}",
+                      );
+                    }
 
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 30.h),
-                      CustomText("الإعدادات :", style: GoogleFonts.cairo()),
-                      SizedBox(height: 30.h),
-                      StatefulBuilder(
-                        builder: (BuildContext context, setState) {
-                          return Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 40.r,
-                                  vertical: 5.r,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30.h),
+                        CustomText("الإعدادات :", style: GoogleFonts.cairo()),
+                        SizedBox(height: 30.h),
+                        StatefulBuilder(
+                          builder: (BuildContext context, setState) {
+                            return Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 40.r,
+                                    vertical: 5.r,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
 
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomText(
-                                      "تفعيل الخدمة :",
-                                      style: GoogleFonts.cairo(
-                                        fontWeight: FontWeight.bold,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomText(
+                                        "تفعيل الخدمة :",
+                                        style: GoogleFonts.cairo(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    Switch(
-                                      value: _appointmentSetting.serviceState,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _appointmentSetting.serviceState =
-                                              value;
-                                        });
-                                      },
-                                    ),
-                                  ],
+                                      Switch(
+                                        value: _appointmentSetting.serviceState,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _appointmentSetting.serviceState =
+                                                value;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              ValueChek(
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: 30.h),
-                                    CustomTextField(
-                                      textHint: "السعر",
-                                      icon: Icon(Icons.price_change),
-                                      controler:
-                                          BlocProvider.of<
-                                                SpecialistServicesBloc
-                                              >(context)
-                                              .price,
-                                    ),
-                                    SizedBox(height: 30.h),
-                                  ],
+                                ValueChek(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 30.h),
+                                      CustomTextField(
+                                        textHint: "السعر",
+                                        icon: Icon(Icons.price_change),
+                                        controler:
+                                            BlocProvider.of<
+                                                  SpecialistServicesBloc
+                                                >(context)
+                                                .price,
+                                      ),
+                                      SizedBox(height: 30.h),
+                                    ],
+                                  ),
+                                  value: _appointmentSetting.serviceState,
                                 ),
-                                value: _appointmentSetting.serviceState,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              BlocProvider.of<SpecialistServicesBloc>(
-                                context,
-                              ).add(
-                                SpecialistUpdateAppointmentSettingEvent(
-                                  serviceState:
-                                      _appointmentSetting.serviceState,
-                                  price:
-                                      BlocProvider.of<SpecialistServicesBloc>(
-                                        context,
-                                      ).price.text,
-                                ),
-                              );
-                            },
-                            child: CustomText(
-                              "تاكيد",
-                              style: GoogleFonts.cairo(color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30.h),
-                      CustomText("الإحصائيات :", style: GoogleFonts.cairo()),
-                      SizedBox(height: 30.h),
-                      Container(
-                        child: BarChartSample3(),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
+                              ],
+                            );
+                          },
                         ),
-                      ),
-                    ],
-                  );
-                },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                BlocProvider.of<SpecialistServicesBloc>(
+                                  context,
+                                ).add(
+                                  SpecialistUpdateAppointmentSettingEvent(
+                                    serviceState:
+                                        _appointmentSetting.serviceState,
+                                    price:
+                                        BlocProvider.of<SpecialistServicesBloc>(
+                                          context,
+                                        ).price.text,
+                                  ),
+                                );
+                              },
+                              child: CustomText(
+                                "تاكيد",
+                                style: GoogleFonts.cairo(color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30.h),
+                        CustomText("الإحصائيات :", style: GoogleFonts.cairo()),
+                        SizedBox(height: 30.h),
+                        Container(
+                          child: BarChartSample3(),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ),

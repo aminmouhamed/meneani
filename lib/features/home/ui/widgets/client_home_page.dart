@@ -6,6 +6,8 @@ import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
+import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
+import 'package:meneani/features/connectivity/ui/404.dart';
 
 import 'package:meneani/features/home/data/services/home_service.dart';
 import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
@@ -207,241 +209,270 @@ class ClientHomePage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(40.r),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  CustomCard(
-                    onPress: () {
-                      Navigator.of(
-                        context,
-                      ).pushNamed(AppRoutes.chatServiceHome);
-                    },
-                    bodyText: "يمكنك حجز موعد مع الطبيب ابتداءا من مبلغ 1000دج",
-                    titel: "استشارة الطبيب عبر الإنترنت",
-                    bgColor: AppColors.therdColor.withAlpha(150),
-                    buttonText: "",
-                  ),
-                  SizedBox(width: 30.h),
-                  CustomCard(
-                    onPress: () {
-                      Navigator.of(context).pushNamed(AppRoutes.clientService);
-                    },
-                    bodyText: "يمكنك حجز موعد مع الطبيب ابتداءا من مبلغ 1000دج",
-                    titel: "قم بحجز موعد لزياره الطبيب",
-                    bgColor: AppColors.secendaryColor.withAlpha(150),
-                    buttonText: "",
-                  ),
-                ],
-              ),
-              SizedBox(height: 30.h),
-              CustomCard2(
-                onPress: () {},
+        child: InternetConnectionsCheker(
+          child: Padding(
+            padding: EdgeInsets.all(40.r),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    CustomCard(
+                      onPress: () {
+                        Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.chatServiceHome);
+                      },
+                      bodyText:
+                          "يمكنك استشارة الطبيب عبر الإنترنت ابتداءا من مبلغ 1000دج",
+                      titel: "استشارة الطبيب عبر الإنترنت",
+                      bgColor: AppColors.therdColor.withAlpha(150),
+                      buttonText: "",
+                    ),
+                    SizedBox(width: 30.h),
+                    CustomCard(
+                      onPress: () {
+                        Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.clientService);
+                      },
+                      bodyText:
+                          "يمكنك حجز موعد مع الطبيب ابتداءا من مبلغ 1000دج",
+                      titel: "قم بحجز موعد لزياره الطبيب",
+                      bgColor: AppColors.secendaryColor.withAlpha(150),
+                      buttonText: "",
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.h),
+                CustomCard2(
+                  onPress: () {
+                    BlocProvider.of<ConnectivityBloc>(context);
+                  },
 
-                titel: "التوجيه الأوتوماتيكي",
-                bgColor: AppColors.primeryColor.withAlpha(150),
-                buttonText: "",
-              ),
-              SizedBox(height: 30.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    "مواعيدي :",
-                    style: GoogleFonts.cairo(fontSize: 47.sp),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      BlocProvider.of<HomeServiceBloc>(
-                        context,
-                      ).add(HomeGetClientAppointmentEvent());
-                    },
-                    icon: Icon(Icons.refresh_rounded),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30.h),
+                  titel: "التوجيه الأوتوماتيكي",
+                  bgColor: AppColors.primeryColor.withAlpha(150),
+                  buttonText: "",
+                ),
+                SizedBox(height: 30.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(
+                      "مواعيدي :",
+                      style: GoogleFonts.cairo(fontSize: 47.sp),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        BlocProvider.of<HomeServiceBloc>(
+                          context,
+                        ).add(HomeGetClientAppointmentEvent());
+                      },
+                      icon: Icon(Icons.refresh_rounded),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.h),
 
-              Expanded(
-                child: BlocBuilder<HomeServiceBloc, HomeServiceState>(
-                  builder: (context, state) {
-                    bool _isLoging = false;
-                    if (state is HomeAppointmrntLoadedState) {
-                      return ModalProgressHUD(
-                        inAsyncCall: _isLoging,
-                        child: ListView.builder(
-                          itemCount: state.appointmentList!.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: EdgeInsets.only(top: 30.h),
-                              padding: EdgeInsets.all(30.r),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(9),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    height: 200.r,
-                                    width: 200.r,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image:
-                                            state
-                                                .appointmentList![index]
-                                                .specialistImage
-                                                .isEmpty
-                                            ? AssetImage(
-                                                "assets/images/pr1.jpg",
-                                              )
-                                            : NetworkImage(
+                Expanded(
+                  child: BlocBuilder<HomeServiceBloc, HomeServiceState>(
+                    builder: (context, state) {
+                      bool _isLoging = false;
+                      if (state is HomeAppointmrntLoadedState) {
+                        return ModalProgressHUD(
+                          inAsyncCall: _isLoging,
+                          child: ListView.builder(
+                            itemCount: state.appointmentList!.length,
+                            itemBuilder: (context, index) {
+                              return FittedBox(
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 30.h),
+                                  padding: EdgeInsets.only(
+                                    left: 30.w,
+                                    right: 30.w,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(9),
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Container(
+                                        height: 200.r,
+                                        width: 200.r,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image:
                                                 state
                                                     .appointmentList![index]
-                                                    .specialistImage,
-                                              ),
+                                                    .specialistImage
+                                                    .isEmpty
+                                                ? AssetImage(
+                                                    "assets/images/pr1.jpg",
+                                                  )
+                                                : NetworkImage(
+                                                    state
+                                                        .appointmentList![index]
+                                                        .specialistImage,
+                                                  ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CustomText(
-                                        "${state.appointmentList![index].specialistFName} ${state.appointmentList![index].specialisLName}",
-                                        style: GoogleFonts.cairo(),
+                                      SizedBox(width: 20.w),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          CustomText(
+                                            "${state.appointmentList![index].specialistFName} ${state.appointmentList![index].specialisLName}",
+                                            style: GoogleFonts.cairo(),
+                                          ),
+                                          SizedBox(height: 10.h),
+                                          CustomText(
+                                            state
+                                                .appointmentList![index]
+                                                .specialistType,
+                                            style: GoogleFonts.cairo(),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(height: 10.h),
-                                      CustomText(
-                                        state
-                                            .appointmentList![index]
-                                            .specialistType,
-                                        style: GoogleFonts.cairo(),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      CustomText(
-                                        state
-                                            .appointmentList![index]
-                                            .appointmentDate
-                                            .split("T")[0],
-                                        style: GoogleFonts.cairo(),
-                                      ),
-                                      CustomText(
-                                        DateTime.parse(
-                                              state
-                                                  .appointmentList![index]
-                                                  .appointmentDate,
-                                            ).hour.toString() +
-                                            ":" +
+                                      Column(
+                                        children: [
+                                          CustomText(
+                                            state
+                                                .appointmentList![index]
+                                                .appointmentDate
+                                                .split("T")[0],
+                                            style: GoogleFonts.cairo(),
+                                          ),
+                                          CustomText(
                                             DateTime.parse(
-                                              state
-                                                  .appointmentList![index]
-                                                  .appointmentDate,
-                                            ).minute.toString().padLeft(2, "0"),
-                                        style: GoogleFonts.cairo(),
+                                                  state
+                                                      .appointmentList![index]
+                                                      .appointmentDate,
+                                                ).hour.toString() +
+                                                ":" +
+                                                DateTime.parse(
+                                                  state
+                                                      .appointmentList![index]
+                                                      .appointmentDate,
+                                                ).minute.toString().padLeft(
+                                                  2,
+                                                  "0",
+                                                ),
+                                            style: GoogleFonts.cairo(),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
 
-                                  Column(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => Center(
-                                              child: Container(
-                                                height: 500.h,
-                                                width: double.infinity,
-                                                padding: EdgeInsets.all(30.r),
-                                                margin: EdgeInsets.all(30.r),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  color: Colors.white,
-                                                ),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.location_on,
-                                                      size: 150.r,
-                                                      color: Colors.blue[200],
+                                      Column(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) => Center(
+                                                  child: Container(
+                                                    height: 500.h,
+                                                    width: double.infinity,
+                                                    padding: EdgeInsets.all(
+                                                      30.r,
                                                     ),
-                                                    SizedBox(height: 30.h),
-                                                    CustomText(
-                                                      state
-                                                          .appointmentList![index]
-                                                          .specialistAddress,
-                                                      style: GoogleFonts.cairo(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 60.sp,
-                                                      ),
+                                                    margin: EdgeInsets.all(
+                                                      30.r,
                                                     ),
-                                                  ],
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            12,
+                                                          ),
+                                                      color: Colors.white,
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.location_on,
+                                                          size: 150.r,
+                                                          color:
+                                                              Colors.blue[200],
+                                                        ),
+                                                        SizedBox(height: 30.h),
+                                                        CustomText(
+                                                          state
+                                                              .appointmentList![index]
+                                                              .specialistAddress,
+                                                          style:
+                                                              GoogleFonts.cairo(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 60.sp,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                              );
+                                            },
+                                            icon: Icon(
+                                              Icons.location_on,
+                                              color: Colors.blue[200],
                                             ),
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.location_on,
-                                          color: Colors.blue[200],
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          BlocProvider.of<HomeServiceBloc>(
-                                            context,
-                                          ).add(
-                                            DeleteClientAppointmentEvent(
-                                              id: state
-                                                  .appointmentList![index]
-                                                  .id,
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              BlocProvider.of<HomeServiceBloc>(
+                                                context,
+                                              ).add(
+                                                DeleteClientAppointmentEvent(
+                                                  id: state
+                                                      .appointmentList![index]
+                                                      .id,
+                                                ),
+                                              );
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.red[200],
                                             ),
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.delete,
-                                          color: Colors.red[200],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                      if (state is HomeClientAppointmentLoadingState) {
+                        _isLoging = true;
+                      }
+                      return ModalProgressHUD(
+                        color: Colors.white,
+                        opacity: 0.1,
+                        inAsyncCall: _isLoging,
+                        child: Container(),
                       );
-                    }
-                    if (state is HomeClientAppointmentLoadingState) {
-                      _isLoging = true;
-                    }
-                    return ModalProgressHUD(
-                      color: Colors.white,
-                      opacity: 0.1,
-                      inAsyncCall: _isLoging,
-                      child: Container(),
-                    );
-                  },
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

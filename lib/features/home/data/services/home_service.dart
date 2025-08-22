@@ -10,20 +10,19 @@ class HomeService {
     if (_userData.userImage.isEmpty ||
         _userData.userfName.isEmpty ||
         _userData.userlName.isEmpty) {
-      print("home service");
       String? userType = await sharedPreferences!.getString("user_type");
-      Map<String, dynamic> result = {};
-      late String uid = _supabaseClient.auth.currentUser!.id;
-      var data = await _supabaseClient
-          .from(userType!)
-          .select("uFName , uLName , image")
-          .eq("id", uid);
-      result = data[0];
-      _userData.UserType = userType;
+      // Map<String, dynamic> result = {};
+      // late String uid = _supabaseClient.auth.currentUser!.id;
+      // var data = await _supabaseClient
+      //     .from(userType!)
+      //     .select("uFName , uLName , image")
+      //     .eq("id", uid);
+      // result = data[0];
+      _userData.UserType = userType!;
       _userData.insertUserData(
-        fName: result["uFName"],
-        lName: result["uLName"],
-        image: result["image"],
+        fName: await sharedPreferences!.getString("uFName")!,
+        lName: await sharedPreferences!.getString("uLName")!,
+        image: await sharedPreferences!.getString("image")!,
       );
     }
   }

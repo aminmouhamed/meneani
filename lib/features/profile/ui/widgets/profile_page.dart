@@ -10,6 +10,7 @@ import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/routing/app_routes.dart';
 import 'package:meneani/core/widgets/custom_text.dart';
+import 'package:meneani/features/connectivity/ui/404.dart';
 import 'package:meneani/features/profile/data/services/profile_services.dart';
 import 'package:meneani/features/profile/ui/bloc/profile_bloc.dart';
 
@@ -77,114 +78,118 @@ class ProfilePage extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              //width: double.infinity,
-              //height: double.infinity,
-              child: ClipRect(
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: Container(
-                    width: double.infinity,
-                    height: 900.h,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: userData.userImage.isEmpty
-                            ? AssetImage("assets/images/pr1.jpg")
-                            : NetworkImage(userData.userImage),
+        child: InternetConnectionsCheker(
+          child: Stack(
+            children: [
+              Container(
+                //width: double.infinity,
+                //height: double.infinity,
+                child: ClipRect(
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: Container(
+                      width: double.infinity,
+                      height: 900.h,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: userData.userImage.isEmpty
+                              ? AssetImage("assets/images/pr1.jpg")
+                              : NetworkImage(userData.userImage),
+                        ),
                       ),
+                      child: SizedBox(),
                     ),
-                    child: SizedBox(),
                   ),
                 ),
               ),
-            ),
-            Container(
-              width: double.infinity,
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 60.h),
-                  Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.bottomRight,
-                        height: 400.r,
-                        width: 400.r,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: userData.userImage.isEmpty
-                                ? AssetImage("assets/images/pr1.jpg")
-                                : NetworkImage(userData.userImage),
+              Container(
+                width: double.infinity,
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 60.h),
+                    Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.bottomRight,
+                          height: 400.r,
+                          width: 400.r,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: userData.userImage.isEmpty
+                                  ? AssetImage("assets/images/pr1.jpg")
+                                  : NetworkImage(userData.userImage),
+                            ),
+                          ),
+                          child: IconButton(
+                            onPressed: () => pickImage(),
+                            icon: Icon(Icons.add_a_photo, color: Colors.white),
                           ),
                         ),
-                        child: IconButton(
-                          onPressed: () => pickImage(),
-                          icon: Icon(Icons.add_a_photo, color: Colors.white),
-                        ),
-                      ),
 
-                      SizedBox(height: 30.h),
-                      CustomText(
-                        "${userData.userfName} ${userData.userlName}",
-                        style: GoogleFonts.cairo(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 45.sp,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 60.h),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 30.r,
-                          vertical: 30.r,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
+                        SizedBox(height: 30.h),
+                        CustomText(
+                          "${userData.userfName} ${userData.userlName}",
+                          style: GoogleFonts.cairo(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 45.sp,
+                            color: Colors.white,
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            ProfileTextField(
-                              hintText: "تغيير الاسم",
-                              icon: Icons.person,
+                        Container(
+                          margin: EdgeInsets.only(top: 60.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 30.r,
+                            vertical: 30.r,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
                             ),
-                            SizedBox(height: 30.h),
-                            ProfileTextField(
-                              hintText: "تغيير اللقب",
-                              icon: Icons.person,
-                            ),
-                            SizedBox(height: 30.h),
-                            ProfileTextField(
-                              hintText: "تغيير البريد الإلكتروني",
-                              icon: Icons.person,
-                            ),
-                            SizedBox(height: 30.h),
-                            ElevatedButton(
-                              onPressed: () async {
-                                BlocProvider.of<ProfileBloc>(context).add(
-                                  SetUserImageProfileEvent(image: _imageFile!),
-                                );
-                              },
-                              child: Text("uploade"),
-                            ),
-                          ],
+                          ),
+                          child: Column(
+                            children: [
+                              ProfileTextField(
+                                hintText: "تغيير الاسم",
+                                icon: Icons.person,
+                              ),
+                              SizedBox(height: 30.h),
+                              ProfileTextField(
+                                hintText: "تغيير اللقب",
+                                icon: Icons.person,
+                              ),
+                              SizedBox(height: 30.h),
+                              ProfileTextField(
+                                hintText: "تغيير البريد الإلكتروني",
+                                icon: Icons.person,
+                              ),
+                              SizedBox(height: 30.h),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  BlocProvider.of<ProfileBloc>(context).add(
+                                    SetUserImageProfileEvent(
+                                      image: _imageFile!,
+                                    ),
+                                  );
+                                },
+                                child: Text("uploade"),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

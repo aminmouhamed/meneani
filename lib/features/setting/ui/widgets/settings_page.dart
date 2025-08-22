@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:meneani/core/const/constent.dart';
 import 'package:meneani/core/const/user_public_data.dart';
 import 'package:meneani/core/routing/app_routes.dart';
+import 'package:meneani/features/connectivity/ui/404.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SettingPage extends StatelessWidget {
@@ -50,14 +51,16 @@ class SettingPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            await _supabaseClient.auth.signOut();
-            await sharedPreferences!.clear();
-            Navigator.of(context).pushReplacementNamed(AppRoutes.welcome);
-          },
-          child: Text("Logout"),
+      body: InternetConnectionsCheker(
+        child: Center(
+          child: ElevatedButton(
+            onPressed: () async {
+              await _supabaseClient.auth.signOut();
+              await sharedPreferences!.remove("user_type");
+              Navigator.of(context).pushReplacementNamed(AppRoutes.welcome);
+            },
+            child: Text("Logout"),
+          ),
         ),
       ),
     );
