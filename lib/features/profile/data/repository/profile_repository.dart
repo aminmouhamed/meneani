@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/profile/data/models/client_mode.dart';
-import 'package:meneani/features/profile/data/services/profile_services.dart';
-import 'package:meneani/features/profile/domain/entities/client_entiti.dart';
-import 'package:meneani/features/profile/domain/repository/profile_repository.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/profile/data/models/client_mode.dart';
+import 'package:naji/features/profile/data/services/profile_services.dart';
+import 'package:naji/features/profile/domain/entities/client_entiti.dart';
+import 'package:naji/features/profile/domain/repository/profile_repository.dart';
 
 class ImplProfileRepository implements ProfileRepository {
   final ProfileServices profileServices;

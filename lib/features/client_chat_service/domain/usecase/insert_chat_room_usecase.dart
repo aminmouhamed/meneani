@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/client_chat_service/domain/repository/client_chat_service_repository.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/client_chat_service/domain/repository/client_chat_service_repository.dart';
 
 class InsertChatRoomUsecase {
   final ClientChatServiceRepository clientChatServiceRepository;

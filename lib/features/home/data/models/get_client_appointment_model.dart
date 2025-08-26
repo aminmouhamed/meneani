@@ -1,4 +1,4 @@
-import 'package:meneani/features/home/domain/entiti/get_client_appointment_entiti.dart';
+import 'package:naji/features/home/domain/entiti/get_client_appointment_entiti.dart';
 
 class GetClientAppointmentModel {
   final String specialistFName;

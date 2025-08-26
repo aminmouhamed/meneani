@@ -1,5 +1,5 @@
-import 'package:meneani/features/auth/signup/data/model/user_model.dart';
-import 'package:meneani/features/auth/signup/domain/entiti/client_entiti.dart';
+import 'package:naji/features/auth/signup/data/model/user_model.dart';
+import 'package:naji/features/auth/signup/domain/entiti/client_entiti.dart';
 
 class ClientModel extends UserModel {
   final String uFName;

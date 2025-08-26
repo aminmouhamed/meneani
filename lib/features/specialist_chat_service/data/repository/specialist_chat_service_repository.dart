@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:meneani/core/errors/failures.dart';
+import 'package:naji/core/errors/failures.dart';
 
-import 'package:meneani/features/specialist_chat_service/data/model/specialist_chat_service_setting_model.dart';
-import 'package:meneani/features/specialist_chat_service/data/service/specialist_chat_service.dart';
-import 'package:meneani/features/specialist_chat_service/domain/entiti/specialist_chat_service_setting_entiti.dart';
-import 'package:meneani/features/specialist_chat_service/domain/repository/specialist_chat_service_repository.dart';
+import 'package:naji/features/specialist_chat_service/data/model/specialist_chat_service_setting_model.dart';
+import 'package:naji/features/specialist_chat_service/data/service/specialist_chat_service.dart';
+import 'package:naji/features/specialist_chat_service/domain/entiti/specialist_chat_service_setting_entiti.dart';
+import 'package:naji/features/specialist_chat_service/domain/repository/specialist_chat_service_repository.dart';
 
 class ImplSpecialistChatServiceRepository
     implements SpecialistChatServiceRepository {
@@ -27,6 +27,22 @@ class ImplSpecialistChatServiceRepository
         await specialistChatService.insertSpecialistChatServiceSetting();
         return await specialistSetChatServiceSetting(state, price);
       }
+    } on Exception catch (e) {
+      return Future.value(left(ServerFailure(errorMassege: e.toString())));
+    }
+  }
+
+  @override
+  Future<Either<Failures, SpecialistChatServiceSettingEntiti>>
+  getChatServiceSetting() async {
+    try {
+      SpecialistChatServiceSettingModel _appointmentModel =
+          SpecialistChatServiceSettingModel.fromJson(
+            await specialistChatService.getChatServiceSetting(),
+          );
+      SpecialistChatServiceSettingEntiti _appointmentEntiti = _appointmentModel
+          .toEntiti();
+      return Future.value(right(_appointmentEntiti));
     } on Exception catch (e) {
       return Future.value(left(ServerFailure(errorMassege: e.toString())));
     }

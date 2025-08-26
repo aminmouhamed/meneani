@@ -1,4 +1,4 @@
-import 'package:meneani/features/profile/domain/entities/client_entiti.dart';
+import 'package:naji/features/profile/domain/entities/client_entiti.dart';
 
 class ClientMode {
   final String fName;

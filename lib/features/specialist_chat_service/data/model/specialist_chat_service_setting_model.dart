@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:meneani/features/specialist_chat_service/domain/entiti/specialist_chat_service_setting_entiti.dart';
+import 'package:naji/features/specialist_chat_service/domain/entiti/specialist_chat_service_setting_entiti.dart';
 
 class SpecialistChatServiceSettingModel {
   final bool state;

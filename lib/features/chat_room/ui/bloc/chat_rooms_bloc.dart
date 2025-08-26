@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/chat_room/domain/entiti/chat_room_entiti.dart';
-import 'package:meneani/features/chat_room/domain/usecase/get_chat_rooms_usecase.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/chat_room/domain/entiti/chat_room_entiti.dart';
+import 'package:naji/features/chat_room/domain/usecase/get_chat_rooms_usecase.dart';
 
 part 'chat_rooms_event.dart';
 part 'chat_rooms_state.dart';

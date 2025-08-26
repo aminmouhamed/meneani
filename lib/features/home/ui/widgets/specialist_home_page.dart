@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/const/user_public_data.dart';
-import 'package:meneani/core/routing/app_routes.dart';
-import 'package:meneani/features/connectivity/ui/404.dart';
-import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
-import 'package:meneani/features/home/ui/widgets/client_home_page.dart';
-import 'package:meneani/features/home/ui/widgets/widgets/custom_card.dart';
+import 'package:naji/core/const/constent.dart';
+import 'package:naji/core/const/user_public_data.dart';
+import 'package:naji/core/routing/app_routes.dart';
+import 'package:naji/features/connectivity/bloc/connectivity_bloc.dart';
+import 'package:naji/features/connectivity/ui/404.dart';
+import 'package:naji/features/home/ui/bloc/bloc/home_bloc.dart';
+import 'package:naji/features/home/ui/widgets/client_home_page.dart';
+import 'package:naji/features/home/ui/widgets/widgets/custom_card.dart';
+import 'package:naji/features/home/ui/widgets/widgets/wallet.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SpecialistHomePage extends StatelessWidget {
@@ -186,9 +188,19 @@ class SpecialistHomePage extends StatelessWidget {
             padding: EdgeInsetsGeometry.all(40.r),
             child: Column(
               children: [
+                Wallet(
+                  onPress: () {
+                    BlocProvider.of<ConnectivityBloc>(context);
+                  },
+
+                  titel: "محفظة",
+                  bgColor: AppColors.primeryColor.withAlpha(150),
+                  buttonText: "",
+                ),
+                SizedBox(height: 30.h),
                 Row(
                   children: [
-                    CustomCard(
+                    CustomCard3(
                       onPress: () {
                         Navigator.of(
                           context,
@@ -201,12 +213,13 @@ class SpecialistHomePage extends StatelessWidget {
                       buttonText: "",
                     ),
                     SizedBox(width: 30.h),
-                    CustomCard(
+                    CustomCard3(
                       onPress: () {
                         Navigator.of(
                           context,
                         ).pushNamed(AppRoutes.apointmentServiceSetting);
                       },
+
                       bodyText:
                           "هنا يمكنك التحكم بإعداد الخدمة الخاصة بك و الوصول إلى إحصائياتها .",
                       titel: "الإعدادات الخاصة بخدمة حجز المواعيد",

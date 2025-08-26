@@ -12,10 +12,8 @@ class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
   ConnectivityBloc() : super(ConnectivityInitial()) {
     on<ConnectivityEvent>((event, emit) async {
       if (event is IsConnected) {
-        print('Connected to the internet');
         emit(ConnectivityHasConnectionsState());
       } else if (event is IsDesConnected) {
-        print('Disconnected from the internet');
         emit(ConnectivityDontHaveConnectionsState());
       }
     });

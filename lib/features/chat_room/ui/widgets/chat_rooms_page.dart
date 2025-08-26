@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meneani/core/const/user_public_data.dart';
-import 'package:meneani/core/di/di.dart' as di;
-import 'package:meneani/core/widgets/custom_page_route.dart';
-import 'package:meneani/core/widgets/custom_text.dart';
-import 'package:meneani/features/chat_room/domain/entiti/chat_room_entiti.dart';
-import 'package:meneani/features/chat_room/ui/bloc/chat_rooms_bloc.dart';
-import 'package:meneani/features/connectivity/ui/404.dart';
-import 'package:meneani/features/messaging/ui/bloc/messaging_service_bloc.dart';
-import 'package:meneani/features/messaging/ui/widgets/messaging_page.dart';
+import 'package:naji/core/const/user_public_data.dart';
+import 'package:naji/core/di/di.dart' as di;
+import 'package:naji/core/widgets/custom_page_route.dart';
+import 'package:naji/core/widgets/custom_text.dart';
+import 'package:naji/features/chat_room/domain/entiti/chat_room_entiti.dart';
+import 'package:naji/features/chat_room/ui/bloc/chat_rooms_bloc.dart';
+import 'package:naji/features/connectivity/ui/404.dart';
+import 'package:naji/features/messaging/ui/bloc/messaging_service_bloc.dart';
+import 'package:naji/features/messaging/ui/widgets/messaging_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatRoomsPage extends StatelessWidget {

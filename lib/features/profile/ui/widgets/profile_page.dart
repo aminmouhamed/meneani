@@ -6,13 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/const/user_public_data.dart';
-import 'package:meneani/core/routing/app_routes.dart';
-import 'package:meneani/core/widgets/custom_text.dart';
-import 'package:meneani/features/connectivity/ui/404.dart';
-import 'package:meneani/features/profile/data/services/profile_services.dart';
-import 'package:meneani/features/profile/ui/bloc/profile_bloc.dart';
+import 'package:naji/core/const/constent.dart';
+import 'package:naji/core/const/user_public_data.dart';
+import 'package:naji/core/routing/app_routes.dart';
+import 'package:naji/core/widgets/custom_text.dart';
+import 'package:naji/features/connectivity/ui/404.dart';
+import 'package:naji/features/profile/data/services/profile_services.dart';
+import 'package:naji/features/profile/ui/bloc/profile_bloc.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});

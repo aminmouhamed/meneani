@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/client_appointment_services/data/model/appointment_model.dart';
-import 'package:meneani/features/client_appointment_services/data/service/client_services_services.dart';
-import 'package:meneani/features/client_appointment_services/domain/entities/appointment_entiti.dart';
-import 'package:meneani/features/client_appointment_services/domain/entities/get_appointment_entiti.dart';
-import 'package:meneani/features/client_appointment_services/domain/entities/set_appointment_entiti.dart';
-import 'package:meneani/features/client_appointment_services/domain/repository/client_services_repository.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/client_appointment_services/data/model/appointment_model.dart';
+import 'package:naji/features/client_appointment_services/data/service/client_services_services.dart';
+import 'package:naji/features/client_appointment_services/domain/entities/appointment_entiti.dart';
+import 'package:naji/features/client_appointment_services/domain/entities/get_appointment_entiti.dart';
+import 'package:naji/features/client_appointment_services/domain/entities/set_appointment_entiti.dart';
+import 'package:naji/features/client_appointment_services/domain/repository/client_services_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ImplClientServiceRepository implements ClientServicesRepository {

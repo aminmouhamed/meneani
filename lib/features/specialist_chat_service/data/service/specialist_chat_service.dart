@@ -29,4 +29,13 @@ class SpecialistChatService {
       "price": "0",
     });
   }
+
+  Future<Map<String, dynamic>> getChatServiceSetting() async {
+    String uid = _supabaseClient.auth.currentUser!.id;
+    var response = await _supabaseClient
+        .from("chat_service")
+        .select(" price  , state ")
+        .eq("specialistid", uid);
+    return response[0];
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/const/user_public_data.dart';
-import 'package:meneani/features/auth/login/domain/entiti/user_entiti.dart';
+import 'package:naji/core/const/constent.dart';
+import 'package:naji/core/const/user_public_data.dart';
+import 'package:naji/features/auth/login/domain/entiti/user_entiti.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginService {

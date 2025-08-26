@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/profile/domain/entities/client_entiti.dart';
-import 'package:meneani/features/profile/domain/repository/profile_repository.dart';
-import 'package:meneani/features/profile/domain/usecase/Get_Profile_data.dart';
-import 'package:meneani/features/profile/domain/usecase/set_client_image_profile.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/profile/domain/entities/client_entiti.dart';
+import 'package:naji/features/profile/domain/repository/profile_repository.dart';
+import 'package:naji/features/profile/domain/usecase/Get_Profile_data.dart';
+import 'package:naji/features/profile/domain/usecase/set_client_image_profile.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';

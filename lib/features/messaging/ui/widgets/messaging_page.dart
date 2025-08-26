@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meneani/features/connectivity/ui/404.dart';
+import 'package:naji/features/connectivity/ui/404.dart';
 
-import 'package:meneani/features/messaging/ui/bloc/messaging_service_bloc.dart';
+import 'package:naji/features/messaging/ui/bloc/messaging_service_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MessagingPage extends StatelessWidget {

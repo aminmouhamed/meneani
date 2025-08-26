@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:meneani/core/errors/failures.dart';
+import 'package:naji/core/errors/failures.dart';
 
-import 'package:meneani/features/client_chat_service/domain/entiti/specialist_chat_service_entiti.dart';
+import 'package:naji/features/client_chat_service/domain/entiti/specialist_chat_service_entiti.dart';
 
 abstract class ClientChatServiceRepository {
   Future<Either<Failures, List<SpecialistChatServiceEntiti>>>

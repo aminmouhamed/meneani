@@ -1,4 +1,4 @@
-import 'package:meneani/features/client_chat_service/domain/entiti/specialist_chat_service_entiti.dart';
+import 'package:naji/features/client_chat_service/domain/entiti/specialist_chat_service_entiti.dart';
 
 class SpecialistChatServiceModel {
   final String fName;

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:meneani/core/errors/failures.dart';
+import 'package:naji/core/errors/failures.dart';
 
-import 'package:meneani/features/home/domain/entiti/client_entiti.dart';
-import 'package:meneani/features/home/domain/repository/home_repository.dart';
+import 'package:naji/features/home/domain/entiti/client_entiti.dart';
+import 'package:naji/features/home/domain/repository/home_repository.dart';
 
 class GetClientDataUsecase {
   final HomeRepository homeRepository;

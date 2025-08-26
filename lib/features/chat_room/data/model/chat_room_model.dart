@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:meneani/core/const/user_public_data.dart';
-import 'package:meneani/features/chat_room/domain/entiti/chat_room_entiti.dart';
+import 'package:naji/core/const/user_public_data.dart';
+import 'package:naji/features/chat_room/domain/entiti/chat_room_entiti.dart';
 
 class ChatRoomModel {
   final String userId;

@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/widgets/custom_text.dart';
-import 'package:meneani/core/widgets/show_dialog_error_handler.dart';
-import 'package:meneani/features/auth/signup/ui/bloc/create_account_bloc.dart';
-import 'package:meneani/features/auth/signup/ui/widgets/widgets/customdatepicker.dart';
-import 'package:meneani/features/auth/signup/ui/widgets/widgets/customdropdown.dart';
-import 'package:meneani/features/auth/signup/ui/widgets/widgets/textfield.dart';
-import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
+import 'package:naji/core/const/constent.dart';
+import 'package:naji/core/widgets/custom_text.dart';
+import 'package:naji/core/widgets/show_dialog_error_handler.dart';
+import 'package:naji/features/auth/signup/ui/bloc/create_account_bloc.dart';
+import 'package:naji/features/auth/signup/ui/widgets/widgets/customdatepicker.dart';
+import 'package:naji/features/auth/signup/ui/widgets/widgets/customdropdown.dart';
+import 'package:naji/features/auth/signup/ui/widgets/widgets/textfield.dart';
+import 'package:naji/features/connectivity/bloc/connectivity_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class CreateClientAccountPage extends StatelessWidget {

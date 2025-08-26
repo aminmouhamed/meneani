@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/messaging/domain/usecase/send_message_usecase.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/messaging/domain/usecase/send_message_usecase.dart';
 
 part 'messaging_service_event.dart';
 part 'messaging_service_state.dart';

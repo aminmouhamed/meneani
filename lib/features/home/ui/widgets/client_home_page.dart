@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/const/user_public_data.dart';
-import 'package:meneani/core/routing/app_routes.dart';
-import 'package:meneani/core/widgets/custom_text.dart';
-import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
-import 'package:meneani/features/connectivity/ui/404.dart';
+import 'package:naji/core/const/constent.dart';
+import 'package:naji/core/const/user_public_data.dart';
+import 'package:naji/core/routing/app_routes.dart';
+import 'package:naji/core/widgets/custom_text.dart';
+import 'package:naji/features/connectivity/bloc/connectivity_bloc.dart';
+import 'package:naji/features/connectivity/ui/404.dart';
 
-import 'package:meneani/features/home/data/services/home_service.dart';
-import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
-import 'package:meneani/features/home/ui/bloc/home_service_bloc.dart';
-import 'package:meneani/features/home/ui/widgets/widgets/custom_card.dart';
+import 'package:naji/features/home/data/services/home_service.dart';
+import 'package:naji/features/home/ui/bloc/bloc/home_bloc.dart';
+import 'package:naji/features/home/ui/bloc/home_service_bloc.dart';
+import 'package:naji/features/home/ui/widgets/widgets/custom_card.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 // ignore: must_be_immutable
@@ -229,6 +229,25 @@ class ClientHomePage extends StatelessWidget {
                       titel: "استشارة الطبيب عبر الإنترنت",
                       bgColor: AppColors.therdColor.withAlpha(150),
                       buttonText: "",
+                      richText: RichText(
+                        text: TextSpan(
+                          text: "استشارة الطبيب عبر الإنترنت :\n",
+                          style: GoogleFonts.cairo(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          children: [
+                            TextSpan(
+                              style: GoogleFonts.cairo(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                              text:
+                                  "  إذا كنت مدمنا وتعاني من أعراض مختلفة كالنسيان، الأرق، التعب المفرط يمكنك استشارة الطبيب من خلال التطبيق .",
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     SizedBox(width: 30.h),
                     CustomCard(
@@ -242,6 +261,24 @@ class ClientHomePage extends StatelessWidget {
                       titel: "قم بحجز موعد لزياره الطبيب",
                       bgColor: AppColors.secendaryColor.withAlpha(150),
                       buttonText: "",
+                      richText: RichText(
+                        text: TextSpan(
+                          text: "طلب موعد :\n",
+                          style: GoogleFonts.cairo(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          children: [
+                            TextSpan(
+                              text:
+                                  "   يمكن للمدمنين من كافة أنحاء التراب الوطني في الجزائر حجز موعد مع المختصين من خلال تطبيق ناجي",
+                              style: GoogleFonts.cairo(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -254,6 +291,24 @@ class ClientHomePage extends StatelessWidget {
                   titel: "التوجيه الأوتوماتيكي",
                   bgColor: AppColors.primeryColor.withAlpha(150),
                   buttonText: "",
+                  richText: RichText(
+                    text: TextSpan(
+                      text: "إحالة المرضى ( التوجيه التلقائي) :\n",
+                      style: GoogleFonts.cairo(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                        TextSpan(
+                          text:
+                              "   يقدم التطبيق خدمة تقييم القدرات الذهنية عن طريق الاختبار النفس عصبي. حيث يوجه تلقائيا المريض نحو الطبيب المختص.",
+                          style: GoogleFonts.cairo(
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(height: 30.h),
                 Row(

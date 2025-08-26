@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:meneani/core/routing/app_routes.dart';
-import 'package:meneani/core/widgets/custom_page_route.dart';
-import 'package:meneani/features/auth/login/ui/bloc/bloc/login_bloc.dart';
-import 'package:meneani/features/auth/login/ui/widgets/login_page.dart';
-import 'package:meneani/features/auth/signup/ui/bloc/create_account_bloc.dart';
-import 'package:meneani/features/auth/signup/ui/widgets/create_client_account_page.dart.dart';
-import 'package:meneani/features/auth/signup/ui/widgets/create_specialist_account_page.dart';
-import 'package:meneani/features/chat_room/ui/bloc/chat_rooms_bloc.dart';
-import 'package:meneani/features/chat_room/ui/widgets/chat_rooms_page.dart';
-import 'package:meneani/features/client_appointment_services/ui/bloc/client_service_bloc.dart';
-import 'package:meneani/features/client_chat_service/ui/bloc/client_chat_services_bloc/client_chat_bloc.dart';
-import 'package:meneani/features/client_chat_service/ui/widgets/client_chat_service_home_page.dart';
-import 'package:meneani/features/home/ui/bloc/home_service_bloc.dart';
-import 'package:meneani/features/profile/ui/bloc/profile_bloc.dart';
-import 'package:meneani/features/profile/ui/widgets/profile_page.dart';
-import 'package:meneani/features/client_appointment_services/ui/widgets/client_ap_service_page.dart';
-import 'package:meneani/features/home/ui/bloc/bloc/home_bloc.dart';
-import 'package:meneani/features/home/ui/widgets/client_home_page.dart';
-import 'package:meneani/features/home/ui/widgets/specialist_home_page.dart';
-import 'package:meneani/features/setting/ui/widgets/settings_page.dart';
-import 'package:meneani/features/specialist_chat_service/ui/bloc/specialist_chat_service_bloc.dart';
-import 'package:meneani/features/specialist_chat_service/ui/widgets/specialist_chat_service_setting_page.dart';
-import 'package:meneani/features/specialist_services/ui/bloc/specialist_services_bloc.dart';
-import 'package:meneani/features/specialist_services/ui/widgets/appointment_service_page.dart';
-import 'package:meneani/features/welcome/ui/welcome_page.dart';
-import 'package:meneani/core/di/di.dart' as di;
+import 'package:naji/core/routing/app_routes.dart';
+import 'package:naji/core/widgets/custom_page_route.dart';
+import 'package:naji/features/auth/login/ui/bloc/bloc/login_bloc.dart';
+import 'package:naji/features/auth/login/ui/widgets/login_page.dart';
+import 'package:naji/features/auth/signup/ui/bloc/create_account_bloc.dart';
+import 'package:naji/features/auth/signup/ui/widgets/create_client_account_page.dart.dart';
+import 'package:naji/features/auth/signup/ui/widgets/create_specialist_account_page.dart';
+import 'package:naji/features/chat_room/ui/bloc/chat_rooms_bloc.dart';
+import 'package:naji/features/chat_room/ui/widgets/chat_rooms_page.dart';
+import 'package:naji/features/client_appointment_services/ui/bloc/client_service_bloc.dart';
+import 'package:naji/features/client_chat_service/ui/bloc/client_chat_services_bloc/client_chat_bloc.dart';
+import 'package:naji/features/client_chat_service/ui/widgets/client_chat_service_home_page.dart';
+import 'package:naji/features/home/ui/bloc/home_service_bloc.dart';
+import 'package:naji/features/profile/ui/bloc/profile_bloc.dart';
+import 'package:naji/features/profile/ui/widgets/profile_page.dart';
+import 'package:naji/features/client_appointment_services/ui/widgets/client_ap_service_page.dart';
+import 'package:naji/features/home/ui/bloc/bloc/home_bloc.dart';
+import 'package:naji/features/home/ui/widgets/client_home_page.dart';
+import 'package:naji/features/home/ui/widgets/specialist_home_page.dart';
+import 'package:naji/features/setting/ui/widgets/settings_page.dart';
+import 'package:naji/features/specialist_chat_service/ui/bloc/specialist_chat_service_bloc.dart';
+import 'package:naji/features/specialist_chat_service/ui/widgets/specialist_chat_service_setting_page.dart';
+import 'package:naji/features/specialist_services/ui/bloc/appointment_list/appointment_list_bloc.dart';
+import 'package:naji/features/specialist_services/ui/bloc/specialist_services_bloc.dart';
+import 'package:naji/features/specialist_services/ui/widgets/appointment_service_page.dart';
+import 'package:naji/features/specialist_services/ui/widgets/specialist_appointment_list_page.dart';
+import 'package:naji/features/welcome/ui/welcome_page.dart';
+import 'package:naji/core/di/di.dart' as di;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRouting {
@@ -32,6 +34,15 @@ class AppRouting {
     switch (rSetting.name) {
       case AppRoutes.welcome:
         return CustomPageRoute(child: WelcomePage());
+      case AppRoutes.specialistAppointmentList:
+        return CustomPageRoute(
+          child: BlocProvider(
+            create: (context) =>
+                AppointmentListBloc(getAppointmentListUsecase: di.getIT())
+                  ..add(GetSpecialistAppointmentListEvent()),
+            child: SpecialistAppointmentListPage(),
+          ),
+        );
       case AppRoutes.ChatRooms:
         return CustomPageRoute(
           child: BlocProvider(
@@ -61,7 +72,8 @@ class AppRouting {
           child: BlocProvider(
             create: (context) => SpecialistChatServiceBloc(
               specialistSetChatServiceUsecase: di.getIT(),
-            ),
+              specialistGetChatServiceSettingUsecase: di.getIT(),
+            )..add(GetChatServiceSettingsEvent()),
             child: SpecialistChatServiceSettingPage(),
           ),
         );

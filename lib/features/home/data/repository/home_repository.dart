@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:meneani/core/errors/failures.dart';
+import 'package:naji/core/errors/failures.dart';
 
-import 'package:meneani/features/home/data/models/get_client_appointment_model.dart';
-import 'package:meneani/features/home/data/services/home_service.dart';
+import 'package:naji/features/home/data/models/get_client_appointment_model.dart';
+import 'package:naji/features/home/data/services/home_service.dart';
 
-import 'package:meneani/features/home/domain/entiti/get_client_appointment_entiti.dart';
-import 'package:meneani/features/home/domain/repository/home_repository.dart';
+import 'package:naji/features/home/domain/entiti/get_client_appointment_entiti.dart';
+import 'package:naji/features/home/domain/repository/home_repository.dart';
 
 class ImplHomeRepository implements HomeRepository {
   final HomeService homeService;

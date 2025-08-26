@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:meneani/core/const/constent.dart';
+import 'package:naji/core/const/constent.dart';
 
 class _BarChart extends StatelessWidget {
   const _BarChart();

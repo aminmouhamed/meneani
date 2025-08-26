@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meneani/core/routing/app_routes.dart';
-import 'package:meneani/generated/l10n.dart';
+import 'package:naji/core/routing/app_routes.dart';
+import 'package:naji/generated/l10n.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});

@@ -1,4 +1,4 @@
-import 'package:meneani/features/specialist_services/domain/entities/appointment_entiti.dart';
+import 'package:naji/features/specialist_services/domain/entities/appointment_entiti.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SpecialistService {
@@ -25,5 +25,16 @@ class SpecialistService {
         .select(" price , descriptions , state ")
         .eq("specialist_id", uid);
     return response[0];
+  }
+
+  Future<List<Map<String, dynamic>>> getAppointmentsList(
+    DateTime dateTime,
+  ) async {
+    var response = await _supabase
+        .from("appointment")
+        .select("id, appointment_date , client(uFName , uLName  , image)")
+        .eq("specialis_id", _supabase.auth.currentUser!.id)
+        .gte("appointment_date", dateTime.toString());
+    return response;
   }
 }

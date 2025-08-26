@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/auth/login/domain/entiti/user_entiti.dart';
-import 'package:meneani/features/auth/login/domain/repository/login_repository.dart';
-import 'package:meneani/features/auth/login/domain/usecase/lognin_with_email_and_password_usecase.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/auth/login/domain/entiti/user_entiti.dart';
+import 'package:naji/features/auth/login/domain/repository/login_repository.dart';
+import 'package:naji/features/auth/login/domain/usecase/lognin_with_email_and_password_usecase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'login_event.dart';
@@ -38,5 +38,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
       }
     });
+  }
+  @override
+  Future<void> close() {
+    email.dispose();
+    password.dispose();
+    return super.close();
   }
 }

@@ -1,5 +1,5 @@
-import 'package:meneani/features/auth/signup/data/model/client_model.dart';
-import 'package:meneani/features/auth/signup/data/model/specialist_model.dart';
+import 'package:naji/features/auth/signup/data/model/client_model.dart';
+import 'package:naji/features/auth/signup/data/model/specialist_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CreateAccountService {

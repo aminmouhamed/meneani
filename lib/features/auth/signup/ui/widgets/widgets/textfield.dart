@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/widgets/custom_text.dart';
+import 'package:naji/core/const/constent.dart';
+import 'package:naji/core/widgets/custom_text.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField({

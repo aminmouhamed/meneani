@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/const/user_public_data.dart';
-import 'package:meneani/core/routing/app_routes.dart';
-import 'package:meneani/core/routing/app_routing.dart';
-import 'package:meneani/core/theme/app_theme.dart';
-import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
-import 'package:meneani/generated/l10n.dart';
+import 'package:naji/core/const/constent.dart';
+import 'package:naji/core/const/user_public_data.dart';
+import 'package:naji/core/routing/app_routes.dart';
+import 'package:naji/core/routing/app_routing.dart';
+import 'package:naji/core/theme/app_theme.dart';
+import 'package:naji/features/connectivity/bloc/connectivity_bloc.dart';
+import 'package:naji/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:meneani/core/di/di.dart' as di;
+import 'package:naji/core/di/di.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

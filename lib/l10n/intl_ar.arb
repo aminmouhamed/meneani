@@ -1,5 +1,15 @@
 {
     "login" : "تسجيل الدخول", 
-    "create_client_account" : "Create Client Account",
-    "create_specialist_account" : "Create Specialist Account"
+    "create_client_account" : "إنشاء حسابات العملاء",
+    "create_specialist_account" : "إنشاء حساب متخصص" ,
+    "good_morning" : "صباح الخير ، " ,
+    "specialist_account" : "حساب المختص" ,
+    "wallet" : "محفظة" , 
+    "settings" : "الإعدادات" , 
+    "home" : "الرئيسية" , 
+    "profile" : "الملف الشخصي" , 
+    "Here_you_can_control_your_service_setup_and_access_its_statistics" : "هنا يمكنك التحكم بإعداد الخدمة الخاصة بك و الوصول إلى إحصائياتها ." , 
+    "Online doctor consultation" : "استشارة الطبيب عبر الإنترنت" ,
+   "Settings_for_the_appointment_booking_service" :  "الإعدادات الخاصة بخدمة حجز المواعيد",
+   "":""
 }

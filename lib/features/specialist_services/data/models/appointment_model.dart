@@ -1,4 +1,4 @@
-import 'package:meneani/features/specialist_services/domain/entities/appointment_entiti.dart';
+import 'package:naji/features/specialist_services/domain/entities/appointment_entiti.dart';
 
 class AppointmentModel {
   final String price;

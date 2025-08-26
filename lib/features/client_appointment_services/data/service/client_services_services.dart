@@ -1,4 +1,4 @@
-import 'package:meneani/features/client_appointment_services/domain/entities/set_appointment_entiti.dart';
+import 'package:naji/features/client_appointment_services/domain/entities/set_appointment_entiti.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ClientServices {

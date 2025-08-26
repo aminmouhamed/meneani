@@ -16,3 +16,5 @@ class SpecialistChatServiceSetSettingEvent extends SpecialistChatServiceEvent {
     required this.state,
   });
 }
+
+class GetChatServiceSettingsEvent extends SpecialistChatServiceEvent {}

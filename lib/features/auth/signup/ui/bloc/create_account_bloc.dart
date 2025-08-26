@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/auth/signup/domain/entiti/client_entiti.dart';
-import 'package:meneani/features/auth/signup/domain/entiti/specialist_entiti.dart';
-import 'package:meneani/features/auth/signup/domain/repository/create_account_repository.dart';
-import 'package:meneani/features/auth/signup/domain/usecase/create_client_account_usecase.dart';
-import 'package:meneani/features/auth/signup/domain/usecase/create_specialist_account_usecase.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/auth/signup/domain/entiti/client_entiti.dart';
+import 'package:naji/features/auth/signup/domain/entiti/specialist_entiti.dart';
+import 'package:naji/features/auth/signup/domain/repository/create_account_repository.dart';
+import 'package:naji/features/auth/signup/domain/usecase/create_client_account_usecase.dart';
+import 'package:naji/features/auth/signup/domain/usecase/create_specialist_account_usecase.dart';
 
 part 'create_account_event.dart';
 part 'create_account_state.dart';

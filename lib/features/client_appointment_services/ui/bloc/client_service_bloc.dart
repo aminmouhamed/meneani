@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/client_appointment_services/domain/entities/appointment_entiti.dart';
-import 'package:meneani/features/client_appointment_services/domain/entities/get_appointment_entiti.dart';
-import 'package:meneani/features/client_appointment_services/domain/entities/set_appointment_entiti.dart';
-import 'package:meneani/features/client_appointment_services/domain/usecase/get_appointment_of_service_usecase.dart';
-import 'package:meneani/features/client_appointment_services/domain/usecase/get_specialist_eppointment_services.dart';
-import 'package:meneani/features/client_appointment_services/domain/usecase/set_client_appointment_usecase.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/client_appointment_services/domain/entities/appointment_entiti.dart';
+import 'package:naji/features/client_appointment_services/domain/entities/get_appointment_entiti.dart';
+import 'package:naji/features/client_appointment_services/domain/entities/set_appointment_entiti.dart';
+import 'package:naji/features/client_appointment_services/domain/usecase/get_appointment_of_service_usecase.dart';
+import 'package:naji/features/client_appointment_services/domain/usecase/get_specialist_eppointment_services.dart';
+import 'package:naji/features/client_appointment_services/domain/usecase/set_client_appointment_usecase.dart';
 
 part 'client_service_event.dart';
 part 'client_service_state.dart';

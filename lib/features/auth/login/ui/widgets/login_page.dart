@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meneani/core/const/constent.dart';
-import 'package:meneani/core/const/user_public_data.dart';
-import 'package:meneani/core/routing/app_routes.dart';
-import 'package:meneani/core/widgets/custom_text.dart';
-import 'package:meneani/core/widgets/show_dialog_error_handler.dart';
-import 'package:meneani/features/auth/login/ui/bloc/bloc/login_bloc.dart';
-import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
+import 'package:naji/core/const/constent.dart';
+import 'package:naji/core/const/user_public_data.dart';
+import 'package:naji/core/routing/app_routes.dart';
+import 'package:naji/core/widgets/custom_text.dart';
+import 'package:naji/core/widgets/show_dialog_error_handler.dart';
+import 'package:naji/features/auth/login/ui/bloc/bloc/login_bloc.dart';
+import 'package:naji/features/connectivity/bloc/connectivity_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});

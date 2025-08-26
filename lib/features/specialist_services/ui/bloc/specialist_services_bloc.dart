@@ -4,10 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/specialist_services/domain/entities/appointment_entiti.dart';
-import 'package:meneani/features/specialist_services/domain/usecases/enabel_appointment_service.dart';
-import 'package:meneani/features/specialist_services/domain/usecases/get_appointment_setting.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/specialist_services/domain/entities/appointment_entiti.dart';
+import 'package:naji/features/specialist_services/domain/usecases/enabel_appointment_service.dart';
+import 'package:naji/features/specialist_services/domain/usecases/get_appointment_setting.dart';
 
 part 'specialist_services_event.dart';
 part 'specialist_services_state.dart';
@@ -74,5 +74,10 @@ class SpecialistServicesBloc
         );
       }
     });
+  }
+  @override
+  Future<void> close() {
+    price.dispose();
+    return super.close();
   }
 }

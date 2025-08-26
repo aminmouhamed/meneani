@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meneani/core/errors/failures.dart';
-import 'package:meneani/features/client_chat_service/domain/entiti/specialist_chat_service_entiti.dart';
-import 'package:meneani/features/client_chat_service/domain/usecase/get_specialist_chat_service_usecase.dart';
-import 'package:meneani/features/client_chat_service/domain/usecase/insert_chat_room_usecase.dart';
+import 'package:naji/core/errors/failures.dart';
+import 'package:naji/features/client_chat_service/domain/entiti/specialist_chat_service_entiti.dart';
+import 'package:naji/features/client_chat_service/domain/usecase/get_specialist_chat_service_usecase.dart';
+import 'package:naji/features/client_chat_service/domain/usecase/insert_chat_room_usecase.dart';
 
 part 'client_chat_event.dart';
 part 'client_chat_state.dart';

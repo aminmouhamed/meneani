@@ -1,4 +1,4 @@
-import 'package:meneani/core/const/user_public_data.dart';
+import 'package:naji/core/const/user_public_data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatRoomsService {

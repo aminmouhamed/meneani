@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:meneani/features/connectivity/bloc/connectivity_bloc.dart';
+import 'package:naji/features/connectivity/bloc/connectivity_bloc.dart';
 
 class InternetConnectionsCheker extends StatelessWidget {
   InternetConnectionsCheker({super.key, required this.child});
