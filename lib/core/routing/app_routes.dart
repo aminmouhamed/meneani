@@ -14,4 +14,5 @@ class AppRoutes {
       "specialist_chat_service_setting";
   static const String ChatRooms = "chat_rooms";
   static const String specialistAppointmentList = "specialist_appointment_list";
+  static const String automaticGuidance = "automatic_guidence";
 }

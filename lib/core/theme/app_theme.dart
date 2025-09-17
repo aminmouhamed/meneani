@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:naji/core/const/constent.dart';
 
 ThemeData lightThem = ThemeData(
   primaryColor: const Color(0xFF8CE7F1),

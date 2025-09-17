@@ -40,6 +40,7 @@ class CustomDatePicker extends StatelessWidget {
             controller: controller,
             onTap: () async {
               DateTime? berthDate = await showDatePicker(
+                locale: Locale("fr"),
                 initialDate: initilaDate,
                 context: context,
                 firstDate: DateTime(1965),

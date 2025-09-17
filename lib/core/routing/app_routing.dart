@@ -6,6 +6,7 @@ import 'package:naji/features/auth/login/ui/widgets/login_page.dart';
 import 'package:naji/features/auth/signup/ui/bloc/create_account_bloc.dart';
 import 'package:naji/features/auth/signup/ui/widgets/create_client_account_page.dart.dart';
 import 'package:naji/features/auth/signup/ui/widgets/create_specialist_account_page.dart';
+import 'package:naji/features/automatic_guidance/ui/widgets/automatic_guidance_page.dart';
 import 'package:naji/features/chat_room/ui/bloc/chat_rooms_bloc.dart';
 import 'package:naji/features/chat_room/ui/widgets/chat_rooms_page.dart';
 import 'package:naji/features/client_appointment_services/ui/bloc/client_service_bloc.dart';
@@ -34,6 +35,8 @@ class AppRouting {
     switch (rSetting.name) {
       case AppRoutes.welcome:
         return CustomPageRoute(child: WelcomePage());
+      case AppRoutes.automaticGuidance:
+        return CustomPageRoute(child: AutomaticGuidancePage());
       case AppRoutes.specialistAppointmentList:
         return CustomPageRoute(
           child: BlocProvider(

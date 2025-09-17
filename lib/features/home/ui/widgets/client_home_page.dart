@@ -285,7 +285,9 @@ class ClientHomePage extends StatelessWidget {
                 SizedBox(height: 30.h),
                 CustomCard2(
                   onPress: () {
-                    BlocProvider.of<ConnectivityBloc>(context);
+                    Navigator.of(
+                      context,
+                    ).pushNamed(AppRoutes.automaticGuidance);
                   },
 
                   titel: "التوجيه الأوتوماتيكي",

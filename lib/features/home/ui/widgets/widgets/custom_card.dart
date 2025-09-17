@@ -50,7 +50,10 @@ class CustomCard extends StatelessWidget {
                 Text(
                   textDirection: TextDirection.rtl,
                   bodyText,
-                  style: GoogleFonts.cairo(fontSize: 30.sp),
+                  style: GoogleFonts.cairo(
+                    fontSize: 35.sp,
+                    color: Colors.black,
+                  ),
                 ),
 
                 SizedBox(height: 150.h),
@@ -69,9 +72,15 @@ class CustomCard extends StatelessWidget {
                   context: context,
                   builder: (context) => Center(
                     child: Container(
-                      padding: EdgeInsets.all(40.r),
+                      padding: EdgeInsets.only(
+                        top: 40.r,
+                        left: 40.r,
+                        right: 40.r,
+                        bottom: 80.r,
+                      ),
                       margin: EdgeInsets.all(40.r),
                       decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white, width: 2),
                         color: bgColor.withAlpha(255),
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -147,7 +156,7 @@ class CustomCard2 extends StatelessWidget {
               Text(
                 textDirection: TextDirection.rtl,
                 "هذه الخدمة مبنية على نتائج أبحاث الخاصة والتي كانت تمكننا من توجيهك نحو الطريق الصحيح للشفاء ",
-                style: GoogleFonts.cairo(fontSize: 30.sp),
+                style: GoogleFonts.cairo(fontSize: 35.sp),
               ),
 
               SizedBox(height: 150.h),
@@ -167,9 +176,15 @@ class CustomCard2 extends StatelessWidget {
                 context: context,
                 builder: (context) => Center(
                   child: Container(
-                    padding: EdgeInsets.all(40.r),
+                    padding: EdgeInsets.only(
+                      top: 40.r,
+                      left: 40.r,
+                      right: 40.r,
+                      bottom: 80.r,
+                    ),
                     margin: EdgeInsets.all(40.r),
                     decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 2),
                       color: bgColor.withAlpha(255),
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -242,7 +257,7 @@ class CustomCard3 extends StatelessWidget {
             Text(
               textDirection: TextDirection.rtl,
               bodyText,
-              style: GoogleFonts.cairo(fontSize: 30.sp),
+              style: GoogleFonts.cairo(fontSize: 35.sp),
             ),
 
             SizedBox(height: 150.h),
